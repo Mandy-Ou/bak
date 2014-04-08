@@ -1,0 +1,1 @@
+	DataTable detail(Long id) throws ServiceException;
