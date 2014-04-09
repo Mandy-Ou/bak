@@ -1,0 +1,81 @@
+/home/liting/jdk-7u51-linux-i586-demos.gz
+
+ sudo cp -r  ~/download/jdk-7u10-linux-x64.tar.gz  /usr/lib/jdk/  
+
+
+sudo mkdir jdk  //创建文件夹jdk
+
+    sudo cp -r  ~/download/jdk-7u10-linux-x64.tar.gz  /usr/lib/jdk/          //把下载的文件拷贝到新创建的目录下面
+
+    sudo tar -zxvg jdk-7u10-linux-x64.tar.gz    //解压缩文件
+
+/home/liting/jdk-6u27
+
+CLASSPATH="/home/liting/jdk-6u27/lib"   
+
+JAVA_HOME="/home/liting/jdk-6u27" 
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games：/home/liting/jdk-6u27
+
+vim /etc/profile
+
+
+
+
+
+
+	var dat_rectDate = FormUtil.getDateField({
+						fieldLabel : '付款日期',
+						name : 'rectDate',
+						"width" : 125,
+						"allowBlank" : false,
+						editable : false,
+						"maxLength" : 50
+					});
+			var rad_order = FormUtil.getRadioGroup({
+						fieldLabel : '付息方式',
+						"width" : 200,
+						allowBlank : false,
+						id:'rad_orderid',
+						name : 'settleType',
+						items : [{
+									boxLabel : '银行转帐',
+									name : 'settleType',
+									inputValue : 1,
+									checked : true
+								}, {
+									boxLabel : '现金',
+									name : 'settleType',
+									inputValue : 2
+								}]});
+			rad_order.addListener('change', function(radgroup, checked) {
+				var PraVal = Ext.getCmp('rad_orderid');//txt_productsid为选中的下拉框的id是唯一的
+				var ids = PraVal.getValue();// 获取下拉框的值
+				if(ids==2){
+				cbog_accountId.setDisabled(true);
+				txt_bankAccount.setDisabled(true);
+				cbog_accountId.setRawValue("");//设置选中的下拉框的值
+				}else{
+				cbog_accountId.setDisabled(false);
+				txt_bankAccount.setDisabled(false);
+				}
+					});
+			var num_cat = FormUtil.getMoneyField({
+						fieldLabel : '付息金额',
+						name : 'amt',
+						"width" : 160,
+						allowBlank : false,
+						unitText : '元'
+					});
+			var num_rat = FormUtil.getMoneyField({
+						fieldLabel : '利息',
+						name : 'rat',
+						allowBlank : false,
+						unitText : '元'
+					});
+
+
+					createAppFrm
+
+
+
+

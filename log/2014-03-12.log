@@ -1,0 +1,278 @@
+fu_
+AgreeBook
+借款承诺书
+
+
+
+
+var rad_custType = FormUtil.getRadioGroup({
+    fieldLabel: '客户类型',
+    name: 'custType',
+    "width": 125,
+    "maxLength": 50,
+    "items": [{
+        "boxLabel": "个人，1：企业",
+        "name": "custType",
+        "inputValue": "0"
+    }]
+});
+
+var txt_bman = FormUtil.getTxtField({
+    fieldLabel: '出借人',
+    name: 'bman',
+    "width": 125,
+    "value": "0:个人，1：企业",
+    "maxLength": 50
+});
+
+var txt_yearLoan = FormUtil.getTxtField({
+    fieldLabel: '借款期限(年)',
+    name: 'yearLoan',
+    "width": "125"
+});
+
+var txt_monthLoan = FormUtil.getTxtField({
+    fieldLabel: '借款期限(月)',
+    name: 'monthLoan',
+    "width": "125"
+});
+
+var txt_dayLoan = FormUtil.getTxtField({
+    fieldLabel: '借款期限(日)',
+    name: 'dayLoan',
+    "width": "125"
+});
+
+var txt_overyLoan = FormUtil.getTxtField({
+    fieldLabel: '超过期限(年)',
+    name: 'overyLoan',
+    "width": "125"
+});
+
+var txt_overmLoan = FormUtil.getTxtField({
+    fieldLabel: '超过期限(月)',
+    name: 'overmLoan',
+    "width": "125"
+});
+
+var txt_overdLoan = FormUtil.getTxtField({
+    fieldLabel: '超过期限(日)',
+    name: 'overdLoan',
+    "width": "125"
+});
+
+var txt_uprate = FormUtil.getTxtField({
+    fieldLabel: '上浮利率1',
+    name: 'uprate',
+    "width": "125"
+});
+
+var txt_unint = FormUtil.getTxtField({
+    fieldLabel: '上浮利率单位1',
+    name: 'unint',
+    "width": "125"
+});
+
+var txt_overyLoan2 = FormUtil.getTxtField({
+    fieldLabel: '超过期限2(年)',
+    name: 'overyLoan2',
+    "width": "125"
+});
+
+var txt_overmLoan2 = FormUtil.getTxtField({
+    fieldLabel: '超过期限2(月)',
+    name: 'overmLoan2',
+    "width": "125"
+});
+
+var txt_overdLoan2 = FormUtil.getTxtField({
+    fieldLabel: '超过期限2(日)',
+    name: 'overdLoan2',
+    "width": "125"
+});
+
+var txt_uprate2 = FormUtil.getTxtField({
+    fieldLabel: '上浮利率2',
+    name: 'uprate2',
+    "width": "125"
+});
+
+var txt_unint2 = FormUtil.getTxtField({
+    fieldLabel: '上浮利率单位2',
+    name: 'unint2',
+    "width": "125"
+});
+
+var txt_lateDays = FormUtil.getTxtField({
+    fieldLabel: '逾期天数',
+    name: 'lateDays',
+    "width": "125"
+});
+
+var txt_pprate = FormUtil.getTxtField({
+    fieldLabel: '罚息利率',
+    name: 'pprate',
+    "width": "125"
+});
+
+var txt_punint = FormUtil.getTxtField({
+    fieldLabel: '罚息利率单位1',
+    name: 'punint',
+    "width": "125"
+});
+
+var txt_domonthes = FormUtil.getTxtField({
+    fieldLabel: '处置期限(月)',
+    name: 'domonthes',
+    "width": "125"
+});
+
+var txt_comitMan = FormUtil.getTxtField({
+    fieldLabel: '承诺人',
+    name: 'comitMan',
+    "width": "125"
+});
+
+var bdat_comitDate = FormUtil.getDateField({
+    fieldLabel: '承诺日期',
+    name: 'comitDate',
+    "width": "125"
+});
+
+
+var txt_undefined = FormUtil.getTxtField({
+    fieldLabel: 'undefined',
+    name: 'undefined',
+    "width": "125"
+});
+
+var txt_undefined = FormUtil.getTxtField({
+    fieldLabel: 'undefined',
+    name: 'undefined',
+    "width": "125"
+});
+
+var txt_undefined = FormUtil.getTxtField({
+    fieldLabel: 'undefined',
+    name: 'undefined',
+    "width": "125"
+});
+
+var layout_fields = [{
+    cmns: FormUtil.CMN_THREE,
+    fields: [rad_custType, txt_bman, txt_yearLoan, txt_monthLoan, txt_dayLoan, txt_overyLoan, txt_overmLoan, txt_overdLoan, txt_uprate, txt_unint, txt_overyLoan2, txt_overmLoan2, txt_overdLoan2, txt_uprate2, txt_unint2, txt_lateDays, txt_pprate, txt_punint, txt_domonthes, txt_comitMan, bdat_comitDate, txt_undefined, txt_undefined, txt_undefined]
+}];
+var frm_cfg = {
+    title: '#TITLE#',
+    url: '#SAVEURL#'
+};
+var appform_1 = FormUtil.createLayoutFrm(frm_cfg, layout_fields);
+
+
+
+
+
+
+
+
+var appform_1 = FormUtil.createLayoutFrm(frm_cfg, layout_fields);
+			var txt_yearLoan = FormUtil.getMyCompositeField({
+						fieldLabel : '贷款期限',
+						width : 215,
+						sigins : null,
+						items : [int_yearLoan, {
+									xtype : 'displayfield',
+									value : '年',
+									width : 6
+								}, int_monthLoan, {
+									xtype : 'displayfield',
+									value : '月',
+									width : 6
+								}]
+					});
+
+
+
+					txt_yearLoassn
+
+			var txt_rateType = FormUtil.getLCboField({
+						name : 'rateType',
+						width : 60,
+						"allowBlank" : false,
+						"maxLength" : 50,
+						data : [["1", "月利率"], ["2", "日利率"], ["3", "年利率"]]
+					});
+
+				var txt_unint = FormUtil.getLCboField({
+						name : 'unint',
+						width : 60,
+						"allowBlank" : false,
+						"maxLength" : 50,
+						data : [["1", "%"], ["2", "‰"]]
+					});
+
+
+D:\Tools\study\Java\jre7\bin\client\jvm.dll
+
+
+
+
+
+
+
+
+
+
+var htmlArrs_1 = ['<tr><th col="custType">客户类型</th> <td col="custType" >&nbsp;</td><th col="bman">出借人</th> <td col="bman" >&nbsp;</td><th col="yearLoan">借款期限(年)</th> <td col="yearLoan" >&nbsp;</td></tr>', '<tr><th col="monthLoan">借款期限(月)</th> <td col="monthLoan" >&nbsp;</td><th col="dayLoan">借款期限(日)</th> <td col="dayLoan" >&nbsp;</td><th col="overyLoan">超过期限(年)</th> <td col="overyLoan" >&nbsp;</td></tr>', '<tr><th col="overmLoan">超过期限(月)</th> <td col="overmLoan" >&nbsp;</td><th col="overdLoan">超过期限(日)</th> <td col="overdLoan" >&nbsp;</td><th col="uprate">上浮利率1</th> <td col="uprate" >&nbsp;</td></tr>', '<tr><th col="unint">上浮利率单位1</th> <td col="unint" >&nbsp;</td><th col="overyLoan2">超过期限2(年)</th> <td col="overyLoan2" >&nbsp;</td><th col="overmLoan2">超过期限2(月)</th> <td col="overmLoan2" >&nbsp;</td></tr>', '<tr><th col="overdLoan2">超过期限2(日)</th> <td col="overdLoan2" >&nbsp;</td><th col="uprate2">上浮利率2</th> <td col="uprate2" >&nbsp;</td><th col="unint2">上浮利率单位2</th> <td col="unint2" >&nbsp;</td></tr>', '<tr><th col="lateDays">逾期天数</th> <td col="lateDays" >&nbsp;</td><th col="pprate">罚息利率</th> <td col="pprate" >&nbsp;</td><th col="punint">罚息利率单位1</th> <td col="punint" >&nbsp;</td></tr>', '<tr><th col="domonthes">处置期限(月)</th> <td col="domonthes" >&nbsp;</td><th col="comitMan">承诺人</th> <td col="comitMan" >&nbsp;</td><th col="comitDate">承诺日期</th> <td col="comitDate" >&nbsp;</td></tr>', '<tr><th col="undefined">undefined</th> <td col="undefined" >&nbsp;</td><th col="undefined">undefined</th> <td col="undefined" >&nbsp;</td><th col="undefined">undefined</th> <td col="undefined" >&nbsp;</td></tr></tr>'];
+var detailCfgs_1 = [{
+    cmns: 'THREE',
+    /* ONE , TWO , THREE */
+    model: 'single',
+    labelWidth: 90,
+    /* title : '#TITLE#', */
+    //详情面板标题
+    /*i18n : UI_Menu.appDefault,*/
+    //国际化资源对象
+    htmls: htmlArrs_1,
+    url: '#GETURLCFG#',
+    prevUrl: '#PREURLCFG#',
+    nextUrl: '#NEXTURLCFG#',
+    params: {
+        id: selId
+    },
+    callback: {
+        sfn: function(jsonData) {
+            /* 可在对页面进行赋值前，对数据进行转换处理 to do .. */
+            //jsonData["leaf"] = (jsonData["leaf"]=="false") ? "否" : "是";
+        }
+    }
+}];
+var attachLoad = function(params, cmd) {
+    /* 在面板执行上一条，下一条查询时，会调用此事件 to do .. */
+    //Cmw.print(params);
+    //Cmw.print(cmd);
+}
+var detailPanel_1 = new Ext.ux.panel.DetailPanel({
+    width: 780,
+    detailCfgs: detailCfgs_1,
+    attachLoad: function(params, cmd) {
+        /* 在面板执行上一条，下一条查询时，会调用此事件 to do .. */
+        //Cmw.print(params);
+        //Cmw.print(cmd);
+    }
+});
+
+
+bman
+yearLoan
+uprate
+unint
+overyLoan2
+uprate2
+unint2
+lateDays
+pprate
+punint
+domonthes
+comitMan
+comitDate
