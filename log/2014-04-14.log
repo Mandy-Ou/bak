@@ -1,0 +1,14 @@
+文档类型定义：DTD
+DOCUMENT type definition
+HTML5的优势：
+1.解决跨浏览器问题
+2.部分代替了原来的javascript
+<input type="text" id="price"/>
+<script type="text/javascript">
+document.getElementByid("price").focus;//获取用户点击某一个元素时候的焦点
+
+</srcript>
+而使用HTML5之后
+<input type="text" autofocues id="price"/>
+只是增加一个属性就可以做到了
+
