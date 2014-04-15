@@ -1,0 +1,16 @@
+方法一：<input type="text" id="test" value="123">
+<script type="text/javascript">
+document.getElementById("test").value="132456789"
+</script>
+方法二：	
+<input type="text" id="test" value="123">
+<script type="text/javascript">
+document.getElementById("test").setAttribute("value","132456789");
+</script>
+
+计算：
+
+单价：<input name="a" type="text" id="a" onBlur="c.innerHTML=a.value*b.value"><br> 
+数量： 
+<input name="b" type="text" id="b" value="3" disabled><br> 
+总金额:<span id="c"></span>

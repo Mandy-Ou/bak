@@ -1,0 +1,122 @@
+    mysql> CREATE TABLE `user` (                   //创建用户表  
+     ->   `id` int(11) NOT NULL auto_increment COMMENT '用户ID',  
+     ->   `name` varchar(50) NOT NULL default '' COMMENT '名称',  
+     ->   `sex` int(1) NOT NULL default '0' COMMENT '0为男，1为女',  
+     ->   PRIMARY KEY  (`id`)  
+     -> ) ENGINE=innodb  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;   //innodb引擎  
+    Query OK, 0 rows affected, 1 warning (0.11 sec)  
+      
+    mysql> insert into user (name,sex)values("tank",1),("zhang",2);   //插入二条数据  
+    Query OK, 2 rows affected (0.00 sec)  
+    Records: 2  Duplicates: 0  Warnings: 0  
+      
+    mysql> create table `order` (              //创建订单表  
+     ->  `order_id` int(11) not null auto_increment comment '订单ID',  
+     ->  `u_id` int(11) not null default '0' comment '用户ID',  
+     ->  `username` varchar(50) not null default '' comment '用户名',  
+     ->  `money` int(11) not null default '0' comment '钱数',  
+     ->  `datetime` timestamp not null default current_timestamp comment '生成时 
+    间',  
+     ->  primary key(`order_id`),  
+     ->  index (`u_id`),  
+     ->  FOREIGN KEY order_f_key (u_id) REFERENCES user(id)     //创建外键  
+     -> )ENGINE=innodb  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;    //innodb引擎  
+    Query OK, 0 rows affected, 1 warning (0.06 sec)  
+      
+    mysql> INSERT INTO `order` (`u_id`, `username`, `money`, `datetime`) VALUES ('1', 'tank','2222',  
+     CURRENT_TIMESTAMP);      //插入一条订单  
+    Query OK, 1 row affected (0.00 sec)  
+      
+    mysql> delete from user where id =1;    //删除用户1，不给删除，因为order表里面有和这条数据有关连的数据  
+    ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`test/order`, CONSTRAINT `order_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `user` (`id`))  
+      
+    //下面在order里面插入一条数据u_id为5用户，在user表里面根本没有，所以插入不进去。  
+    mysql> INSERT INTO `order` (`u_id`, `username`, `money`, `datetime`) VALUES ('5', 'good','123',  CURRENT_TIMESTAMP);  
+    ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`test/order`, CONSTRAINT `order_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `user` (`id`))  
+      
+    //把u_id改成2就可以插进去了，因为user表里面有id=2的用户  
+    mysql> INSERT INTO `order` (`u_id`, `username`, `money`, `datetime`) VALUES ('2', 'zhang','3452',  CURRENT_TIMESTAMP);  
+    Query OK, 1 row affected (0.00 sec)  
+      
+    mysql> show create table `order`\G;     //查看创建表的数据，为的是查看foreign key的名子，还有order二边要有`这个符号  
+    *************************** 1. row ***************************  
+     Table: order  
+    Create Table: CREATE TABLE `order` (  
+     `order_id` int(11) NOT NULL auto_increment COMMENT '订单ID',  
+     `u_id` int(11) NOT NULL default '0' COMMENT '用户ID',  
+     `username` varchar(50) NOT NULL default '' COMMENT '用户名',  
+     `money` int(11) NOT NULL default '0' COMMENT '钱数',  
+     `datetime` timestamp NOT NULL default CURRENT_TIMESTAMP COMMENT '生成时间',  
+     PRIMARY KEY  (`order_id`),  
+     KEY `u_id` (`u_id`),  
+     CONSTRAINT `order_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `user` (`id`)  
+    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8  
+    1 row in set (0.00 sec)  
+      
+    ERROR:  
+    No query specified  
+      
+    mysql> alter table `order` drop foreign key order_ibfk_1;   //删除foreign key，mysql里面没有修改foreign key的命令  
+    Query OK, 2 rows affected (0.10 sec)  
+    Records: 2  Duplicates: 0  Warnings: 0  
+      
+    //删除后在新增  
+    mysql> alter table `order` add foreign key(u_id) references user(id) on delete cascade on update cascade;  
+    Query OK, 2 rows affected (0.00 sec)  
+    Records: 2  Duplicates: 0  Warnings: 0  
+      
+    mysql> update user set id=6 where id=1;     //更新user表里面的id  
+    Query OK, 1 row affected (0.05 sec)  
+    Rows matched: 1  Changed: 1  Warnings: 0  
+      
+    mysql> select * from `order` where u_id=6;   //order表里面的数据，也根着改变了。  
+    +----------+------+----------+-------+---------------------+  
+    | order_id | u_id | username | money | datetime            |  
+    +----------+------+----------+-------+---------------------+  
+    |        2 |    6 | tank     |  2222 | 2010-11-25 22:18:57 |  
+    +----------+------+----------+-------+---------------------+  
+    1 row in set (0.00 sec)  
+
+
+
+,什么是foreign key，及其完整性
+
+个人觉得，foreign key就是表与表之间的某种约定的关系，由于这种关系的存在，我们能够让表与表之间的数据，更加的完整，关连性更强。关于完整性，关连性我举个例子，大家就会明白了。
+
+有二张表，一张是用户表，一张是订单表：
+
+1，如果我删除了用户表里的用户，那么订单表里面根这个用户有关的数据，就成了无头数据了，不完整了。
+
+2，如果我在订单表里面，随便插入了一条数据，这个订单在用户表里面，没有与之对应的用户。这样数据也不完整了。
+
+如果有外键的话，就方便多了，可以不让用户删除数据，或者删除用户的话，通过外键同样删除订单表里面的数据，这样也能让数据完整。
+
+二，使用foreign key，遵守以下几点规则
+
+1，有外键约束的表，必须是innodb型
+
+2，外键约束的二个表，本来就相关系的表，并且要有索引关系，如果没有，创建外键时也可以创建索引。
+
+3，不支持对外键列的索引前缀。这样的后果之一是BLOB和TEXT列不被包括在一个外键中，这是因为对这些列的索引必须总是包含一个前缀长度。
+
+4，mysql外键的名子在数据库内要是唯一的
+
+三，创建foreign key的语法规则
+
+[CONSTRAINT symbol] FOREIGN KEY [id] (index_col_name, ...)
+    REFERENCES tbl_name (index_col_name, ...)
+    [ON DELETE {RESTRICT | CASCADE | SET NULL | NO ACTION}]
+    [ON UPDATE {RESTRICT | CASCADE | SET NULL | NO ACTION}]
+
+四，外键维护数据完整性的5种方式
+
+1，CASCADE: 从父表删除或更新且自动删除或更新子表中匹配的行。ON DELETE CASCADE和ON UPDATE CASCADE都可用。在两个表之间，你不应定义若干在父表或子表中的同一列采取动作的ON UPDATE CASCADE子句。
+
+2，SET NULL: 从父表删除或更新行，并设置子表中的外键列为NULL。如果外键列没有指定NOT NULL限定词，这就是唯一合法的。ON DELETE SET NULL和ON UPDATE SET NULL子句被支持。
+
+3，NO ACTION: 在ANSI SQL-92标准中，NO ACTION意味这不采取动作，就是如果有一个相关的外键值在被参考的表里，删除或更新主要键值的企图不被允许进行（Gruber, 掌握SQL, 2000:181）。 InnoDB拒绝对父表的删除或更新操作。
+
+4，RESTRICT: 拒绝对父表的删除或更新操作。NO ACTION和RESTRICT都一样，删除ON DELETE或ON UPDATE子句。（一些数据库系统有延期检查，并且NO ACTION是一个延期检查。在MySQL中，外键约束是被立即检查的，所以NO ACTION和RESTRICT是同样的）。
+
+5，SET DEFAULT: 这个动作被解析程序识别，但InnoDB拒绝包含ON DELETE SET DEFAULT或ON UPDATE SET DEFAULT子句的表定义。
+

@@ -1,0 +1,32 @@
+ utf-8编码引起js输出中文乱码的解决办法
+如果web application的编码规则是utf-8，如网页头中的：
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+那么js文件中如果有中文输出就会出现乱码，解决此个问题可在引用javascript输出的地方加上charset="gb2312" 或 charset="big5"（假设输出的是Big5繁体字）。
+
+例：
+<script type="text/javascript" language="javascript" src="scripts/output.js" charset="gb2312"></script>
+
+PS：另一种解决方法是把js文件保存为utf-8编码。 
+如果web application的编码规则是utf-8，如网页头中的：
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+那么js文件中如果有中文输出就会出现乱码，解决此个问题可在引用javascript输出的地方加上charset="gb2312" 或 charset="big5"（假设输出的是Big5繁体字）。
+
+例：
+<script type="text/javascript" language="javascript" src="scripts/output.js" charset="gb2312"></script>
+
+PS：另一种解决方法是把js文件保存为utf-8编码。
+
+
+ 对于大多数的web页面，我们一般都是使用如下两种编码：UTF-8、GB2312。所以我们只需要同意页面和js编码就可以解决乱码问题：
+
+          对于GBK页面引用编码为UTF-8编码的JavaScript文件如果出现乱码问题，可以使用下面的代码来解决    
+[javascript] view plaincopyprint?
+
+    ＜script type=”text/javascript” src=”test.js” charset=”utf-8″></script>  
+
+          同样在UTF-8页面中引入编码为GBK的JavaScript文件乱码问题了，可以使用如下方式：
+[html] view plaincopyprint?
+
+    ＜script type=”text/javascript” src=”test.js” charset=”gb2312″></script>  
+
+          此方法是对于在js文件中出现汉字中文，以及其他容易造成在GBK与UTF-8编码错误字符的时候使用，对于纯英文的就不需要了。如果为了保险，加上也可以....

@@ -1,0 +1,50 @@
+在使用Class.getResourceAsStream 时， 资源路径有两种方式， 一种以 / 开头，则这样的路径是指定绝对
+ 路径， 如果不以 / 开头， 则路径是相对与这个class所在的包的。 
+
+ 在使用ClassLoader.getResourceAsStream时， 路径直接使用相对于classpath的绝对路径
+
+
+
+
+
+
+
+
+
+
+
+
+前提：在一个webproject中，在source目录下有一个配置文件settings.property,有一个Class叫Test.
+
+ 
+
+1. 直接在Test.java中的main()方法中读取settings.properties文件，可以有如下3种方法：
+
+      Properties properties = new Properties();
+
+ 
+
+    1）     properties.load(Test.class.getResourceAsStream("/settings.properties"));
+
+    2）      properties.load(Test.class.getClassLoader().getResourceAsStream("settings.properties"));
+
+    3）      properties.load(ClassLoader.getSystemResourceAsStream("settings.properties"));
+
+注意第一种方法中必须要有"/".
+
+ 
+
+2. 如果将该项目发布到tomcat中，settings.property就会被部署到WEB-INF/classes目录下，这时只能用前两种方法访问到settings.propertes文件。
+
+    1）     properties.load(Test.class.getResourceAsStream("/settings.properties"));
+
+    2）      properties.load(Test.class.getClassLoader().getResourceAsStream("settings.properties"));
+
+ 
+
+备注：
+
+    1） 上面的第三种方法会抛出NullPointerException,这是因为ClassLoader.getSystemResourceAsStream("settings.properties"))会返回null，所以properties.load(null)会抛出NullPointerException.原因是在web项目中，有多个ClassLoader，有StandardClassLoader，有WebClassLoader,由于不同的ClassLoader，就导致了获取不到settings.properties文件。
+
+
+   2） 这就是说，我们一般用前两种方法来读取properties文件，因为这样既可以用于普通的java类方法之间的调用，也可以用于web project中Tomcat处理http的请求。

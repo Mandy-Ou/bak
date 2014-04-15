@@ -1,0 +1,41 @@
+string agent = request.getheader("user-agent"); 
+stringtokenizer st = new stringtokenizer(agent,";"); 
+st.nexttoken(); 
+//得到用户的浏览器名 
+string userbrowser = st.nexttoken(); 
+//得到用户的操作系统名 
+string useros = st.nexttoken(); 
+
+取得本机的信息也可以这样： 
+
+操作系统信息 
+system.getproperty("os.name"); //win2003竟然是win xp？ 
+system.getproperty("os.version"); 
+system.getproperty("os.arch"); 
+瀏覽器： 
+request.getheader("user-agent") 
+
+再送个红包 
+request.getheader(“user-agent”)返回客户端浏览器的版本号、类型 
+
+getheader(string name)：获得http协议定义的传送文件头信息， 
+
+request. getmethod()：获得客户端向服务器端传送数据的方法有get、post、put等类型 
+
+request. getrequesturi()：获得发出请求字符串的客户端地址 
+
+request. getservletpath()：获得客户端所请求的脚本文件的文件路径 
+
+request. getservername()：获得服务器的名字 
+
+request.getserverport()：获得服务器的端口号 
+
+request.getremoteaddr()：获得客户端的ip地址 
+
+request.getremotehost()：获得客户端电脑的名字，若失败，则返回客户端电脑的ip地址 
+
+request.getprotocol()： 
+
+request.getheadernames()：返回所有request header的名字，结果集是一个enumeration（枚举）类的实例 
+
+request.getheaders(string name)：返回指定名字的request header的所有值，结果集是一个enumeration（枚举）类的实例 

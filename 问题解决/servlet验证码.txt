@@ -1,0 +1,108 @@
+package com;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Random;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
+
+public class servletFirst extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    public static final char[] CHARS = { '1', '2', '3', '4', '5', '6', '7',
+            '8', '9', '0', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+            'X', 'Y', 'Z', };
+    public static Random random = new Random();
+
+    public static String getRandomString() {
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < 9; i++) {
+            buffer.append(CHARS[random.nextInt(CHARS.length)]);
+        }
+        return buffer.toString();
+    }
+
+    public static Color getRandomColor() {
+        return new Color(random.nextInt(255), random.nextInt(255), random
+                .nextInt(255));
+    }
+
+    public static Color getReverseColor(Color c) {
+        return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c
+                .getBlue());
+    }
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("image/jpeg");
+        String radomString = getRandomString();
+        request.getSession(true).setAttribute("radomString", radomString);
+        Color color = getRandomColor();
+        Color reverse = getReverseColor(color);
+        BufferedImage bi = new BufferedImage(100, 30, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bi.createGraphics();
+        g.setFont(new Font(Font.SANS_SERIF,Font.BOLD,16));
+        g.setColor(color);
+        g.fillRect(0,0,100,30);
+        g.setColor(reverse);
+        g.drawString(radomString,18,20);
+        for (int i = 0,n = random.nextInt(100); i<n; i++) {
+            g.drawRect(random.nextInt(100), random.nextInt(30), 1, 1);
+        }
+        ServletOutputStream out = response.getOutputStream();
+        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+        encoder.encode(bi);
+        out.flush();
+    }
+}
+
+ 
+
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'index.jsp' starting page</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">    
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <!--
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    -->
+    <script>
+        function reloadImage(){
+            document.getElementById("btn").disabled=true;
+            document.getElementById("imgservlet").src='servlet/servletFirst?ts='+new Date().getTime();
+        }
+    </script>
+  </head>
+  
+  <body>
+    <img src="servlet/servletFirst" id="imgservlet" onload="btn.disabled=false;" onclick="reloadImage()""/>
+    <input type="button" value="»»ÕÅÍ¼Æ¬" onclick="reloadImage()" id="btn">
+  </body>
+</html>

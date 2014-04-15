@@ -1,0 +1,2 @@
+因为web-inf下,应用服务器把它指为禁访目录,即直接在浏览器里是不能访问到的.
+但是可以让servlet进行访问,如web-inf下有a.jsp则可以用request.getRequestDispatcher("/WEB-INF/a.jsp").forward(request,response);
