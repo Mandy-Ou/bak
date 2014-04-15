@@ -1,0 +1,7 @@
+/**
+	 * 委托人详情
+	 */
+	CusInfoDetailTab : {
+		id : 'custInfoDetail_tabid_9',
+		url : 'pages/app/funds/amountapply/AmountApplyDetil.js'
+	},
