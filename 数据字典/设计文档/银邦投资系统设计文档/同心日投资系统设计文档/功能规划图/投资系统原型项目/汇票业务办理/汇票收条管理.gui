@@ -1,0 +1,1855 @@
+<Screen
+	CID = "90770597"
+	AppID = "2"
+	AppVer = "4.5.151.0"
+	DocID = ""
+	HasCanvas = "0"
+	Width = "640"
+	Height = "480"
+	NextCID = "6"
+	RepresentativeRefID = "0"
+	UseDefRepresentative = "1">
+	<Elements
+		CID = "1">
+		<Element
+			CID = "656032981"
+			Type = "FrameWindow"
+			X = "-158"
+			Y = "37"
+			Width = "1001"
+			Height = "490"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			WindowColour = "172,168,153,0,13"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Title = "汇票收条管理"
+			TitleBarHeight = "15"
+			IconMargin = "0"
+			BorderSize = "1"
+			IsBorderless = "0"
+			IsActive = "1"
+			IsDocWindow = "0"
+			HasSunkenWindow = "0"
+			CentreText = "0"
+			UseMutedColours = "0"
+			Mirror = "0"
+			Buttons = "17"
+			Icon = ""/>
+		<Element
+			CID = "656027110"
+			Type = "Bitmap"
+			X = "-156"
+			Y = "149"
+			Width = "995"
+			Height = "34"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FileID = "8FA3E6DD-22E4-4DE3-922B965DB4EFBBBD"
+			RootPath = "$Container"
+			Filename = "..\images\工具栏.png"
+			Placement = "Stretch"
+			HorzAlign = "Left"
+			VertAlign = "Top"
+			ClipLeft = "0"
+			ClipRight = "0"
+			ClipTop = "0"
+			ClipBottom = "0"
+			SliceLeft = "0"
+			SliceRight = "0"
+			SliceTop = "0"
+			SliceBottom = "0"/>
+		<Element
+			CID = "656035637"
+			Type = "TextButton"
+			X = "-17"
+			Y = "158"
+			Width = "67"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "查询"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "656032689"
+			Type = "TextButton"
+			X = "61"
+			Y = "158"
+			Width = "62"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "重置"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "656036661"
+			Type = "TextButton"
+			X = "356"
+			Y = "157"
+			Width = "89"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "生成汇票承诺书"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "656030512"
+			Type = "TextButton"
+			X = "134"
+			Y = "157"
+			Width = "67"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "添加收条"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "656041820"
+			Type = "TextButton"
+			X = "206"
+			Y = "157"
+			Width = "67"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "编辑收条"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "656047983"
+			Type = "TextButton"
+			X = "762"
+			Y = "156"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "删除"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "656033440"
+			Type = "StaticText"
+			X = "-115"
+			Y = "71"
+			Width = "64"
+			Height = "21"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FillColour = "236,233,216,0,16"
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "票号："
+			IsDisabled = "0"
+			IsHyperlink = "0"
+			Fill = "None"
+			HorzAlign = "Right"
+			VertAlign = "Centre"/>
+		<Element
+			CID = "656034816"
+			Type = "StaticText"
+			X = "226"
+			Y = "70"
+			Width = "66"
+			Height = "21"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FillColour = "236,233,216,0,16"
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "出票人："
+			IsDisabled = "0"
+			IsHyperlink = "0"
+			Fill = "None"
+			HorzAlign = "Right"
+			VertAlign = "Centre"/>
+		<Element
+			CID = "656031525"
+			Type = "StaticText"
+			X = "554"
+			Y = "72"
+			Width = "79"
+			Height = "21"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FillColour = "236,233,216,0,16"
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "出票日期："
+			IsDisabled = "0"
+			IsHyperlink = "0"
+			Fill = "None"
+			HorzAlign = "Right"
+			VertAlign = "Centre"/>
+		<Element
+			CID = "656040017"
+			Type = "EditBox"
+			X = "633"
+			Y = "74"
+			Width = "80"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = ""
+			IsDisabled = "0"
+			IsReadOnly = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HorzAlign = "Right"
+			EditType = "Text"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "255,255,153,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "164,185,127,0,12"/>
+		<Element
+			CID = "656036066"
+			Type = "EditBox"
+			X = "739"
+			Y = "74"
+			Width = "86"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = ""
+			IsDisabled = "0"
+			IsReadOnly = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HorzAlign = "Right"
+			EditType = "Text"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "255,255,153,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "164,185,127,0,12"/>
+		<Element
+			CID = "656047326"
+			Type = "StaticText"
+			X = "716"
+			Y = "73"
+			Width = "15"
+			Height = "21"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FillColour = "236,233,216,0,16"
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "至"
+			IsDisabled = "0"
+			IsHyperlink = "0"
+			Fill = "None"
+			HorzAlign = "Right"
+			VertAlign = "Centre"/>
+		<Element
+			CID = "656036367"
+			Type = "Icon"
+			X = "695"
+			Y = "77"
+			Width = "16"
+			Height = "16"
+			Flags = "3"
+			UseDataTable = "0"
+			TableName = ""
+			RootPath = "$Application"
+			Filename = "Icons\Toolbars\InsertTable.ico"
+			IconIndex = "0"
+			IsDisabled = "0"/>
+		<Element
+			CID = "656019584"
+			Type = "Icon"
+			X = "807"
+			Y = "78"
+			Width = "16"
+			Height = "16"
+			Flags = "3"
+			UseDataTable = "0"
+			TableName = ""
+			RootPath = "$Application"
+			Filename = "Icons\Toolbars\InsertTable.ico"
+			IconIndex = "0"
+			IsDisabled = "0"/>
+		<Element
+			CID = "656047823"
+			Type = "Table"
+			X = "-155"
+			Y = "184"
+			Width = "995"
+			Height = "340"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			HeaderBackgroundColour = "236,233,216,0,16"
+			HeaderBorderColour = "172,168,153,0,17"
+			HeaderTextColour = "0,0,0,0,19"
+			BackgroundColour = "172,168,153,0,13"
+			BorderColour = "164,185,127,0,12"
+			GridLineColour = "241,239,226,0,23"
+			SortedBlendColour = "64,64,64,0,0"
+			DefOddBackgroundColour = "255,255,255,0,6"
+			DefEvenBackgroundColour = "255,255,255,0,6"
+			DefTextColour = "0,0,0,0,9"
+			HighlightColour = "147,160,112,0,14"
+			HighlightTextColour = "255,255,255,0,15"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			NextColumnID = "18"
+			NextRowID = "6"
+			IsFlat = "0"
+			IsHeaderBold = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HasHorzScrollBar = "1"
+			HasVertScrollBar = "1"
+			Mirror = "0"
+			HasHorzLines = "1"
+			HasVertLines = "1"
+			HasExtHorzLines = "0"
+			HasExtVertLines = "0"
+			ExtendColumnHeaders = "1"
+			ExtendColumns = "1"
+			ExtendRows = "1"
+			VariableHeightRows = "1"
+			HighlightSelections = "1"
+			FullRowSelection = "1"
+			HeaderWordWrap = "0"
+			WordWrap = "0"
+			HeaderSpace = "0"
+			HeaderHeight = "22"
+			RowHeight = "18"
+			FirstVisibleRow = "0"
+			FixedColumns = "0"
+			SortedColumn = "0"
+			ValueColumn = "0"
+			SortedBlendFactor = "0.000000"
+			ColumnSort = "Ascending"
+			HeaderStyle = "Standard"
+			FixedCellStyle = "SemiFlat">
+			<Columns>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "1"
+					Heading = "可用标识"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "17"
+					Heading = "票号"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "9"
+					Heading = "出票人"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "10"
+					Heading = "出票人账号"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "11"
+					Heading = "付款行"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "12"
+					Heading = "出票日期"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "13"
+					Heading = "到票日期"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "14"
+					Heading = "金额"
+					VisibleCondition = ""
+					Width = "80"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "2"
+					Heading = "收款人账户名"
+					VisibleCondition = ""
+					Width = "90"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "3"
+					Heading = "收款人账号"
+					VisibleCondition = ""
+					Width = "90"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "4"
+					Heading = "收款人开户行"
+					VisibleCondition = ""
+					Width = "90"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "5"
+					Heading = "收条签收日期"
+					VisibleCondition = ""
+					Width = "60"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "8"
+					Heading = "生成承诺书"
+					VisibleCondition = ""
+					Width = "150"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "15"
+					Heading = "查询申请单"
+					VisibleCondition = ""
+					Width = "150"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "16"
+					Heading = "回款收条"
+					VisibleCondition = ""
+					Width = "150"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "6"
+					Heading = "创建人"
+					VisibleCondition = ""
+					Width = "60"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+				<ColumnItem
+					OddBackgroundColour = "255,255,255,0,6"
+					EvenBackgroundColour = "255,255,255,0,6"
+					TextColour = "0,0,0,0,9"
+					ColumnID = "7"
+					Heading = "创建日期"
+					VisibleCondition = ""
+					Width = "60"
+					HeaderMargin = "0"
+					CellMargin = "0"
+					HasCustomOddBgColour = "0"
+					HasCustomEvenBgColour = "0"
+					HasCustomTextColour = "0"
+					Type = "Text"
+					HeadingAlignment = "Left"
+					CellAlignment = "Left"/>
+			</Columns>
+			<Data>
+				<Row
+					RowID = "1"
+					IsSelected = "0">
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+				</Row>
+				<Row
+					RowID = "2"
+					IsSelected = "0">
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+				</Row>
+				<Row
+					RowID = "3"
+					IsSelected = "0">
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+				</Row>
+				<Row
+					RowID = "4"
+					IsSelected = "0">
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+				</Row>
+				<Row
+					RowID = "5"
+					IsSelected = "0">
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+					<Cell>
+						
+					</Cell>
+				</Row>
+			</Data>
+		</Element>
+		<Element
+			CID = "141179647"
+			Type = "EditBox"
+			X = "-51"
+			Y = "69"
+			Width = "141"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = ""
+			IsDisabled = "0"
+			IsReadOnly = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HorzAlign = "Left"
+			EditType = "Text"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "255,255,153,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "164,185,127,0,12"/>
+		<Element
+			CID = "820933417"
+			Type = "EditBox"
+			X = "297"
+			Y = "69"
+			Width = "141"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = ""
+			IsDisabled = "0"
+			IsReadOnly = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HorzAlign = "Left"
+			EditType = "Text"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "255,255,153,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "164,185,127,0,12"/>
+		<Element
+			CID = "193813696"
+			Type = "StaticText"
+			X = "-118"
+			Y = "104"
+			Width = "64"
+			Height = "21"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FillColour = "236,233,216,0,16"
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "金额："
+			IsDisabled = "0"
+			IsHyperlink = "0"
+			Fill = "None"
+			HorzAlign = "Right"
+			VertAlign = "Centre"/>
+		<Element
+			CID = "193796762"
+			Type = "EditBox"
+			X = "7"
+			Y = "103"
+			Width = "80"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = ""
+			IsDisabled = "0"
+			IsReadOnly = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HorzAlign = "Left"
+			EditType = "Text"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "255,255,153,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "164,185,127,0,12"/>
+		<Element
+			CID = "83890259"
+			Type = "StaticText"
+			X = "202"
+			Y = "103"
+			Width = "92"
+			Height = "21"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FillColour = "236,233,216,0,16"
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "收款人账户名："
+			IsDisabled = "0"
+			IsHyperlink = "0"
+			Fill = "None"
+			HorzAlign = "Right"
+			VertAlign = "Centre"/>
+		<Element
+			CID = "83892151"
+			Type = "EditBox"
+			X = "299"
+			Y = "102"
+			Width = "141"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = ""
+			IsDisabled = "0"
+			IsReadOnly = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HorzAlign = "Left"
+			EditType = "Text"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "255,255,153,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "164,185,127,0,12"/>
+		<Element
+			CID = "83888462"
+			Type = "StaticText"
+			X = "551"
+			Y = "105"
+			Width = "83"
+			Height = "21"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FillColour = "236,233,216,0,16"
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "收款人账号："
+			IsDisabled = "0"
+			IsHyperlink = "0"
+			Fill = "None"
+			HorzAlign = "Right"
+			VertAlign = "Centre"/>
+		<Element
+			CID = "83908982"
+			Type = "EditBox"
+			X = "639"
+			Y = "104"
+			Width = "179"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = ""
+			IsDisabled = "0"
+			IsReadOnly = "0"
+			IsTransparent = "0"
+			HasBorder = "1"
+			HorzAlign = "Left"
+			EditType = "Text"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "255,255,153,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "164,185,127,0,12"/>
+		<Element
+			CID = "1490753226"
+			Type = "ComboBox"
+			X = "-53"
+			Y = "103"
+			Width = "55"
+			Height = "21"
+			Flags = "2"
+			UseDataTable = "0"
+			TableName = ""
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "等于"
+			IsDisabled = "0"
+			IsEditable = "0"
+			IsFlat = "0"
+			Mirror = "0"
+			CustomStyle = "0"
+			HorzAlign = "Left"
+			OverrideTextColour = "0"
+			OverrideDisabledTextColour = "0"
+			OverrideFillColour = "0"
+			OverrideDisabledFillColour = "0"
+			OverrideBorderColour = "0"
+			TextColour = "0,0,0,0,9"
+			DisabledTextColour = "161,161,146,0,18"
+			FillColour = "240,240,255,0,0"
+			DisabledFillColour = "236,233,216,0,16"
+			BorderColour = "192,192,255,0,0"/>
+		<Element
+			CID = "372185578"
+			Type = "TextButton"
+			X = "452"
+			Y = "157"
+			Width = "89"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "生成查询申请单"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1216480062"
+			Type = "TextButton"
+			X = "557"
+			Y = "157"
+			Width = "89"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "生成回款收条"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "337016709"
+			Type = "TextButton"
+			X = "661"
+			Y = "157"
+			Width = "89"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "打印汇票证明"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "76566376"
+			Type = "TextButton"
+			X = "278"
+			Y = "157"
+			Width = "67"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "收条详情"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1708155740"
+			Type = "FrameWindow"
+			X = "-809"
+			Y = "-40"
+			Width = "561"
+			Height = "534"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			WindowColour = "172,168,153,0,13"
+			Typeface = ""
+			FontAttributes = "1"
+			TextSize = "Normal"
+			Title = "添加收条"
+			TitleBarHeight = "18"
+			IconMargin = "0"
+			BorderSize = "1"
+			IsBorderless = "0"
+			IsActive = "1"
+			IsDocWindow = "0"
+			HasSunkenWindow = "0"
+			CentreText = "0"
+			UseMutedColours = "0"
+			Mirror = "0"
+			Buttons = "17"
+			Icon = ""/>
+		<Element
+			CID = "1708160394"
+			Type = "Bitmap"
+			X = "-806"
+			Y = "13"
+			Width = "550"
+			Height = "473"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FileID = "FFF6A81A-2743-4860-85E2DD7600F3BDA2"
+			RootPath = "$Container"
+			Filename = "收条.png"
+			Placement = "Stretch"
+			HorzAlign = "Left"
+			VertAlign = "Top"
+			ClipLeft = "0"
+			ClipRight = "0"
+			ClipTop = "0"
+			ClipBottom = "0"
+			SliceLeft = "0"
+			SliceRight = "0"
+			SliceTop = "0"
+			SliceBottom = "0"/>
+		<Element
+			CID = "1708145263"
+			Type = "Bitmap"
+			X = "-806"
+			Y = "-21"
+			Width = "555"
+			Height = "34"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FileID = "8FA3E6DD-22E4-4DE3-922B965DB4EFBBBD"
+			RootPath = "$Container"
+			Filename = "..\images\工具栏.png"
+			Placement = "Stretch"
+			HorzAlign = "Left"
+			VertAlign = "Top"
+			ClipLeft = "0"
+			ClipRight = "0"
+			ClipTop = "0"
+			ClipBottom = "0"
+			SliceLeft = "0"
+			SliceRight = "0"
+			SliceTop = "0"
+			SliceBottom = "0"/>
+		<Element
+			CID = "1708161057"
+			Type = "TextButton"
+			X = "-414"
+			Y = "-13"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "保存"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "631780562"
+			Type = "TextButton"
+			X = "-336"
+			Y = "-13"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "关闭"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1130002414"
+			Type = "FrameWindow"
+			X = "-783"
+			Y = "584"
+			Width = "561"
+			Height = "534"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			WindowColour = "172,168,153,0,13"
+			Typeface = ""
+			FontAttributes = "1"
+			TextSize = "Normal"
+			Title = "编辑收条"
+			TitleBarHeight = "18"
+			IconMargin = "0"
+			BorderSize = "1"
+			IsBorderless = "0"
+			IsActive = "1"
+			IsDocWindow = "0"
+			HasSunkenWindow = "0"
+			CentreText = "0"
+			UseMutedColours = "0"
+			Mirror = "0"
+			Buttons = "17"
+			Icon = ""/>
+		<Element
+			CID = "1129979719"
+			Type = "Bitmap"
+			X = "-780"
+			Y = "637"
+			Width = "550"
+			Height = "473"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FileID = "FFF6A81A-2743-4860-85E2DD7600F3BDA2"
+			RootPath = "$Container"
+			Filename = "收条.png"
+			Placement = "Stretch"
+			HorzAlign = "Left"
+			VertAlign = "Top"
+			ClipLeft = "0"
+			ClipRight = "0"
+			ClipTop = "0"
+			ClipBottom = "0"
+			SliceLeft = "0"
+			SliceRight = "0"
+			SliceTop = "0"
+			SliceBottom = "0"/>
+		<Element
+			CID = "1129997265"
+			Type = "Bitmap"
+			X = "-780"
+			Y = "603"
+			Width = "555"
+			Height = "34"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FileID = "8FA3E6DD-22E4-4DE3-922B965DB4EFBBBD"
+			RootPath = "$Container"
+			Filename = "..\images\工具栏.png"
+			Placement = "Stretch"
+			HorzAlign = "Left"
+			VertAlign = "Top"
+			ClipLeft = "0"
+			ClipRight = "0"
+			ClipTop = "0"
+			ClipBottom = "0"
+			SliceLeft = "0"
+			SliceRight = "0"
+			SliceTop = "0"
+			SliceBottom = "0"/>
+		<Element
+			CID = "1129984353"
+			Type = "TextButton"
+			X = "-388"
+			Y = "611"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "保存"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1129993815"
+			Type = "TextButton"
+			X = "-310"
+			Y = "611"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "关闭"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1129996532"
+			Type = "TextButton"
+			X = "-469"
+			Y = "611"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "下一条"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1129983312"
+			Type = "TextButton"
+			X = "-551"
+			Y = "611"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "上一条"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1837650245"
+			Type = "FrameWindow"
+			X = "-197"
+			Y = "585"
+			Width = "561"
+			Height = "534"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			WindowColour = "172,168,153,0,13"
+			Typeface = ""
+			FontAttributes = "1"
+			TextSize = "Normal"
+			Title = "收条详情"
+			TitleBarHeight = "18"
+			IconMargin = "0"
+			BorderSize = "1"
+			IsBorderless = "0"
+			IsActive = "1"
+			IsDocWindow = "0"
+			HasSunkenWindow = "0"
+			CentreText = "0"
+			UseMutedColours = "0"
+			Mirror = "0"
+			Buttons = "17"
+			Icon = ""/>
+		<Element
+			CID = "1837646826"
+			Type = "Bitmap"
+			X = "-194"
+			Y = "638"
+			Width = "550"
+			Height = "473"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FileID = "FFF6A81A-2743-4860-85E2DD7600F3BDA2"
+			RootPath = "$Container"
+			Filename = "收条.png"
+			Placement = "Stretch"
+			HorzAlign = "Left"
+			VertAlign = "Top"
+			ClipLeft = "0"
+			ClipRight = "0"
+			ClipTop = "0"
+			ClipBottom = "0"
+			SliceLeft = "0"
+			SliceRight = "0"
+			SliceTop = "0"
+			SliceBottom = "0"/>
+		<Element
+			CID = "1837653870"
+			Type = "Bitmap"
+			X = "-194"
+			Y = "604"
+			Width = "555"
+			Height = "34"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			FileID = "8FA3E6DD-22E4-4DE3-922B965DB4EFBBBD"
+			RootPath = "$Container"
+			Filename = "..\images\工具栏.png"
+			Placement = "Stretch"
+			HorzAlign = "Left"
+			VertAlign = "Top"
+			ClipLeft = "0"
+			ClipRight = "0"
+			ClipTop = "0"
+			ClipBottom = "0"
+			SliceLeft = "0"
+			SliceRight = "0"
+			SliceTop = "0"
+			SliceBottom = "0"/>
+		<Element
+			CID = "1837633403"
+			Type = "TextButton"
+			X = "198"
+			Y = "612"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "打印"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1837637818"
+			Type = "TextButton"
+			X = "276"
+			Y = "612"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "关闭"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1837649209"
+			Type = "TextButton"
+			X = "117"
+			Y = "612"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "下一条"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+		<Element
+			CID = "1837636021"
+			Type = "TextButton"
+			X = "35"
+			Y = "612"
+			Width = "75"
+			Height = "23"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			TextColour = "0,0,0,0,19"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Text = "上一条"
+			Depth = "2"
+			IsDefault = "0"
+			IsDisabled = "0"
+			MarginLeft = "0"
+			MarginRight = "0"
+			MarginTop = "0"
+			MarginBottom = "0"
+			AutoNavType = ""/>
+	</Elements>
+	<Connections
+		CID = "2">
+		<Connection
+			CID = "263928207"
+			Layer = "DesignElements"
+			Trigger = "LeftClick"
+			Type = "Navigation"
+			SubType = "Modal"
+			SourceSubItemID = ""
+			SourceRefID = "656030512"
+			TargetRefID = "1708145263"
+			ConLineWidth = "2"
+			ConLineColour = "0,0,0,0,0"/>
+		<Connection
+			CID = "263937805"
+			Layer = "DesignElements"
+			Trigger = "LeftClick"
+			Type = "Navigation"
+			SubType = "Modal"
+			SourceSubItemID = ""
+			SourceRefID = "656041820"
+			TargetRefID = "1129997265"
+			ConLineWidth = "2"
+			ConLineColour = "0,0,0,0,0"/>
+		<Connection
+			CID = "1837639239"
+			Layer = "DesignElements"
+			Trigger = "LeftClick"
+			Type = "Navigation"
+			SubType = "Modal"
+			SourceSubItemID = ""
+			SourceRefID = "76566376"
+			TargetRefID = "1837653870"
+			ConLineWidth = "2"
+			ConLineColour = "0,0,0,0,0"/>
+	</Connections>
+	<Groups
+		CID = "3"/>
+	<SelectionGroups
+		CID = "4"/>
+	<Notes
+		CID = "5">
+		<Note
+			CID = "90767887"
+			Name = "Description"
+			NextCID = "2">
+			<Text
+				CID = "1">
+				
+			</Text>
+		</Note>
+	</Notes>
+</Screen>
