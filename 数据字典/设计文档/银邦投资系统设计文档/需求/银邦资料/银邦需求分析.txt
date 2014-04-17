@@ -1,0 +1,191 @@
+1. 贷款利率单位	可选择 百分位 或 千分位  项目申请表加一个利率单位
+2. 利率可选择保留4位小数或两位小数(默认4位小数)
+3. 委托合同字段：
+		委托人ID,委托资金,利率类型[公司标准利率,自定义利率],利率(%或千分位),每月收益金额,期限,委托生效日期,截止日期,
+		收款银行,银行账号,账户名,其它条款
+		
+		crm_Consort
+		
+		2011000.00		1092000	360000
+		
+		
+		txr_platform_minghui_v2.7_test
+		
+		C:\Users\b\Desktop\明穗\txr_platform_minhui_20140122.bak
+		C:\Users\b\Desktop\明穗\txr_platform_v2.7_minhui_20140124.bak
+		saveData
+		
+		rectDate
+		
+		NO管理费_001
+		
+		 NO管理费_001,B2014012109573144
+		 
+		 
+		 minhui
+		 
+		 B2014012309282412
+		 
+		 B2014012309335720
+
+B2014012309240806
+
+借2013010101
+
+minhui
+
+
+outJsonString={"c_iamount":120000.00,"planId":6,"t_iamount":0}
+
+CMW_1984
+
+currPlanId
+lateDatas,c_iamount,c_mamount
+
+
+返还利息	riamount
+返还管理费	rmamount
+返还罚息	rpamount
+返还滞纳金	rdamount
+
+riamount,rmamount,rpamount,rdamount
+
+	/**
+	  * 获取 的值
+	 * @return 返回  的值
+	**/
+	
+	
+	/**
+	  * 设置 的值
+	 * @param 		
+	**/
+	
+	
+trinterAmount
+trmgrAmount
+trpenAmount
+trdelAmount
+
+
+RANDOM_ALGORITHM
+
+	
+返还利息,返还管理费,返还罚息,返还滞纳金, 豁免利息,豁免管理费,豁免罚息,豁免滞纳金
+riamount,rmamount,rpamount,rdamount, trinterAmount,trmgrAmount,trpenAmount,trdelAmount
+
+
+720,000.00
+
+
+doFinish
+
+name
+
+interest,yinterest,riamount,trinterAmount,
+mgrAmount,ymgrAmount,rmamount,trmgrAmount,
+penAmount,ypenAmount,rpamount,trpenAmount,
+delAmount,ydelAmount,rdamount,trdelAmount
+
+interest-
+
+
+throw new ServiceException(ServiceException.ID_IS_NULL);
+
+
+返还利息	riamount
+返还管理费	rmamount
+返还罚息	rpamount
+返还滞纳金	rdamount
+豁免利息	trinterAmount
+豁免管理费	trmgrAmount
+豁免罚息	trpenAmount
+豁免滞纳金	trdelAmount\
+
+
+bussTag	BussStateConstant.AMOUNTRECORDS_BUSSTAG_10
+
+//-----> 息费返还 CODE 
+	SHashMap<String, Object> data = new SHashMap<String, Object>();
+		data.put("contractId", x.getContractId());
+		data.put("invoceId", x.getId());
+		data.put("rat", trinterAmount);
+		data.put("mat", trmgrAmount);
+		data.put("pat", trpenAmount);
+		data.put("dat", trdelAmount);
+		data.put("rectDate", lastDate);
+		data.put("bussTag", BussStateConstant.AMOUNTRECORDS_BUSSTAG_10);
+		AmountRecordsEntity obj = createAmountRecords(data,user);
+		
+		//--> 页面传参数：
+		contractId,rectDate,rat,mat,pat,dat
+		
+		// 部分豁免
+		exemptBatch
+		
+		//息费返还
+		returnBatch
+		
+		
+		
+		data.put("rat", trinterAmount);
+			data.put("mat", trmgrAmount);
+			data.put("pat", trpenAmount);
+			data.put("dat", trdelAmount);
+			data.put("rectDate", rectDate);
+			
+			
+				BigDecimal b_tramount = BigDecimalHandler.get(d_tramount);
+					data.put("rat", b_tramount);
+					trinterAmount = BigDecimalHandler.sub2BigDecimal(trinterAmount, b_tramount);
+					
+					
+					中行网银USB KEY 名称：程明卫
+中行网银USB KEY 密码：CMW_1984
+中行网银登录帐号：cmw19841@gmail.com
+中行网银密码：txr_CMW-1984122
+
+
+updatePlanAmounts(List<PlanEntity> planList, SHashMap<String, Object> complexData, Long casualId)
+
+
+借2013010104
+
+预收利息金额    0.00元
+预收管理费金额  100,000.00元
+1,860,000.00
+860,000
+
+借2013010102
+
+
+	p_zamount = BigDecimalHandler.sub2BigDecimal(p_zamount, p_triamount);
+		p_zamount = BigDecimalHandler.add2BigDecimal(p_zamount, p_riamount, 2);
+		BigDecimal result_amount = BigDecimalHandler.sub2BigDecimal(t_amount, p_zamount);
+		
+		
+		{"list":[{"datas":[{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/workflow/bussProcc/formUIs/CostOff.js","id":"3","name":"费用报销申请","pdid":"myProcess_oa_costOff:1:28","txtPath":"WEB-INF/attachments/clause_dir/1388155452777.txt"},{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/workflow/bussProcc/formUIs/PayApply.js","id":"2","name":"还款申请","pdid":"myProcess_oa_pay:1:32","txtPath":""},{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/workflow/bussProcc/formUIs/LoanApply.js","id":"1","name":"借款申请","pdid":"myProcess_oa_loan:1:36","txtPath":"WEB-INF/attachments/clause_dir/1388156963401.txt"}],"id":3,"name":"财务"},{"datas":[{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/workflow/bussProcc/formUIs/OvertimeApply.js","id":"6","name":"加班申请","pdid":"myProcess_oa_overtime:1:16","txtPath":""},{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/workflow/bussProcc/formUIs/LeaveApply.js","id":"5","name":"请假申请","pdid":"myProcess_oa_leave:1:20","txtPath":""}],"id":2,"name":"人力资源"},{"datas":[{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/oa/newsmanage/NewsEdit.js","id":"9","name":"新闻审批","pdid":"myProcess_oa_news:1:4","txtPath":""},{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/oa/announcementmanage/BulletinEdit.js","id":"8","name":"公告审批","pdid":"myProcess_oa_bulletin:1:8","txtPath":""},{"createTime":"2013-12-24 12:00:00","formUrl":"pages/app/workflow/bussProcc/formUIs/ContractApply.js","id":"7","name":"合同申请","pdid":"myProcess_oa_contract:1:12","txtPath":""}],"id":1,"name":"行政事务"}],"success":true,"totalSize":3}
+		
+		
+		formUrl,content,pdid,
+		
+	label	text	Colon
+	
+	lcbo
+	
+	
+	工作名称	piname	String	50	N	
+子业务品种ID	bussProccId	Long		N	
+流程实例ID	procId	String	30		
+紧急程度	degree	Integer		N	1
+单据类型	formType	Integer		N	
+审批状态	status	Integer			
+
+
+savePiData
+
+oaprocInstanceId
+
+OA流程实例要显示的 DataTable 列
+
+OA流程实例要查询的 SQL 列
