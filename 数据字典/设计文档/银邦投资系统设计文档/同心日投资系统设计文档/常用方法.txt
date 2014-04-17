@@ -1,0 +1,12 @@
+1. 工具栏自动把按钮插入到 ts_module 表，加以下代码：
+ ,rightData : {menuId : this.params.nodeId}});
+
+
+2. confirm 提示 CODE :
+	ExtUtil.confirm({title:'提示',msg:'',fn:function(){
+		 	 if(arguments && arguments[0] != 'yes') return;
+	});
+	
+
+//客户编号,客户ID,客户流水号,企业名称,工商登记号,组织机构代码,所属行业,企业性质,联系人,手机,电话,法人,成立时间,登记时间,登记人
+		colNames = "code,customerId,serialNum,name,tradNumber,orgcode,trade,kind,contactor,phone,contactTel,legalMan,comeTime#yyyy-MM-dd,registerTime#yyyy-MM-dd,regman";
