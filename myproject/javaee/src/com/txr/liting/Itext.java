@@ -35,9 +35,13 @@ public class Itext {
 	 */
 	@Test
 	public void itextOne() throws FileNotFoundException, DocumentException{
+		testPrint("要打印的内容");
+	}
+
+	private void testPrint(String content) throws DocumentException, FileNotFoundException {
 		Document doc=new Document();
-		PdfWriter.getInstance(doc, new FileOutputStream("/home/liting/study/itext/HelloWorld.pdf"));
-		doc.open();doc.add(new Paragraph("这是文本——itext输出"));//注意输出之后的itext没有中文
+		PdfWriter.getInstance(doc, new FileOutputStream("/home/liting/study/itext/HelloWorld.doc"));
+		doc.open();doc.add(new Paragraph(content));//注意输出之后的itext没有中文
 		doc.close();
 	}
 	@Test
@@ -62,6 +66,7 @@ public class Itext {
 		PdfPCell cell = new PdfPCell (new Paragraph ("09140800002",font));  
 		cell.setColspan (3);  
 		table.addCell (cell);  
+		
 		// 添加第一行  
 		table.addCell (new Paragraph ("Name(CN)",font));  
 		table.addCell (new Paragraph ("党宁生",font));  
