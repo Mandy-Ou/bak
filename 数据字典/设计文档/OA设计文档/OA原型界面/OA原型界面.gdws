@@ -1,0 +1,23 @@
+<Workspace
+	CID = "1"
+	NextCID = "2"
+	IconCategory = "Toolbars">
+	<OpenFiles
+		CID = "1"
+		LastActive = "3">
+		<File
+			FileID = "84964570-7105-461A-A78C24AAE08C498D"
+			RootPath = "$Container"
+			RelativePathname = "行政办公\费用项配置.gui"
+			ViewSettings = ""/>
+		<File
+			FileID = "EE52B29C-5958-42A8-A6C66421FC42B360"
+			RootPath = "$Container"
+			RelativePathname = "工作流\流程表单\加班申请单.gui"
+			ViewSettings = ""/>
+		<File
+			RootPath = "$Container"
+			RelativePathname = "工作流\流程表单\门店加班申请表.gui"
+			ViewSettings = ""/>
+	</OpenFiles>
+</Workspace>

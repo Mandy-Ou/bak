@@ -1,0 +1,87 @@
+<Catalogue
+	CID = "1"
+	NextCID = "2">
+	<Files
+		CID = "1">
+		<FileInfo
+			ID = "1AF8CFDF-A7F8-4F00-B2DF1CD7BF128143"
+			RelativePath = "行政办公\固定资产\折旧方案设置.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "行政办公\固定资产\折旧方案设置.gui"/>
+		<FileInfo
+			ID = "2F70FD4C-A135-433D-B4A53C07253A53D1"
+			RelativePath = "工作流\流程表单\还款单.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "工作流\流程表单\还款单.gui"/>
+		<FileInfo
+			ID = "32827370-72C5-4C8C-8C17ED85CA9E6E42"
+			RelativePath = "images\富文本.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\富文本.png"/>
+		<FileInfo
+			ID = "3716128D-6455-4D69-BA4690A68301BC35"
+			RelativePath = "工作流\流程表单\合同申请单.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "工作流\流程表单\合同申请单.gui"/>
+		<FileInfo
+			ID = "540D131B-233B-4208-AB155C33A31018FB"
+			RelativePath = "工作流\流程表单\请假申请单.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "工作流\流程表单\请假申请单.gui"/>
+		<FileInfo
+			ID = "6D678F7C-97F7-46CB-AC0A18D7EE790270"
+			RelativePath = "工作流\流程表单\出差申请单.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "工作流\流程表单\出差申请单.gui"/>
+		<FileInfo
+			ID = "753BBD99-7559-48F5-BD2EF2DA11D44979"
+			RelativePath = "images\提前还款计算.jpg"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\提前还款计算.jpg"/>
+		<FileInfo
+			ID = "84964570-7105-461A-A78C24AAE08C498D"
+			RelativePath = "行政办公\费用项配置.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "行政办公\资产项配置.gui"/>
+		<FileInfo
+			ID = "92AB7ECC-0179-4101-8AD2AD05CEC45D6A"
+			RelativePath = "OA原型界面.autosave"
+			OriginalRoot = "$Project"
+			OriginalPath = "OA原型界面.autosave"/>
+		<FileInfo
+			ID = "9D396AF4-D64A-4E73-A05CEAC58DC5FF91"
+			RelativePath = "images\工具栏.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\工具栏.png"/>
+		<FileInfo
+			ID = "A00BC9D2-89C7-48A3-B85C12E2DB878E3F"
+			RelativePath = "工作流\流程表单\借款单.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "工作流\流程表单\借款单.gui"/>
+		<FileInfo
+			ID = "A8147008-C342-443D-91C0FB3D16D55D8F"
+			RelativePath = "images\豁免项.jpg"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\豁免项.jpg"/>
+		<FileInfo
+			ID = "CD801515-600A-46AA-A3B21CAAF97A8D65"
+			RelativePath = "工作流\流程表单\费用报销单.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "工作流\流程表单\费用报销单.gui"/>
+		<FileInfo
+			ID = "EE52B29C-5958-42A8-A6C66421FC42B360"
+			RelativePath = "工作流\流程表单\加班申请单.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "工作流\流程表单\加班申请单.gui"/>
+		<FileInfo
+			ID = "EF4DC6DC-8AA7-41C8-8008DB0826804E13"
+			RelativePath = "images\查询条件.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\查询条件.png"/>
+		<FileInfo
+			ID = "F7A22A96-A0B6-4562-BBC83BA1803128FD"
+			RelativePath = "images\标题.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\标题.png"/>
+	</Files>
+</Catalogue>
