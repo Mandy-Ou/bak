@@ -1,0 +1,345 @@
+@CHARSET "UTF-8";
+.x-grid-back-gree {
+   background: #1d953f;
+}
+.x-grid-back-org {
+   background: #f47920;
+}
+.x-grid-back-red {
+   background: #ed1941;
+}
+.x-grid-back-qs {
+   background: #72baa7;
+}
+	/**
+	* 台账明显中表格的颜色
+	*/
+.x-grid-back-ysRatMonth {
+   background: #b2d235;
+}
+.x-grid-back-ysRat {
+   background: #74905d;
+}
+.x-grid-back-ysMatMonth {
+   background: #77ac98;
+}
+.x-grid-back-ysMat {
+   background: #00ae9d;
+}
+.x-grid-back-stats {
+   background: #8552a1;
+}
+
+.tr_td {
+	border-right:0px solid #000;border-bottom:0px solid #000;padding:2px 5px ;font: normal 13px '宋体', '新宋体', '黑体', "Trebuchet MS", tahoma, arial, verdana, sans-serif;
+}
+.ledgerDiv{
+	 overFlow: auto ; 
+	 width:100%; 
+	 height : 490px;
+}
+.ledgerDiv table {
+	width : 1380px;
+    padding: 0px;  
+    margin: 0px;  
+    font-family:Arial, Tahoma, Verdana, Sans-Serif,宋体;  
+    border-left:1px solid #ADD8E6;  
+    border-right:0px;
+    border-bottom :0px;
+    border-collapse:collapse;  
+}
+.ledger {width:1350px;}
+.ledger tr{height : 20px;}
+
+.ledger td {
+    border-top:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:0px ;font: normal 13px '宋体', '新宋体', '黑体', "Trebuchet MS", tahoma, arial, verdana, sans-serif;
+    font-size:12px;
+    text-align:center;
+    color: #303030;
+    word-break:break-all;
+    word-wrap:break-word;
+    white-space:normal;
+} 
+
+/*
+ * Ext 多表头单元格样式 
+ */
+td.ux-grid-hd-group-cell {
+    background: url(../extlibs/ext-3.3.0/resources/images/default/grid/grid3-hrow.gif) repeat-x bottom;
+}
+/*
+* Ext EditGrid 可编辑器列标识
+*/
+.x-grid-edit-back{
+	background-color: #F4A460;	
+}
+
+.choseCenterCls{
+	position:relative;
+	left:30%;
+	top: 100px;
+}
+
+.nextTransRadioCls{margin:5px 0px 8px 10px;padding:0px;display:block;}
+/*-- 详情页面 Table 样式  CODE START --*/
+.txr_detail_tabcls{ 
+	margin:0px;padding:0px;font: normal 13px   '宋体', '新宋体', '黑体', "Trebuchet MS", tahoma, arial, verdana, sans-serif;	
+	border-collapse:collapse; 	border:solid #99BBE8;	border-width:0px 0 0 1px;
+	width:100%;
+}
+
+.txr_detail_tabcls .txr_detail_fixcmncls{ 
+	height:0px; padding:0px; margin:0px; border-width:0px;
+}
+
+
+.txr_detail_tabcls th {
+	color: #4f6b72;	border-right: 1px solid #99BBE8;border-bottom: 1px solid #99BBE8;
+	border-top: 1px solid #99BBE8;letter-spacing: 1px;text-align: right;
+	background-color: #EDEDED;margin:0px;padding-right:4px;
+	height:20px;
+}
+
+.txr_detail_tabcls th span {
+	color:#F00;	margin:0px;	padding:0px;
+}
+
+.txr_detail_tabcls td {
+	color: #4f6b72;	border-right: 1px solid #99BBE8;border-bottom: 1px solid #99BBE8;
+	border-top: 1px solid #99BBE8;text-align: left;	padding: 6px 18px 6px 12px;
+	word-break:break-all; word-wrap: break-word;
+}
+/*-- 详情页面 Table 样式   CODE END  --*/
+
+.nodeClickCls{
+background-color:#CCF;
+border: 1px solid #8B4726;
+cursor: pointer;
+}
+
+.nodeOverCls{ filter:alpha(opacity=12);
+-moz-opacity:0.12;
+opacity:0.12;
+background-color:#FC9;
+cursor: pointer;
+}
+
+.btnBussNodeCls{
+	color: #8B4500;	border-bottom: 1px solid #708090;
+}
+
+.bubbles{margin-top:5px;width:80%; padding:10px 10px; margin-left:80px; background:#CDB7B5; position:relative;}
+.bubbles span{width:0; height:0; font-size:0; overflow:hidden; position:absolute;}
+.bubbles span.bot{
+    border-width:20px; 
+    border-style:solid; 
+    border-color:#ffffff #CDB7B5 #CDB7B5 #ffffff; 
+    left:-40px; 
+    top:30px;
+}
+.bubbles span.top{
+    border-width:10px 20px; 
+    border-style:dashed solid solid dashed; 
+    border-color:transparent #ffffff #ffffff transparent; 
+    left:-40px; 
+    top:50px;
+}
+.auditWoman{
+	margin-left:4px;padding-left:40px;margin-top:5px;width:300px;
+	font-weight : bold;color:blue;
+	background: url("../images/big_icons/48x48/apps/personal.png") no-repeat !important;
+}
+.auditMan{
+	margin-left:4px;padding-left:40px;margin-top:5px;width:300px;
+	font-weight : bold;color:blue;
+	background: url("../images/big_icons/48x48/apps/gaim-4.png") no-repeat !important;
+}
+
+.contentDiv {
+	padding-left: 3px;
+	padding-right: 3px;
+	background: white;
+	border: none;
+}
+
+.newsList {
+	border: 0 dashed #c7e3fa;
+	width: 100%;
+	font-size : 13px;
+}
+
+.newsList tr td {
+	height: 20px;
+	border: none;
+	border-buttom: 1px dashed #c7e3fa;
+	border-top: 1px dashed #c7e3fa;
+	color: #c3e3fa;
+}
+
+.newsList tr td a {
+	text-decoration: none;
+	overflow: hidden;
+	color: blue;
+}
+
+.newsList tr td a:hover {
+	color: #25e3fa;
+}
+
+.moreDiv {
+width: 100%;
+}
+
+.moreDiv span {
+float: right;
+margin-right: 12px;
+}
+
+moreDiv span a {
+text-decoration: none;
+color: red;
+}
+
+.fd_main_attchements{padding:5px 0px 5px 0px; float:left; width:100%}
+
+.fd_attchement{float:left; margin-left:15px;margin-top: 10px;}
+.fd_attchement a{
+	text-decoration: none;
+	overflow: hidden;
+	color: blue;}
+.fd_attchement a:hover {
+	color: #8B4500;
+	text-decoration: underline;
+}
+.fd_img_attchement{width: 16px;height: 16px; cursor: pointer;}
+
+/**-------------------- CmwPivotGrid CSS CODE START -----------------------**/
+/*主容器DIV 样式*/
+.cmw_report_grid{border: solid 1px #000; overflow:visible;background-color:#F0F0F0;}
+/*表头DIV 样式*/
+.cmw_report_grid .report_header{overflow-x:hidden;}
+
+ /*表头TABLE 样式*/
+.report_header .report_header_table  {border-collapse:collapse; font-size:13px;}
+
+.report_header_table th {border:1px solid black;text-align:center;padding:5px;font-weight: bold;}
+
+/*表体DIV 样式*/
+.cmw_report_grid .report_body{overflow:auto;background-color:#FFF;  height:300PX;}
+ /*表体TABLE 样式*/
+.report_body .report_body_table {border-collapse:collapse; border:none;  font-size:13px;}
+.report_body_table td  {border:1px solid black;text-align:center;word-break:break-all;word-wrap: break-word;height:25px;}
+
+.report_body_table .first_row_td { border-top: none;}
+.report_body_table .last_row_td{ font-size:0px; line-height:0px;height:0px; padding:0px; margin:0px; border-width:0px; border:none;}
+.report_body_table .cmw_td_group{ background-color:#CC99FF;text-align:left;padding-left:10px; font-weight:bold;}
+/**-------------------- CmwPivotGrid CSS CODE END -----------------------**/
+
+/**-------------------- 业务审批面板上的必做/选做事项 CSS CODE START -----------------------**/
+.buss_menu_list_menuLabel{float:right;white-space:nowrap;margin: 0px;padding: 0px;font-size: 12px;cursor: pointer;}
+.buss_menu_list_menuLabel_img{
+	border:0px;height:14px;display:inline;margin:0px;
+}
+/**-------------------- 业务审批面板上的必做/选做事项 CSS CODE END -----------------------**/
+
+/**-------------------- 扁平化图标面板  see ImgPanel.js 中的  CSS CODE START -----------------------**/
+.flat_content {margin:0;padding:0; text-align:center; background-color:#DFE8F6;white-space:nowrap;height: 100%;width: 100%} 
+
+.flat_content ul {
+	margin:0;padding:0;
+	display:inline;margin:0px;
+	list-style-type: disc;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 40px;
+}
+
+.flat_content ul li {
+	font-size:12px;
+	list-style:none;float:left;width:100px; 
+	margin:0PX 10px 0px 0px;
+	padding: 0px;
+}
+
+
+.flat_content ul li .flat_img {
+	height: 64px;
+	width: 64px;
+	line-height: 64px;
+	cursor: pointer;
+	position: relative;
+	margin: 0px auto;
+	text-align: center;
+	padding:5px;
+}
+
+.select_bussform_ele{
+	background-color:#666;
+}
+/*
+.block_buss_finish {
+	position:absolute;
+	width: 40px;
+	height: 40px;
+	background-repeat: no-repeat;
+	display:none;
+	background-image: url('../images/public/flat/finish.png');
+}*/
+.block_buss_finish{
+	border: solid 2px red;
+}
+
+.flat_icon_text {
+	cursor: pointer;
+	margin-top: 0px;
+	padding-left: 10px;
+	height: 20px;
+	display: inline-block;
+	 margin:0px 0px 10px 0px; text-decoration:none;
+	background: url('../images/public/flat/icon_text_l.png') 0px 0px no-repeat;
+}
+
+.flat_icon_text span {
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	background: url('../images/public/flat/icon_text_r.png') right center no-repeat;
+	color: #000;
+	padding: 0 10px 0 0px;
+	color:#FFF;
+	font-weight:bold;
+}
+
+.flat_buss_clear{clear:both;height:0;}
+/**-------------------- 扁平化图标面板 CSS CODE END -----------------------**/
+
+
+.x-checkboxcombo-list {
+	background-color: #DDECFE;
+	border: 1px solid #98C0F4;
+	overflow: hidden;
+}
+.x-checkboxcombo-list-inner {
+	background-color: #FFFFFF;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+}
+.x-checkboxcombo-list-inner .x-form-item {
+	border: 1px solid #FFFFFF;
+	font: 12px tahoma,arial,helvetica,sans-serif;
+	overflow: hidden;
+	padding: 2px;
+	white-space: nowrap;
+	margin: 0px;
+}
+.x-checkboxcombo-list-inner .x-checkboxcombo-item-over {
+	background-color: #DFE8F6;
+	border-color: #A3BAE9 !important;
+	border: 1px dotted !important;
+	cursor:pointer;
+	background-color: #DFE8F6;
+	border-color: #A3BAE9 !important;
+}
