@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<headcfg desc="贷款业务结构报表统计项">
+{
+	signleAmountInfo : {itemTitle:"单笔金额",
+		  items:[
+		 	{itemTitle : "1. 5万元以下(含)",express : "(appAmount &lt;= 5)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "2. 5万元至10万元(含)",express : "(appAmount &gt; 5 &amp;&amp; appAmount &lt;= 10)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "3. 10万元至20万元(含)",express : "(appAmount &gt; 10 &amp;&amp; appAmount &lt;= 20)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "4. 20万元至30万元(含)",express : "(appAmount &gt; 20 &amp;&amp; appAmount &lt;= 30)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "5. 30万元至50万元(含)",express : "(appAmount &gt; 30 &amp;&amp; appAmount &lt;= 50)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "6. 50万元至100万元(含)",express : "(appAmount &gt; 50 &amp;&amp; appAmount &lt;= 100)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "7. 100万元至200万元(含)",express : "(appAmount &gt; 100 &amp;&amp; appAmount &lt;= 200)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "8. 200万元至300万元(含)",express : "(appAmount &gt; 200 &amp;&amp; appAmount &lt;= 300)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "9. 300万元至500万元(含)",express : "(appAmount &gt; 300 &amp;&amp; appAmount &lt;= 500)",fields:[{name:"appAmount",type:2}]},
+		 	{itemTitle : "10. 500万元以上",express : "(appAmount &gt; 500)",fields:[{name:"appAmount",type:2}]}
+		  ]
+	},
+	loanLimitInfo : {itemTitle:"期限类型",
+		   items : [
+		   		{itemTitle : "A、短期",
+		   			items : [
+		   				{itemTitle : "1. 1个月以内(含)",express : "(loanLimit &lt;= 1)",fields:[{name:"loanLimit",type:1}]},
+		 				{itemTitle : "2. 1至3个月(含)",express : "(loanLimit &gt; 1 &amp;&amp; loanLimit &lt;= 3)",fields:[{name:"loanLimit",type:1}]},
+		 				{itemTitle : "3. 3至6个月(含)",express : "(loanLimit &gt; 3 &amp;&amp; loanLimit &lt;= 6)",fields:[{name:"loanLimit",type:1}]},
+		 				{itemTitle : "4. 6至12个月(含)",express : "(loanLimit &gt; 6 &amp;&amp; loanLimit &lt;= 12)",fields:[{name:"loanLimit",type:1}]}
+		   			]
+		   		},{itemTitle : "B、中期 (1至3年)",
+		   			items : [
+		   				{itemTitle : "1. 1年至1年半(含)",express : "(loanLimit &gt; 12 &amp;&amp; loanLimit &lt;= 18)",fields:[{name:"loanLimit",type:1}]},
+		 				{itemTitle : "2. 1年半至2年(含)",express : "(loanLimit &gt; 18 &amp;&amp; loanLimit &lt;= 24)",fields:[{name:"loanLimit",type:1}]},
+		 				{itemTitle : "3. 2年至2年半(含)",express : "(loanLimit &gt; 24 &amp;&amp; loanLimit &lt;= 30)",fields:[{name:"loanLimit",type:1}]},
+		 				{itemTitle : "4. 2年半至3年(含)",express : "(loanLimit &gt; 30 &amp;&amp; loanLimit &lt;= 36)",fields:[{name:"loanLimit",type:1}]}
+		   			]
+		   		},{itemTitle : "C、长期 (3年以上)",
+		   			items : [
+		   				{itemTitle : "1. 3年以上",express : "(loanLimit &gt; 36)",fields:[{name:"loanLimit",type:1}]}
+		   			]
+		   		},
+		   ]
+	}
+}
+</headcfg>
