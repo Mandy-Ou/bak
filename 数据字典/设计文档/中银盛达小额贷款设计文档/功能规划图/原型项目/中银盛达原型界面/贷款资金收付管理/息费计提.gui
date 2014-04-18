@@ -1,0 +1,60 @@
+<Screen
+	CID = "714758063"
+	AppID = "2"
+	AppVer = "4.5.151.0"
+	DocID = ""
+	HasCanvas = "0"
+	Width = "640"
+	Height = "480"
+	NextCID = "6"
+	RepresentativeRefID = "0"
+	UseDefRepresentative = "1">
+	<Elements
+		CID = "1">
+		<Element
+			CID = "1613656642"
+			Type = "FrameWindow"
+			X = "94"
+			Y = "64"
+			Width = "975"
+			Height = "444"
+			Flags = "0"
+			UseDataTable = "0"
+			TableName = ""
+			WindowColour = "172,168,153,0,13"
+			Typeface = ""
+			FontAttributes = "0"
+			TextSize = "Normal"
+			Title = "息费计提"
+			TitleBarHeight = "15"
+			IconMargin = "0"
+			BorderSize = "1"
+			IsBorderless = "0"
+			IsActive = "1"
+			IsDocWindow = "0"
+			HasSunkenWindow = "0"
+			CentreText = "0"
+			UseMutedColours = "0"
+			Mirror = "0"
+			Buttons = "17"
+			Icon = ""/>
+	</Elements>
+	<Connections
+		CID = "2"/>
+	<Groups
+		CID = "3"/>
+	<SelectionGroups
+		CID = "4"/>
+	<Notes
+		CID = "5">
+		<Note
+			CID = "714761857"
+			Name = "Description"
+			NextCID = "2">
+			<Text
+				CID = "1">
+				
+			</Text>
+		</Note>
+	</Notes>
+</Screen>
