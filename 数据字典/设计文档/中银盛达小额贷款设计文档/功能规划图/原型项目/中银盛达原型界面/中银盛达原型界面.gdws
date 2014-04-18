@@ -1,0 +1,29 @@
+<Workspace
+	CID = "1"
+	NextCID = "2"
+	IconCategory = "Toolbars">
+	<OpenFiles
+		CID = "1"
+		LastActive = "4">
+		<File
+			FileID = "1D3F81E8-40E2-489D-B6D31700BDB38D28"
+			RootPath = "$Container"
+			RelativePathname = "贷款资金收付管理\正常还款管理.gui"
+			ViewSettings = ""/>
+		<File
+			FileID = "A13E8516-0B64-4B4B-A493150F2D9EF479"
+			RootPath = "$Container"
+			RelativePathname = "融资业务管理\融资管理.gui"
+			ViewSettings = ""/>
+		<File
+			FileID = "C61DDD4E-400B-4EFC-A483A33F11AD9606"
+			RootPath = "$Container"
+			RelativePathname = "贷款资金收付管理\息费计提.gui"
+			ViewSettings = ""/>
+		<File
+			FileID = "3BB53313-101B-4032-AA4587710CEFEB4A"
+			RootPath = "$Container"
+			RelativePathname = "系统初始化\还款方式管理.gui"
+			ViewSettings = ""/>
+	</OpenFiles>
+</Workspace>

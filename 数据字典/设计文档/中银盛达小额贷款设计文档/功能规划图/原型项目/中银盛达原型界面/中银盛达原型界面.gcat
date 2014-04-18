@@ -1,0 +1,72 @@
+<Catalogue
+	CID = "1"
+	NextCID = "2">
+	<Files
+		CID = "1">
+		<FileInfo
+			ID = "0AC291F3-5F58-4E49-91A58FDC51D46C39"
+			RelativePath = "中银盛达原型界面.autosave"
+			OriginalRoot = "$Project"
+			OriginalPath = "中银盛达原型界面.autosave"/>
+		<FileInfo
+			ID = "13E6E0B8-5517-445A-AF5FD2F0041C3078"
+			RelativePath = "images\豁免项.jpg"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\豁免项.jpg"/>
+		<FileInfo
+			ID = "1493FAAC-833E-4E25-9B9A38C81EC3B6A1"
+			RelativePath = "images\工具栏.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\工具栏.png"/>
+		<FileInfo
+			ID = "1D3F81E8-40E2-489D-B6D31700BDB38D28"
+			RelativePath = "贷款资金收付管理\正常还款管理.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "贷款资金收付管理\正常还款管理.gui"/>
+		<FileInfo
+			ID = "22C5D251-F365-4157-84BF16760F741A54"
+			RelativePath = "images\标题.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\标题.png"/>
+		<FileInfo
+			ID = "3BB53313-101B-4032-AA4587710CEFEB4A"
+			RelativePath = "系统初始化\还款方式管理.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "系统初始化\还款方式管理.gui"/>
+		<FileInfo
+			ID = "5F8A561E-9B5F-43AD-B6CB83D6421E60E4"
+			RelativePath = "贷款资金收付管理\正常收款.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "贷款资金收付管理\正常收款.png"/>
+		<FileInfo
+			ID = "A13E8516-0B64-4B4B-A493150F2D9EF479"
+			RelativePath = "融资业务管理\融资管理.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "融资业务管理\融资管理.gui"/>
+		<FileInfo
+			ID = "A82C8FE6-2284-46A7-B104B6D76981575C"
+			RelativePath = "images\富文本.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\富文本.png"/>
+		<FileInfo
+			ID = "AFE1804C-DFFE-44F9-97A950B82C8D4B5E"
+			RelativePath = "贷款资金收付管理\正常收款管理列表.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "贷款资金收付管理\正常收款管理列表.png"/>
+		<FileInfo
+			ID = "C3FA4DB9-6B3A-47E3-AED40ABF7E5EA95B"
+			RelativePath = "images\查询条件.png"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\查询条件.png"/>
+		<FileInfo
+			ID = "C61DDD4E-400B-4EFC-A483A33F11AD9606"
+			RelativePath = "贷款资金收付管理\息费计提.gui"
+			OriginalRoot = "$Project"
+			OriginalPath = "贷款资金收付管理\息费计提.gui"/>
+		<FileInfo
+			ID = "CBA49A06-CFD2-470C-B6AF269C064A783D"
+			RelativePath = "images\提前还款计算.jpg"
+			OriginalRoot = "$Project"
+			OriginalPath = "images\提前还款计算.jpg"/>
+	</Files>
+</Catalogue>
