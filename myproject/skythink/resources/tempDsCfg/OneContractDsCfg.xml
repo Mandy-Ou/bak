@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<headcfg desc="个人客户借款合同数据源配置，参数说明：[dsCfg 可配置的参数如下{dstag:数据源标识，cmns：DataTable 列名（当 loadType = 1 或 2时）}]">
+{
+	tempPath : 'attachments/contractTemps/oneLoanContractTemp.html',
+	dsCfg : [
+		{loadType:3,dispType:1,dataCode:"getContractDs",urlparams:"contractId#L,custType#I",
+		 cmnMappings : [{name : "appAmount",dataType:2},
+		 {name : "payDate",dataType:3,fmt:'yyyy年MM月dd日'},
+		 {name : "endDate",dataType:3,fmt:'yyyy年MM月dd日'},
+		 {name : "dxAppAmount",dataType:5,fun:"RenderMgr.convertBigAmount",mapingCmns : 'appAmount'},
+		 {name : "yearLoan",fun:"RenderMgr.loanLimitRender"},
+		 {name : "rate",fun:"RenderMgr.rateTypeRender"}]}
+	]
+}
+</headcfg>

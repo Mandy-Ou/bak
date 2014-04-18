@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<headcfg desc="企业借款合同数据源配置">
+{
+	tempPath : 'attachments/contractTemps/entLoanContractTemp.html',
+	dsCfg : [
+		{loadType:3,dispType:1,dataCode:"getContractDs",urlparams:"contractId#L,custType#I",
+		 cmnMappings : [{name : "appAmount",dataType:2},
+		 {name : "payDate",dataType:3,fmt:'yyyy年MM月dd日'},
+		 {name : "endDate",dataType:3,fmt:'yyyy年MM月dd日'},
+		 {name : "dxAppAmount",dataType:5,fun:"RenderMgr.convertBigAmount",mapinngCmns : 'appAmount'},
+		 {name : "yearLoan",fun:"RenderMgr.loanLimitRender"},
+		 {name : "rate",fun:"RenderMgr.rateTypeRender"}]}
+	]
+}
+</headcfg>
