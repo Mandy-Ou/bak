@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN"
+    "http://getahead.ltd.uk/dwr/dwr20.dtd">
+
+<dwr>
+	<allow>
+	 <!-- create元素定义创建一个JavaScript对象，该对象的名字叫bm -->
+	  <!--	<create javascript="aj" creator="spring"> -->
+	 		 <!-- 定义将Spring中的bean blogManager创建为JavaScript对象 -->
+	 		 <!--
+	 		 <param name="beanName" value="dwrService"/>
+	 		 -->
+	 		  <!-- 定义要暴露给JavaScript对象的方法 -->
+	 		   <!--
+	 		   <include method="getEmpList"/>
+	 		    -->
+	  <!--		</create>-->
+	 	
+	 </allow>
+</dwr>
