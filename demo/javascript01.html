@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>javascript基础回顾</title>
+</head>
+
+<body>
+<div>
+div是独行元素所有的div都占一行,div和其他元素不同行 
+</div>
+<span>内联元素和div不同</span><span>内联元素和div不同</span><div>
+div是独行元素所有的div都占一行,div和其他元素不同行 
+</div><div>
+div是独行元素所有的div都占一行,div和其他元素不同行 
+</div>
+<!--hr是分割线-->
+<hr>
+
+<form method="post" id="formId" action="a.action">
+<input type="text" value="value1" />
+<input type="submit" value="提交" />
+</form>
+<script type="text/javascript">
+var form= document.getElementById("formId")
+alert(form.method);//采用对象.方法的格式获取方法
+
+</script>
+
+</body>
+</html>
