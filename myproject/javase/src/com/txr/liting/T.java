@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class T<T extends List> {
 	public static void main(String[] args) {
+		
 		}
 }
 
