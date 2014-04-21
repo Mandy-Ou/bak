@@ -1,4 +1,5 @@
 package com.txr.liting;
+import static java.lang.System.out;
 
 public class Outer {
 	/**
@@ -22,6 +23,7 @@ public class Outer {
 		Outer o=new Outer();
 		Integer x= o.getInner().getX();
 		System.out.println(x);
+		out.print(x);//静态导入 import static  java.lang.system.out
 	}
 	
 
