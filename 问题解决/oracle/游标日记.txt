@@ -1,0 +1,22 @@
+declare--类型定义
+cursor c_job
+is
+ select empno,ename,job,sal
+from emp
+where job='manager';
+c_row c_job%rowtype;
+begin 
+for c_row in c_job loop
+ dbms_output.put_line(c_row.empno||'-'||c_row,ename||'-'c_row.job||'-'||c_row.sal);
+end loop;
+end;
+动态游标：REF游标
+可以在游标打开时反映对基础数据进行的修改的游标。用户所做的更新、删除和插入在动态游标中加以反映。
+创建游标变量的两个步骤：
+1.声明REF游标类型
+2、声明REF变量。
+
+Fetch游标
+使用的时候必须要明确的打开和关闭。
+
+

@@ -1,0 +1,62 @@
+select rowid from itemfile where itemdesc='brackets';--操作rowid
+ delete itemfile where itemdesc='brackets' and rowid<>'AAARhmAAEAAAAJ7AAK';----根据rowid删除数据
+set serveroutput on---打开错误提示。（默认是不打开的所以需要打开）
+DBMS_output.put_line(output_var); ----显示读到的用户信息
+SQL中使用：=赋值。
+属性类型：%TYPE----引用变量和数据库列的数据类型和%ROWTYPR0-----------提供表示表中一行的记录类型
+属性类型的优点：
+1.不需要知道被引用的表列的具体类型
+2.如果被引用对象的数据类型发生改变，PL/sql变量的数据类型也随之改变
+icode itemfile.itemcod%TYPE；
+emp_rec scott.emp%ROWTYPE;
+
+动态SQL
+动态SQL是指在PL/SQL程序执行时生成的SQL语句
+编译程序对动态SQL不做处理。而是在程序运行是动态构造语句，
+
+
+DECLARE
+  sql_stmt VARCHAR2(200);
+  emp_id NUMBER(4) := 7566;
+  emp_rec emp%ROWTYPE;
+BEGIN
+  EXECUTE IMMEDIATE 
+    'CREATE TABLE bonus1 (id NUMBER, amt NUMBER)';
+
+  sql_stmt := 'SELECT * FROM emp WHERE empno = :id';
+  EXECUTE IMMEDIATE sql_stmt INTO emp_rec USING emp_id;
+END;
+/
+oracle的nvl（）函数
+nvl( ) 函数
+
+从两个表达式返回一个非 null 值。
+nvl( ) 函数
+
+从两个表达式返回一个非 null 值。
+
+语法
+
+NVL(eExpression1, eExpression2) 
+参数
+
+eExpression1, eExpression2 
+如果 eExpression1 的计算结果为 null 值，则 NVL( ) 返回 eExpression2。如果 eExpression1 的计算结果不是 null 值，则返回 eExpression1。eExpression1 和 eExpression2 可以是任意一种数据类型。如果 eExpression1 与 eExpression2 的结果皆为 null 值，则 NVL( ) 返回 .NULL.。
+
+返回值类型
+
+字符型、日期型、日期时间型、数值型、货币型、逻辑型或 null 值
+
+说明
+
+在不支持 null 值或 null 值无关紧要的情况下，可以使用 NVL( ) 来移去计算或操作中的 null 值。
+
+select nvl(a.name,'空得') as name from student a join school b on a.ID=b.ID 
+注意：两个参数得类型要匹配
+
+
+
+sqlerrm返回DML语句影响的行数。
+
+游标的四部：1.声明游标。2.打开游标3.提取游标4.关闭游标
+声明游标：CURSOP 游标名 is

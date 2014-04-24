@@ -1,0 +1,54 @@
+问题出现的故障：
+   在一次正常使用企业管理器后，重新启动计算机，再次启动OracleDBConsoleORCL服务时，报：Windows 不能在 本地计算机 启动 OracleDBConsoleorcl。有关更多信息，查阅系统事件日志。如果这是非 Microsoft 服务，请与服务厂商联系，并参考特定服务错误代码 2。
+  
+问题出现的背景：
+   更换IP地址，包括局域网和无线网。
+  
+问题解决的思路：
+第一种是拔出网线在启动服务，或者把ip改为当时安装的时候的ip就好了
+第二种在c:\windows\system32\drivers\etc 文件夹中找到HOST文件，在最后加入“192.168.?.?(你自己目前IP) localhost ”
+第三种是更改Oracle的一种配置文件，就是当时安装时记录的一个配置文件，
+      具体方法如下：
+      
+      1、开始->运行 cmd
+      2、执行 emctl start dbconsole
+          C:\Documents and Settings\xcl>emctl start dbconsole
+          Environment variable ORACLE_SID not defined. Please define it.
+          提示：环境变量 ORACLE_SID 未定义，请定义。 
+      3、设置 ORACLE_SID =WLW (WLW是我的实例名，也是服务名)
+         C:\Documents and Settings\xcl>set ORACLE_SID=WLW(注意大写)
+      4、再次执行emctl start dbconsole
+         C:\Documents and Settings\xcl>emctl start dbconsole
+         OC4J Configuration issue. E:\oracle\product\10.2.0\db_1/oc4j/j2ee/OC4J_DBConsole
+         _china-d9e3f7d07_orcl not found.
+         提示：无法找到“E:\oracle\product\10.2.0\db_1/oc4j/j2ee/OC4J_DBConsole
+         _china-d9e3f7d07_orcl “
+         注：china-d9e3f7d07 是我的计算机名
+         复制该目录下的“OC4J_DBConsole_localhost_orcl”文件夹放在同一目录下,且把名称改成    
+         “OC4J_DBConsole_china-d9e3f7d07_orcl”。
+       5、再次执行emctl start dbconsole
+          C:\Documents and Settings\xcl>emctl start dbconsole
+          EM Configuration issue. E:\oracle\product\10.2.0\db_1/china-d9e3f7d07_orcl not found.
+          提示：无法找到 “E:\oracle\product\10.2.0\db_1/china-d9e3f7d07_orcl ”
+          复制该目录下的“localhost_orcl”文件夹放在同一目录下,且把名称改成“china-
+          d9e3f7d07_orcl”。
+       6、再次执行emctl start dbconsole
+          C:\Documents and Settings\xcl>emctl start dbconsole
+          Oracle Enterprise Manager 10g Database Control Release 10.2.0.1.0
+          Copyright (c) 1996, 2006 Oracle Corporation. All rights reserved.
+          http://localhost:1158/em/console/aboutApplication 
+          Starting Oracle Enterprise Manager 10g Database Control ...OracleDBConsoleorcl
+          服务正在启动 ...................................................................
+          ................................................................................
+          ................................................................................
+          ..............................
+          OracleDBConsoleorcl 服务已经启动成功。
+注明：1.OracleDBConsole[SID]服务负责Windows平台下启动Oracle企业管理器，从Oracle 10g开始引入这个服
+        务，也是从Oracle 10g开始，Oracle的企业管理器从客户端形式变为浏览器操作模式，这里的[SID]即
+        Oracle SID，如果是默认安装就是orcl，故这个服务在你的机器上可能就是OracleDBConsoleORCL
+        总结：因为机器在内网，路由器设置为强制DHCP分配IP地址，虽然每次设置的IP地址都是一样的（我这
+        里为192.168.1.103）但因为设置的原因造成服务启动失败。
+      2.Oracle的OracleDBConsole[SID]服务很脆弱，在没有任何误操作的情况下，重新启动计算机后，它也可
+        能就启动不了了，但在这时，大家一定要保持冷静，多思考，办法总是有的，不到万不得已，不要重新
+        安装，建议大家在重新启动系统前，先手动停止OracleDBConsole[SID]服务、监听器服务和数据库服
+        务。

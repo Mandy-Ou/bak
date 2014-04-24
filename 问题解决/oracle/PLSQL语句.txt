@@ -1,0 +1,232 @@
+/*  匿名的PL/SQL 块*/
+DECLARE
+  qty_on_hand NUMBER(5);--当前的数量
+BEGIN
+  --定义游标变量时候必须使用select ... for update of 语句
+  SELECT qty_hand INTO qty_on_hand
+  FROM itemfile
+  WHERE itemdesc ='brackets'
+  FOR UPDATE OF qty_hand;
+  IF qty_on_hand > 0 THEN
+    UPDATE itemfile SET qty_hand = qty_hand - 1
+    WHERE itemdesc = '芭比娃娃';
+    INSERT INTO purchase_record
+    VALUES ('已购买brackets', SYSDATE);
+  END IF;
+  COMMIT;
+  DBMS_OUTPUT.PUT_LINE('成功更新brackets数量'); 
+EXCEPTION  /* 异常处理语句 */
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('出错:'|| SQLERRM);  
+END;
+/
+
+/*
+ * 使用LOB类型 
+ */
+ -- CREATE DIRECTORY BOOK_DIR AS 'C:\BOOKS';首先在C盘目录下有该文件目录
+
+ create or replace directory BOOK_DIR as 'C:/BOOKS';
+  grant read, write on directory BOOK_DIR to annie;
+ declare
+      fhandle utl_file.file_type;
+  begin
+     fhandle := utl_file.fopen('BOOK_DIR', 'example.txt', 'w');
+      utl_file.put_line(fhandle , 'eygle test write one');
+      utl_file.put_line(fhandle , 'eygle test write two');
+      utl_file.fclose(fhandle);
+    end;
+    /
+
+/**
+ * 创建购买商品信息表
+ */
+ create table purchase_record (
+ purdesc varchar2(20),
+ purdate date);
+ /
+ 
+ CREATE TABLE itemfile
+(
+  itemcode varchar2(4),
+  itemdesc varchar2(20),
+  p_category varchar2(20),
+  qty_hand number(5),
+  re_level number(5),
+  max_level number(5),
+  itemrate number(7,2)
+)
+/
+INSERT INTO itemfile VALUES('i201','nuts','spares',100,50,250,20);
+INSERT INTO itemfile VALUES('i202','bolts','spares',95,125,300,16.5);
+INSERT INTO itemfile VALUES('i204','holders','spares',18,30,75,112);
+INSERT INTO itemfile VALUES('i205','covers','accessories',30,15,50,400);
+INSERT INTO itemfile VALUES('i203','panels','accessories',75,30,150,4000);
+INSERT INTO itemfile VALUES('i206','brackets','spares',150,73,200,132);
+/
+COMMIT;
+
+SET SERVEROUTPUT ON 
+DECLARE 
+  invalidCATEGORY EXCEPTION;
+  category varchar2(10);
+BEGIN
+  category := '&Category';
+  IF category NOT IN ('附件','顶盖','备件') THEN
+    RAISE invalidCATEGORY;
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('您输入的类别是'|| category);
+  END IF;
+EXCEPTION
+  WHEN invalidCATEGORY THEN
+    DBMS_OUTPUT.PUT_LINE('无法识别该类别');
+END;
+/
+--------隐式游标
+set serveroutput on 
+begin
+delete from toys where toyid='p001';
+if sql%notfound then
+dbms_output.put_line('找不到编号为p001的玩具信息');
+else 
+dbms_output.put_line('已经删除编号为p001的玩具信息！');
+end if;
+end;
+
+
+
+--游标使用（游标其实是一个放入内存临时表）
+declare
+   money cms3_simcard.card_fee%type :=0; --定义与表字段相同类型
+   cursor mycursor is --定义游标
+          select * from cms3_simcard 
+          where return_flag = 1 and msisdn like '138%';
+   my_record mycursor%rowtype;  --定义游标记录类型
+   Counter int :=0;
+   
+begin
+   open mycursor;  --打开游标
+   if mycursor%isopen  then  --判断打开成功
+   loop --循环获取记录集
+     fetch mycursor into my_record; --获取游标中的记录
+         if mycursor%found then  --游标的found属性判断是否有记录
+            dbms_output.put_line(my_record.card_fee);
+         else
+            exit;
+         end if;
+   end loop;
+   else
+     dbms_output.put_line('游标没有打开');
+   end if;
+  close mycursor;
+end;
+
+
+
+
+/*创建测试数据*/
+CREATE TABLE toys 
+(
+ toyid    VARCHAR2(10), 
+ toyname  VARCHAR2(15), 
+ toyprice NUMBER(6,2) 
+)
+/
+INSERT INTO toys VALUES('P001', 'Doll', 100)
+/
+INSERT INTO toys VALUES('P002','Batman',125)
+/
+INSERT INTO toys VALUES('P003','Spiderman',110)
+/
+INSERT INTO toys VALUES('P004','He-man',200)
+/
+COMMIT
+/
+--隐式游标的显示定义
+set serveroutput on
+declare 
+  cursor cur_emp is select * from emp;    	
+  rec_emp emp%rowtype;
+  i number;  ---？？？这个变量用处？
+begin
+  i:=0;
+  open cur_emp;--打开游标
+  loop 
+    fetch cur_emp into rec_emp;
+    i:=i+1;
+    DBMS_Output.PUT_LINE('emp no is:'||rec_emp.empno||'-- emp name is :'||rec_emp.ename);  
+     DBMS_Output.PUT_LINE('count '||cur_emp%rowcount)；
+    exit when i=cur_emp%rowcount  ;
+  end loop;
+   close cur_emp;
+end;
+/
+
+
+
+
+----不带参数的传参数游标
+declare
+   cursor  empCur  is  select * from emp where  sal>&InputSalary;
+   iCount int;
+begin
+    iCount:=&iCount;
+    DBMS_output.put_line('iCount='||iCount);
+    for emprow in empCur loop
+   DBMS_output.put_line('employee no:'||emprow.empno||' '||'employee name:'||emprow.ename);
+     DBMS_output.put_line('提取了'||empCur%rowcount); 
+    end loop;
+end;
+
+
+
+----带参数的游标，改进上面示例
+declare
+     cursor empCur(param number default 10) is select * from emp where deptno=param;
+ begin
+     for emprow in empCur(10) loop
+      DBMS_output.put_line('employeeno:'||emprow.empno||''||'employee name:'||emprow.ename);
+     end loop;
+ end;
+
+
+---自己做的例子
+declare ----声明部分（声明变量）
+	1_book_count integer;
+begin--程序执行部分（开始）
+	select count(*)
+	into 1_book_count---这里的into相当于桥梁的作用
+from books
+where author like '%FEUERSTEIN,STEVEN%';
+
+DBMS_OUTPUT.PUT_LINE(---使用内置的DBMS_OUTPUT.PUT_LINE过程
+'Steven has written (or co-wirtten)'|| 1_book_count |||
+'books.'
+
+);
+---哦我已经改名了
+update books
+set author=replace(author,'STEVEN','STEPHEN')
+where author like '%FEUERSTEIN,STEVEN%';
+end;
+
+
+
+PROCEDURE pay_out_banlance(
+account_id_id IN accounts.id%TYPE
+
+IF 1_balance_remaining :=account_balance(account_id_id);
+IF 1_balance_remaining<100
+THEN
+EXITl
+ELSE
+	apply_balance(account_id_in,1_balance_remaining);
+END IF;
+END LOOP;
+END pay_out_balance;
+)
+
+
+
+
+

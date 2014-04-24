@@ -1,0 +1,65 @@
+包的作用:包可以将任何出现在块声明的语句(过程,函数,游标,游标,类型,变量)放于包中,相当于一个容器.将声明语句放入包中的好处是:用户可以从其他PL/SQL块中对其进行引用,因此包为PL/SQL提供了全程变量.
+
+打包的PL/SQL程序和没有打包的有很大的差异，包数据在用户的整个会话期间都一直存在，当用户获得包的执行授权时，就等于获得包规范中的所有程序和数据结构的权限。但不能只对包中的某一个函数或过程进行授权。包可以重载过程和函数，在包内可以用同一个名字声明多个程序，在运行时根据参数的数目和数据类型调用正确的程序。
+
+分为两部分:包头和包体
+创建包头
+
+    CREATE [OR REPLACE] PACKAGE package_name  
+    {AS|IS}  
+    public_variable_declarations |  
+    public_type_declarations |  
+    public_exception_declarations |  
+    public_cursor_declarations |  
+    function_declarations |  
+    procedure_specifications  
+    END [package_name]  
+
+创建包主体使用CREATE PACKAGE BODY语句：
+
+    CREATE [OR REPLACE] PACKAGE BODY package_name  
+    {AS|IS}  
+    private_variable_declarations |  
+    private_type_declarations |  
+    private_exception_declarations |  
+    private_cursor_declarations |  
+    function_declarations |  
+    procedure_specifications  
+    END [package_name]
+
+以下是完是一个比较简单的示例：
+scott@ORCL2> create or replace package pg_myfirst
+  2  is
+  3  procedure sp_emp_insert;
+  4  function f_getename(i_empno number) return varchar2;
+  5  end pg_myfirst;
+  6  /
+程序包已创建。
+scott@ORCL2> create or replace package body pg_myfirst
+  2  is
+  3  procedure sp_emp_insert
+  4  is
+  5  begin
+  6  insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno)
+  7  values(7384,'WangYi','SALESMAN',7698,to_date('2011-07-29','yyyy-mm-dd'),125
+0.00,1400.00,30);
+  8  commit;
+  9  end;
+ 10  function f_getename(i_empno number)
+ 11  return varchar2
+ 12  is
+ 13  v_ename varchar2(200);
+ 14  begin
+ 15  select ename into v_ename from emp where empno=i_empno;
+ 16  return v_ename;
+ 17  end;
+ 18  end;
+ 19  /
+程序包体已创建。
+scott@ORCL2> call pg_myfirst.sp_emp_insert();
+调用完成。
+scott@ORCL2> select pg_myfirst.f_getename(7384) from dual;
+PG_MYFIRST.F_GETENAME(7384)
+--------------------------------------------------------------------------------
+--------------------
+WangYi

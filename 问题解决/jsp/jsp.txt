@@ -1,0 +1,21 @@
+jsp的执行过程
+1.客户端发送ruquest(请求)
+2.jsp Container将jsp转译成serlvet的源代码
+3.将产生的servlet的源代码经过编译后并加载到内存执行4.把结果respons(相应)至客户端
+注意哦:jsp的执行和servlet差不多就是第一次的执行因为jsp在第一次执行时就会被编译为servelt的类文件当在重复调用时就执行第一次所产生的servlet 而不用重新编译(所以jsp第一次执行的时间会长一点其他的和servlet的相同)
+jsp转译期间主要做了两件事将jsp网页转译为servlet源代码(.java文件)此段称为转译然后将servlet源代码编译为servlet类(.class)此段称为编译段
+jsp的过程jspinit()方法:但jsp网页一开始执行时最先执行此方法(初始化方法)
+destroy()方法最后执行的方法
+service()方法用于编译执行jsp程序主要的程序都在这个方法中
+指令page指令 page language="java"
+extends=""继承哪个父类 import 定义jsp网页可以使用哪些javaAPI session ="true|false"
+决定jsp网页是否可以使用session对象默认时true  ,page buffer="none|size in kb"决定输出流是否有缓冲区默认有8kb
+	autoFlush="true|false"决定输出流是否要自动清除缓冲区满了会产生异常(Exception)默认为true 
+isThreadSafe="true|false" 主要是告诉jsp container次jsp网页能处理超过一个以上的请求默认为true 如果次值为false singleThreadModel会被使用
+一个jsp网页如果同时要导入很多文件时
+<%@page import="java.util.date"%>
+<%@page import="java.text.*"%>可以有如下简写:<%@page import="java.util.date,java.text.*"%>
+
+jsp中使用:
+表达式<%不能用分号结束表达式%>
+	

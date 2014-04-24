@@ -1,0 +1,19 @@
+游标(显示和隐式)：声明游标，打开游标，提取游标，关闭游标.
+声明游标declare  
+id number(2);
+name varchar2(12);
+定义游标：CURSOP 游标名  IS
+判断条件：
+
+select  * from 表名 where  id=12；
+begin
+open 游标名-打开游标
+使用游标之前一定要打开游标。
+
+declare 
+cursor c_job is select empno,ename,job,sal from emp where job='manager';
+----定义一个游标变量v_cinfo c_emp%rowtype
+
+
+
+
