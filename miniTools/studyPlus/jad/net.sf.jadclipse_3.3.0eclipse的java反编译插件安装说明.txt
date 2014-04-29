@@ -1,0 +1,2 @@
+安装方式和svn.link的link安装方式一样但这里是jar包的形式要注意:eclipse/plugins这个目录是不能改变的也就是说jar包必须放到这个目录下:
+在eclipse下安装成功之后回下windows--preferences--java---jadClipse选项
