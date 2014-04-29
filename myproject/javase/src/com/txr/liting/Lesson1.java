@@ -13,7 +13,7 @@ import org.junit.Test;
  */
 public class Lesson1 {
 	public static void main(String[] args) {
-		
+//		Lesson1.testS();//调用静态方法
 	}
 	@Test
 	public void test1(){
@@ -38,5 +38,16 @@ public class Lesson1 {
 		
 	}
 		return new_str;
+	}
+	public static void testS(){
+		/**
+		 * 
+		 *static关键字修饰的方法是:静态方法~属于整个类 的方法调用的时候直接使用类名.静态方法名();
+		 */
+		System.out.println("静态方法");
+	}
+	final void testF(){
+		
+		//=最终的方法:使用该方法的时候父类定义了 子类就不能够重写:此方法是最终的
 	}
 }
