@@ -77,7 +77,22 @@ public class SystemT {
 		System.err.println("输入的数字乘以8的结果是:"+(num<<3));
 		System.err.println("输入的数字乘以16的结果是:"+(num<<4));
 		/*从上面可以看出一个数字执行左移n次运算就相当于这个数乘与2的n次方*/
-		
-		
 	}
+@Test
+public void changePass(){
+	System.err.println("输入用户名:");
+	String uname=sc.nextLine();
+	System.err.println("输入密码:");
+	String upass=sc.nextLine();
+	if(!uname.equals("123")){
+		System.out.println("用户名错误");
+		
+		
+	}else if(!upass.equals("123")){
+		System.out.println("密码错误");
+	}else{
+		System.out.println("欢迎"+uname);
+	}
+	
+}
 }
