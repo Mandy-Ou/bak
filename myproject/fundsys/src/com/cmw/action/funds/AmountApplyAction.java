@@ -21,14 +21,18 @@ import com.cmw.core.util.FastJsonUtil;
 import com.cmw.core.util.FastJsonUtil.Callback;
 import com.cmw.core.util.JsonUtil;
 import com.cmw.core.util.SHashMap;
+import com.cmw.core.util.SqlUtil;
 import com.cmw.core.util.StringHandler;
 import com.cmw.entity.funds.AmountApplyEntity;
 import com.cmw.entity.sys.BussProccEntity;
 import com.cmw.entity.sys.UserEntity;
+import com.cmw.entity.sys.VarietyEntity;
 import com.cmw.service.impl.cache.BussProccCache;
 import com.cmw.service.impl.workflow.BussProccFlowService;
 import com.cmw.service.inter.funds.AmountApplyService;
+import com.cmw.service.inter.sys.BussProccService;
 import com.cmw.service.inter.sys.FormCfgService;
+import com.cmw.service.inter.sys.VarietyService;
 
 
 /**
@@ -44,8 +48,13 @@ public class AmountApplyAction extends BaseAction {
 	private String result = ResultMsg.GRID_NODATA;
 	@Resource(name="formCfgService")
 	private FormCfgService formCfgService;
-	@Resource(name="bussProccFlowService")
+	@Resource(name="bussProccFlowService") 
 	private BussProccFlowService bussProccFlowService;
+	@Resource(name="bussProccService")
+	private BussProccService bussProccService;
+	@Resource(name="varietyService")
+	private VarietyService varietyService;
+	
 	/**
 	 * 获取 委托合同 列表
 	 * @return
@@ -57,6 +66,9 @@ public class AmountApplyAction extends BaseAction {
 			map.put(SysConstant.USER_KEY, this.getCurUser());
 			map.put("actionType", SysConstant.ACTION_TYPE_APPLYFORM_AUDIT_0);
 			DataTable dt = amountApplyService.getResultList(map,getStart(),getLimit());
+			if(null != dt || dt.getRowCount() > 0){
+				setNameProce(dt);
+			}
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
@@ -70,10 +82,35 @@ public class AmountApplyAction extends BaseAction {
 		outJsonString(result);
 		return null;
 }
-	
-	
-
-
+	/**
+	 * 
+	 * @param dt
+	 * @throws ServiceException
+	 */
+	private void setNameProce(DataTable dt) throws ServiceException {
+		SHashMap<Object, Object> params = new SHashMap<Object, Object>();
+		params.put("isenabled", SqlUtil.LOGIC_NOT_EQ+SqlUtil.LOGIC+SysConstant.OPTION_DEL);
+		for(int i=0,count = dt.getRowCount();i<count;i++){
+			String productsId = dt.getString(i, "productsId");
+			if(StringHandler.isValidStr(productsId)){
+				if(params.validKey("id")){
+					params.remove("id");
+				}
+				params.put("id", SqlUtil.LOGIC_IN+SqlUtil.LOGIC+productsId);
+				List<VarietyEntity>  bussProccEntityList = varietyService.getEntityList(params);
+				if( bussProccEntityList != null && bussProccEntityList.size()>0){
+					StringBuffer sb = new StringBuffer();
+					for(VarietyEntity x : bussProccEntityList){
+						String name = x.getName();
+						sb.append(name+",");
+					}
+					String dtName = StringHandler.RemoveStr(sb);
+					dt.setCellData(i, "productsId", dtName);
+				}
+				
+			}
+		}
+	}
 /**
  * 获取 展期审批待办 列表
  * @return		
@@ -90,6 +127,9 @@ public String auditlist()throws Exception {
 			map.put("procIds", procIds);
 		}
 		DataTable dt = amountApplyService.getResultList(map,getStart(),getLimit());
+		if(null != dt || dt.getRowCount() > 0){
+			setNameProce(dt);
+		}
 		result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
 	} catch (ServiceException ex){
 		result = ResultMsg.getFailureMsg(this,ex.getMessage());
@@ -120,6 +160,9 @@ public String  auditAll()throws Exception {
 			map.put("procIds", procIds);
 		}
 		DataTable dt = amountApplyService.getResultList(map,getStart(),getLimit());
+		if(null != dt || dt.getRowCount() > 0){
+			setNameProce(dt);
+		}
 		result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
 	} catch (ServiceException ex){
 		result = ResultMsg.getFailureMsg(this,ex.getMessage());
@@ -163,6 +206,7 @@ public String auditHistory()throws Exception {
 	outJsonString(result);
 	return null;
 }
+
 	
 	/**
 	 * 获取 委托合同 详情
@@ -173,7 +217,10 @@ public String auditHistory()throws Exception {
 		try {
 			String id = getVal("id");
 			if(!StringHandler.isValidStr(id)) throw new ServiceException(ServiceException.ID_IS_NULL);
-			AmountApplyEntity entity = amountApplyService.getEntity(Long.parseLong(id));
+//			SHashMap<Object, String> map =new SHashMap<Object, String>();
+//			map.put("id", id);
+//			DataTable entity = amountApplyService.getResultList(map);
+			AmountApplyEntity entity=	amountApplyService.getEntity(Long.parseLong(id));
 			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
 				public void execute(JSONObject jsonObj) {
 					
@@ -200,9 +247,11 @@ public String auditHistory()throws Exception {
 	public String save()throws Exception {
 		try {
 			AmountApplyEntity entity = BeanUtil.copyValue(AmountApplyEntity.class,getRequest());
-//			entity.setBreed(-1L);
 			amountApplyService.saveOrUpdateEntity(entity);
-			result = ResultMsg.getSuccessMsg(this,entity, ResultMsg.SAVE_SUCCESS);
+			Map<String,Object> appnendMap = new HashMap<String, Object>();
+			appnendMap.put("applyId", entity.getId());
+			appnendMap.put("entrustCustId", entity.getEntrustCustId());
+			result = ResultMsg.getSuccessMsg(appnendMap);
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
 			if(null == result) result = ex.getMessage();
@@ -349,6 +398,43 @@ public String auditHistory()throws Exception {
 		outJsonString(result);
 		return null;
 	}
+	public String lget()throws Exception {
+		try {
+			Long id = getLVal("id");
+			if(!StringHandler.isValidObj(id)) throw new ServiceException(ServiceException.ID_IS_NULL);
+			SHashMap<String, Object> params=new SHashMap<String, Object>();
+			params.put("id", id);
+			DataTable dt = amountApplyService.getResultList(params, -1, -1);
+			if(null != dt || dt.getRowCount() > 0){
+				setNameProce(dt);
+			}
+			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonObjStr();
+//			result =FastJsonUtil.convertJsonToStr(dtResult,new Callback(){
+//				@Override
+//				public void execute(JSONObject jsonObj) {
+//					Long productsId = jsonObj.getLong("productsId");
+//					try {
+//						if(StringHandler.isValidObj(productsId)){
+//							VarietyEntity creatorObj=varietyService.getEntity(productsId);
+//							if(null != creatorObj) jsonObj.put("productsId", creatorObj.getName());
+//						}
+//					} catch (ServiceException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			});
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
 	
 	/**
 	 * 获取委托合同申请单的 详情
@@ -379,6 +465,7 @@ public String auditHistory()throws Exception {
 					dtResult.appendData("bussFormDatas", new Object[]{bussFormDatas});
 				}
 			}
+			getOn(dtResult);
 			result = dtResult.getJsonObjStr();
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
@@ -392,6 +479,20 @@ public String auditHistory()throws Exception {
 		outJsonString(result);
 		return null;
 	}
+	private void getOn(DataTable dtResult) throws ServiceException {
+		for(int i=0,count = dtResult.getRowCount();i<count;i++){
+			String productsId = dtResult.getString(i, "productsId");
+			if(StringHandler.isValidStr(productsId)){
+				Long breed=Long.parseLong(productsId);
+				VarietyEntity creatorObj=varietyService.getEntity(breed);
+//							StringBuffer sb = new StringBuffer();
+//							String dtName = StringHandler.RemoveStr(sb);
+				if(StringHandler.isValidObj(creatorObj)){
+				 dtResult.setCellData(i, "productsId", creatorObj.getName());
+				}
+			}
+		}
+	}
 
 	/**
 	 * 获取业务表单菜单数据
@@ -400,7 +501,7 @@ public String auditHistory()throws Exception {
 	 * @param procId
 	 * @return
 	 * @throws ServiceException
-	 */
+ 	 */
 	private JSONObject getBussFormDatas(Long id, String pdid, String procId)
 			throws ServiceException {
 		SHashMap<String, Object> formParams = new SHashMap<String, Object>();
@@ -413,8 +514,4 @@ public String auditHistory()throws Exception {
 		final JSONObject bussFormDatas = formCfgService.getBussFormDatas(formParams);
 		return bussFormDatas;
 	}
-	
-	
-	
-	
 }

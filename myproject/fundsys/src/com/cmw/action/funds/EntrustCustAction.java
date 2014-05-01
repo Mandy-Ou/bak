@@ -2,6 +2,7 @@ package com.cmw.action.funds;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,6 +16,7 @@ import com.cmw.core.base.exception.ServiceException;
 import com.cmw.core.util.BeanUtil;
 import com.cmw.core.util.CodeRule;
 import com.cmw.core.util.DataTable;
+import com.cmw.core.util.SqlUtil;
 import com.cmw.core.util.DataTable.JsonDataCallback;
 import com.cmw.core.util.FastJsonUtil;
 import com.cmw.core.util.FastJsonUtil.Callback;
@@ -22,11 +24,14 @@ import com.cmw.core.util.JsonUtil;
 import com.cmw.core.util.SHashMap;
 import com.cmw.core.util.StringHandler;
 import com.cmw.entity.funds.EntrustCustEntity;
+import com.cmw.entity.sys.BussProccEntity;
 import com.cmw.entity.sys.RestypeEntity;
 import com.cmw.entity.sys.UserEntity;
 import com.cmw.entity.sys.VarietyEntity;
 import com.cmw.service.impl.cache.UserCache;
 import com.cmw.service.inter.funds.EntrustCustService;
+import com.cmw.service.inter.sys.BussProccService;
+import com.cmw.service.inter.sys.GvlistService;
 import com.cmw.service.inter.sys.RestypeService;
 import com.cmw.service.inter.sys.VarietyService;
 
@@ -44,8 +49,13 @@ public class EntrustCustAction extends BaseAction {
 	private EntrustCustService entrustCustService;
 	@Resource(name="restypeService")
 	private RestypeService restypeService;
+	@Resource(name="gvlistService")
+	private GvlistService gvlistService;
 	@Resource(name="varietyService")
 	private VarietyService varietyService;
+	@Resource(name="bussProccService")
+	private BussProccService bussProccService;
+	
 	private String result = ResultMsg.GRID_NODATA;
 	/**
 	 * 获取 委托客户资料 列表
@@ -74,15 +84,163 @@ public class EntrustCustAction extends BaseAction {
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr(new JsonDataCallback(){
 				public void makeJson(JSONObject jsonObj) {
 					Long creator = jsonObj.getLong("creator");
+					String key=jsonObj.getString("products");
 					try {
+						if(null!=key&&""!=key){
+							Long products =Long.parseLong(key);
+							VarietyEntity entity=	varietyService.getEntity(products);
+							if(StringHandler.isValidObj(products)&&StringHandler.isValidObj(entity)){
+								jsonObj.put("products", entity.getName());
+							} 
+						}
 						UserEntity creatorObj = UserCache.getUser(creator);
 						if(null != creatorObj) jsonObj.put("creator", creatorObj.getEmpName());
 					} catch (ServiceException e) {
 						e.printStackTrace();
 					}
 				}
-				
 			});
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+	
+	/**
+	 * 获取 委托客户资料 列表
+	 * @return
+	 * @throws Exception
+	 */
+	public String listCus()throws Exception {
+		try {
+			Integer status=getIVal("status");
+			String name=getVal("name");
+			String startDate1=getVal("startDate1");
+			String endDate1=getVal("endDate1");
+			String phone=getVal("phone");
+			String contactTel=getVal("contactTel");
+			String inAddress=getVal("inAddress");
+			SHashMap<String, Object> map = new SHashMap<String, Object>();
+			map.put("status", status);
+			map.put("name", name);
+			map.put("startDate1", startDate1);
+			map.put("endDate1", endDate1);
+			map.put("phone", phone);
+			map.put("contactTel", contactTel);
+			map.put("inAddress", inAddress);
+			map.put(SysConstant.USER_KEY, this.getCurUser());
+			DataTable dt = entrustCustService.getResultList(map,getStart(),getLimit());
+			if(null != dt || dt.getRowCount() > 0){
+				setNameProce(dt);
+			}
+			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param dt
+	 * @throws ServiceException
+	 */
+	private void setNameProce(DataTable dt) throws ServiceException {
+		SHashMap<Object, Object> params = new SHashMap<Object, Object>();
+		params.put("isenabled", SqlUtil.LOGIC_NOT_EQ+SqlUtil.LOGIC+SysConstant.OPTION_DEL);
+		for(int i=0,count = dt.getRowCount();i<count;i++){
+			String productsId = dt.getString(i, "products");
+			if(StringHandler.isValidStr(productsId)){
+				if(params.validKey("id")){
+					params.remove("id");
+				}
+				params.put("id", SqlUtil.LOGIC_IN+SqlUtil.LOGIC+productsId);
+				List<BussProccEntity>  bussProccEntityList = bussProccService.getEntityList(params);
+				if( bussProccEntityList != null && bussProccEntityList.size()>0){
+					StringBuffer sb = new StringBuffer();
+					for(BussProccEntity x : bussProccEntityList){
+						String name = x.getName();
+						sb.append(name+",");
+					}
+					String dtName = StringHandler.RemoveStr(sb);
+					dt.setCellData(i, "products", dtName);
+				}
+				
+			}
+		}
+	}
+	/**
+	 * 获取 委托客户资料 列表
+	 * @return
+	 * @throws Exception
+	 */
+	public String listOne()throws Exception {
+		try {
+			Long id= getLVal("id");
+			SHashMap<String, Object> map = new SHashMap<String, Object>();
+			map.put("id",id);
+			map.put(SysConstant.USER_KEY, this.getCurUser());
+			DataTable dt = entrustCustService.getResultList(map,-1,-1);
+			result =  FastJsonUtil.convertJsonToStr(dt,new Callback(){
+				public void execute(JSONObject jsonObj) {
+					Long creator = jsonObj.getLong("creator");
+					Long products = jsonObj.getLong("products");
+					try {
+					 RestypeEntity entity=	restypeService.getEntity(products);
+						UserEntity creatorObj = UserCache.getUser(creator);
+						if(null != creatorObj) jsonObj.put("creator", creatorObj.getEmpName());
+						if(null != products) jsonObj.put("products", entity.getName());
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+	public String lget()throws Exception {
+		try {
+			Long id= getLVal("id");
+			SHashMap<String, Object> map = new SHashMap<String, Object>();
+			map.put("id",id);
+			map.put(SysConstant.USER_KEY, this.getCurUser());
+			DataTable dt = entrustCustService.getResultList(map,-1,-1);
+//			if(s!=""&&null!=s){
+//				Long products=Long.parseLong(s);
+//				RestypeEntity entity=restypeService.getEntity(products);
+//				if(null != products) jsonobj.put("products", entity.getName());
+//			}
+			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA :dt.toString();
+			for(int i=0;i<result.length();i++){
+				JSONObject jsonobj=dt.getJsonObj();
+				String s= (String) jsonobj.get("products");
+				
+				dt.setCellData(i, "products", dtName);
+				
+			}
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
 			if(null == result) result = ex.getMessage();
@@ -190,8 +348,8 @@ public class EntrustCustAction extends BaseAction {
 		try {
 			Long id=getLVal("id");
 			EntrustCustEntity entity = BeanUtil.copyValue(EntrustCustEntity.class,getRequest());
-			System.out.println(id);
 			entity.setId(id);
+			entity.setBreed(Long.valueOf(-1));//设置breed为-1以后添加的时候会扩展
 			entrustCustService.saveOrUpdateEntity(entity);
 			Long saveafterId = entity.getId();
 			HashMap<String, Object> params = new HashMap<String, Object>();

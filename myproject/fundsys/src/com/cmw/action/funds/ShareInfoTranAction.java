@@ -1,31 +1,29 @@
 package com.cmw.action.funds;
 
 
-import javax.annotation.Resource;
-
-import com.cmw.core.base.annotation.Description;
-import com.cmw.constant.ResultMsg;
-import com.cmw.constant.SysConstant;
-import com.cmw.core.base.action.BaseAction;
-import com.cmw.core.base.exception.ServiceException;
-import com.cmw.core.util.BeanUtil;
-import com.cmw.core.util.CodeRule;
-import com.cmw.core.util.DataTable;
-import com.alibaba.fastjson.JSONObject;
-import com.cmw.core.util.FastJsonUtil;
-import com.cmw.core.util.FastJsonUtil.Callback;
-import com.cmw.core.util.JsonUtil;
-import com.cmw.core.util.SHashMap;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import com.alibaba.fastjson.JSONObject;
+import com.cmw.constant.ResultMsg;
+import com.cmw.constant.SysConstant;
+import com.cmw.core.base.action.BaseAction;
+import com.cmw.core.base.annotation.Description;
+import com.cmw.core.base.exception.ServiceException;
+import com.cmw.core.util.BeanUtil;
+import com.cmw.core.util.CodeRule;
+import com.cmw.core.util.DataTable;
+import com.cmw.core.util.FastJsonUtil;
+import com.cmw.core.util.FastJsonUtil.Callback;
+import com.cmw.core.util.JsonUtil;
+import com.cmw.core.util.SHashMap;
 import com.cmw.core.util.StringHandler;
-import com.cmw.entity.funds.BackInvoceEntity;
-import com.cmw.entity.funds.BackReceiptEntity;
+import com.cmw.entity.funds.CapitalPairEntity;
 import com.cmw.entity.funds.ShareInfoTranEntity;
-import com.cmw.service.inter.funds.BackInvoceService;
+import com.cmw.entity.sys.UserEntity;
 import com.cmw.service.inter.funds.ShareInfoTranService;
 
 
@@ -49,6 +47,7 @@ public class ShareInfoTranAction extends BaseAction {
 	public String list()throws Exception {
 		try {
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
+			map.put(SysConstant.USER_KEY, this.getCurUser());
 			DataTable dt = shareInfoTranService.getResultList(map);
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
 		} catch (ServiceException ex){
@@ -63,13 +62,17 @@ public class ShareInfoTranAction extends BaseAction {
 		outJsonString(result);
 		return null;
 	}
-	
 	public String listAll()throws Exception {
 		try {
 			Long formid=getLVal("formid");
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
-			map.put("formId",formid);
-			DataTable dt = shareInfoTranService.getResultList(map, -1, -1);
+			map.put("formid", formid);
+			map.put(SysConstant.USER_KEY, this.getCurUser());
+			DataTable dt = shareInfoTranService.getResultList(map,getStart(),getLimit());
+//			List<Object> dtL = dt.getDataSource();
+//			Map<String, Object> value=new HashMap<String,Object>();
+//			value.put("jsonData", dtL);
+//			shareInfoTranService.doComplexBusss(value);
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
@@ -118,9 +121,17 @@ public class ShareInfoTranAction extends BaseAction {
 	 */
 	public String save()throws Exception {
 		try {
-			ShareInfoTranEntity entity = BeanUtil.copyValue(ShareInfoTranEntity.class,getRequest());
-			shareInfoTranService.saveOrUpdateEntity(entity);
-			result = ResultMsg.getSuccessMsg(this,entity, ResultMsg.SAVE_SUCCESS);
+			String Edit = getVal("Edit");
+			UserEntity userEntity = this.getCurUser();
+			List<ShareInfoTranEntity> list = FastJsonUtil.convertJsonToList(Edit,
+					ShareInfoTranEntity.class);
+			for (ShareInfoTranEntity capitalPairEntity : list) {
+				BeanUtil.setCreateInfo(userEntity, capitalPairEntity);
+			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			shareInfoTranService.doComplexBusss(map);
+			result = ResultMsg.getSuccessMsg(ResultMsg.SAVE_SUCCESS);
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
 			if(null == result) result = ex.getMessage();
@@ -133,7 +144,6 @@ public class ShareInfoTranAction extends BaseAction {
 		outJsonString(result);
 		return null;
 	}
-	
 	
 	/**
 	 * 新增  汇票回款单表 

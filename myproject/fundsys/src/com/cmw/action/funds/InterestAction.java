@@ -28,6 +28,7 @@ import com.cmw.entity.funds.EntrustCustEntity;
 import com.cmw.entity.funds.InterestEntity;
 import com.cmw.entity.funds.InterestRecordsEntity;
 import com.cmw.entity.sys.UserEntity;
+import com.cmw.entity.sys.VarietyEntity;
 import com.cmw.service.impl.cache.UserCache;
 import com.cmw.service.inter.funds.EntrustContractService;
 import com.cmw.service.inter.funds.EntrustCustService;
@@ -208,6 +209,31 @@ public class InterestAction extends BaseAction {
 		outJsonString(result);
 		return null;
 	}
+	
+	public String getTest()throws Exception {
+		try {
+			String applyId = getVal("applyId");
+			if(!StringHandler.isValidStr(applyId)) throw new ServiceException(ServiceException.ID_IS_NULL);
+			SHashMap<Object, Object> map=new SHashMap<Object, Object>();
+			map.put("applyId", applyId);
+			EntrustContractEntity entity = entrustContractService.getEntity(map);
+			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
+				@Override
+				public void execute(JSONObject jsonObj) {}
+			});
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+	
 	/**
 	 * 保存 委托客户资料 
 	 * @return

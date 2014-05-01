@@ -121,7 +121,7 @@ public class AgreeBookAction extends BaseAction {
 		try {
 			Long formId = getLVal("formId");
 			Long customerId = getLVal("customerId");
-			if (!StringHandler.isValidObj(formId))
+			if(!StringHandler.isValidObj(formId))
 				throw new ServiceException(ServiceException.ID_IS_NULL);
 			SHashMap<String, Object> params=new SHashMap<String, Object>();
 			params.put("formId", formId);

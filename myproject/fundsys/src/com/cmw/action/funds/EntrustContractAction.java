@@ -1,8 +1,6 @@
 package com.cmw.action.funds;
 
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +26,15 @@ import com.cmw.entity.funds.AmountApplyEntity;
 import com.cmw.entity.funds.EntrustContractEntity;
 import com.cmw.entity.funds.EntrustCustEntity;
 import com.cmw.entity.sys.BussProccEntity;
+import com.cmw.entity.sys.UserEntity;
+import com.cmw.entity.sys.VarietyEntity;
 import com.cmw.service.impl.cache.BussProccCache;
+import com.cmw.service.impl.cache.UserCache;
 import com.cmw.service.inter.funds.AmountApplyService;
 import com.cmw.service.inter.funds.EntrustContractService;
 import com.cmw.service.inter.funds.EntrustCustService;
 import com.cmw.service.inter.sys.FormCfgService;
+import com.cmw.service.inter.sys.VarietyService;
 
 
 /**
@@ -49,6 +51,8 @@ public class EntrustContractAction extends BaseAction {
 	private AmountApplyService amountApplyService;
 	@Resource(name="entrustCustService")
 	private EntrustCustService entrustCustService;
+	@Resource(name="varietyService")
+	private VarietyService varietyService;
 	private String result = ResultMsg.GRID_NODATA;
 	@Resource(name="formCfgService")
 	private FormCfgService formCfgService;
@@ -102,8 +106,17 @@ public class EntrustContractAction extends BaseAction {
 			map.put("applyId", applyId);
 			EntrustContractEntity entity = entrustContractService.getEntity(map);
 			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
+				@Override
 				public void execute(JSONObject jsonObj) {
-					
+					Long productsId = jsonObj.getLong("productsId");
+					try {
+						if(StringHandler.isValidObj(productsId)){
+							VarietyEntity creatorObj=varietyService.getEntity(productsId);
+							if(null != creatorObj) jsonObj.put("productsId", creatorObj.getName());
+						}
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
 				}
 			});
 		} catch (ServiceException ex){
@@ -154,12 +167,10 @@ public class EntrustContractAction extends BaseAction {
 	public String save()throws Exception {
 		try {
 			EntrustContractEntity entity = BeanUtil.copyValue(EntrustContractEntity.class,getRequest());
-			entity.setDelayCount(-1);
-			entity.setBstatus(-1);
-			entity.setBamount(new BigDecimal(-1));
-			entity.setUamount(new BigDecimal(-1));
 			entrustContractService.saveOrUpdateEntity(entity);
-			result = ResultMsg.getSuccessMsg(this,entity, ResultMsg.SAVE_SUCCESS);
+			Map<String,Object> appnendMap = new HashMap<String, Object>();
+			appnendMap.put("id", entity.getId());
+			result = ResultMsg.getSuccessMsg(appnendMap);
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
 			if(null == result) result = ex.getMessage();

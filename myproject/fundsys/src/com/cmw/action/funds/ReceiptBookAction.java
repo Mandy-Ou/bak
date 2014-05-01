@@ -101,6 +101,7 @@ public class ReceiptBookAction extends BaseAction {
 	public String save()throws Exception {
 		try {
 			String id = getVal("id");
+			String receiptId = getVal("receiptId");
 			String receiptBook = getVal("receiptBook");
 			String attachmentList= getVal("attachmentList");//数组中含有数组，将[]去掉
 			attachmentList=attachmentList.substring(1, attachmentList.length()-1);
@@ -115,8 +116,12 @@ public class ReceiptBookAction extends BaseAction {
 			complexData.put("receiptBookEntities", receiptBookEntities);
 			complexData.put("receiptBookAttachmentEntities", receiptBookAttachmentEntities);
 			complexData.put("settlementEntities", settlementEntities);
-			if(null != id){
+			complexData.put("userEntity", this.getCurUser());
+			if(null != id && !"".equals(id) && !"null".equals(id)){
 				complexData.put("id",Long.parseLong(id));
+			}
+			if( null != receiptId && !"".equals(receiptId)){
+				complexData.put("receiptId",Long.parseLong(receiptId));
 			}
 			receiptBookService.doComplexBusss(complexData);
 			result = ResultMsg.getSuccessMsg(this, ResultMsg.SAVE_SUCCESS);

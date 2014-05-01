@@ -97,13 +97,18 @@ public class BackReceiptAction extends BaseAction {
 	 */
 	public String save()throws Exception {
 		try {
+			Map<String, Object> complexData = new HashMap<String, Object>();
 			String backReceipt = getVal("backReceipt");
 			String backInvoce = getVal("backInvoce");
-			List<BackReceiptEntity> backReceiptEntities = FastJsonUtil.convertJsonToList(backReceipt, BackReceiptEntity.class);
-			List<BackInvoceEntity> backInvoceEntities = FastJsonUtil.convertJsonToList(backInvoce, BackInvoceEntity.class);
-			Map<String, Object> complexData = new HashMap<String, Object>();
-			complexData.put("backReceiptEntities", backReceiptEntities);
-			complexData.put("backInvoceEntities", backInvoceEntities);
+			if( null != backReceipt && !"".equals(backReceipt)){
+				List<BackReceiptEntity> backReceiptEntities = FastJsonUtil.convertJsonToList(backReceipt, BackReceiptEntity.class);
+				complexData.put("backReceiptEntities", backReceiptEntities);
+			}
+			if( null != backInvoce && !"".equals(backInvoce) ){
+				List<BackInvoceEntity> backInvoceEntities = FastJsonUtil.convertJsonToList(backInvoce, BackInvoceEntity.class);
+				complexData.put("backInvoceEntities", backInvoceEntities);
+			}
+			complexData.put("userEntity", this.getCurUser());
 			backReceiptService.doComplexBusss(complexData);
 			result = ResultMsg.getSuccessMsg(this, ResultMsg.SAVE_SUCCESS);
 		} catch (ServiceException ex){

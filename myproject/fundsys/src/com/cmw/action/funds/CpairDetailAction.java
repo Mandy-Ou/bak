@@ -14,13 +14,13 @@ import com.cmw.constant.SysConstant;
 import com.cmw.core.base.action.BaseAction;
 import com.cmw.core.base.annotation.Description;
 import com.cmw.core.base.exception.ServiceException;
+import com.cmw.core.util.BeanUtil;
 import com.cmw.core.util.BigDecimalHandler;
 import com.cmw.core.util.CodeRule;
 import com.cmw.core.util.DataTable;
 import com.cmw.core.util.DataTable.JsonDataCallback;
 import com.cmw.core.util.FastJsonUtil;
 import com.cmw.core.util.FastJsonUtil.Callback;
-import com.cmw.core.util.BeanUtil;
 import com.cmw.core.util.JsonUtil;
 import com.cmw.core.util.SHashMap;
 import com.cmw.core.util.StringHandler;
@@ -35,7 +35,6 @@ import com.cmw.service.inter.funds.CapitalPairService;
 import com.cmw.service.inter.funds.CpairDetailService;
 import com.cmw.service.inter.funds.EntrustContractService;
 import com.cmw.service.inter.sys.RestypeService;
-import com.cmw.service.inter.sys.VarietyService;
 
 /**
  * 资金配对ACTION
@@ -93,8 +92,7 @@ public class CpairDetailAction extends BaseAction {
 								UserEntity creatorObj = UserCache
 										.getUser(creator);
 								if (null != creatorObj)
-									jsonObj.put("creator",
-											creatorObj.getEmpName());
+									jsonObj.put("creator",creatorObj.getEmpName());
 							} catch (ServiceException e) {
 								e.printStackTrace();
 							}
@@ -235,14 +233,11 @@ public class CpairDetailAction extends BaseAction {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				BigDecimal amt = jsonObject.getBigDecimal("amt");
 				Long id = jsonObject.getLong("id");
-				EntrustContractEntity entrustContractEntity = entrustContractService
-						.getEntity(id);
+				EntrustContractEntity entrustContractEntity = entrustContractService.getEntity(id);
 				BigDecimal appamount = entrustContractEntity.getAppAmount();
-				entrustContractEntity.setUamount(BigDecimalHandler
-						.sub2BigDecimal(appamount, amt));
+				entrustContractEntity.setUamount(BigDecimalHandler.sub2BigDecimal(appamount, amt));
 			}
-			List<CapitalPairEntity> list = FastJsonUtil.convertJsonToList(Edit,
-					CapitalPairEntity.class);
+			List<CapitalPairEntity> list = FastJsonUtil.convertJsonToList(Edit,CapitalPairEntity.class);
 			for (CapitalPairEntity capitalPairEntity : list) {
 				BeanUtil.setCreateInfo(userEntity, capitalPairEntity);
 			}
