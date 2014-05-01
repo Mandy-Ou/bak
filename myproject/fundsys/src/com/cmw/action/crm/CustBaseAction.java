@@ -189,6 +189,7 @@ public class CustBaseAction extends BaseAction {
 			appendParams.put("code", code);
 			appendParams.put("custLevel", custLevel);
 			appendParams.put("cardNum", cardNum);
+			appendParams.put("custType", custType);
 			result = ResultMsg.getSuccessMsg(customerEntityObj, appendParams);
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
