@@ -1,0 +1,10 @@
+index.php名称随意改，可以改成index.asp或者index.html都可以，内容自行更改，如可能请保留版权。
+
+flash文件夹内为首页的播放器目录,dj.xml为歌曲目录，这是一个CMP播放器，不明白如何改可以自己看CMP播放器说明。
+
+images下面有一个PSD图为首页头部图片，用photoshop打开自己修改。
+
+作者：蓝叶 演示：http://music.lanyes.org 博客: http://lanyes.org
+
+需安全稳定音乐视频外链空间请联系蓝叶。
+
