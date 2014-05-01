@@ -43,11 +43,13 @@ public class AppraiseAction extends BaseAction {
 	@Resource(name="varietyService")
 	private VarietyService varietyService;	
 	private String result = ResultMsg.GRID_NODATA;
+
 	/**
 	 * 获取 审贷评审 列表
 	 * @return
 	 * @throws Exception
 	 */
+	
 	public String list()throws Exception {
 		try {
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
@@ -71,6 +73,7 @@ public class AppraiseAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
+	
 	public String listVariety()throws Exception {
 		try {
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
