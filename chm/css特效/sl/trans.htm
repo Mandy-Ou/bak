@@ -1,0 +1,34 @@
+<html>
+<head>
+<script language="JavaScript">
+function startTrans()
+{
+window.defaultStatus=SampleID.filters.blendTrans.status;
+SampleID.filters.blendTrans.Apply();
+SampleID.src = "ss01093.jpg";
+SampleID.filters.blendTrans.Play();
+}
+function finishTrans()
+{
+if (SampleID.filters.blendTrans.Status == 0) alert("ÂË¾µÕ¹Ê¾Íê±Ï");
+}
+function doTrans()
+{
+theImg.filters.item(0).Apply();
+theImg.src="ss01093.jpg";
+theImg.filters.item(0).Play();
+}
+</script></head>
+
+<body bgcolor="#FFFFFF">
+
+<img ID="SampleID" src="ss01094.jpg"
+style=" filter:blendTrans(duration=2)" onclick="startTrans()"
+onFilterChange="finishTrans()" width="225" height="180">
+
+<img ID="theImg" src="ss01094.jpg"
+style="filter:revealTrans(Duration=3, Transition=23)" onClick="doTrans()"
+onFilterChange="finishTrans()" width="225" height="180">
+
+</body>
+</html> 

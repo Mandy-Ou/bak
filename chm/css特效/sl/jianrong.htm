@@ -1,0 +1,30 @@
+<HTML>
+  <HEAD>
+    <SCRIPT LANGUAGE="JavaScript">
+    <!--
+    ns4 = (document.layers)? true:false
+    ie4 = (document.all)? true:false
+
+    function init() {
+      if (ns4) block = document.blockDiv
+      if (ie4) block = blockDiv.style
+    }
+    //-->
+    </SCRIPT>
+  </HEAD>
+
+  <BODY onLoad="init()">
+
+  <A HREF="javascript:alert(block.left)">left</A> -
+  <A HREF="javascript:alert(block.top)">top</A> -
+  <a href="javascript:alert(block.width)">width</a>-
+  <A HREF="javascript:alert(block.visibility)">visibility</A>
+
+  <DIV ID="blockDiv" 
+	STYLE="position:absolute; left:50; top:100; 
+		width:250; visibility:visible;">
+  <IMG SRC="ss01020.jpg" WIDTH=250 HEIGHT=180 BORDER=0>
+  </DIV>
+
+  </BODY>
+</html>

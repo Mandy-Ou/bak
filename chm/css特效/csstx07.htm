@@ -1,0 +1,179 @@
+<html>
+<head>
+<title>洪恩在线 - CSS特效赏析</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="/pub/css/home.css">
+<link rel="stylesheet" href="/pc/homepage/homepage.css">
+<meta name="keywords" content="电脑乐园,电脑,乐园,交互教程,交互,教程,教育,网页制作,CSS,特效,赏析">
+
+</head>
+<body bgcolor="white" text="black" topmargin="10" leftmargin="0" marginwidth="0" marginheight="10"> 
+<!--顶部开始--> 
+<script language="Javascript" src="/pub/js/head.js"></script>
+<!--顶部结束--> 
+<table width="760" height="20" border=0 cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td height=20 class="p1" bgcolor="#E8E8E8" align="left"><img src="/pc/img/blank.gif" width="12" height="8"><font color="#000000"><font color="#FF9966">当前位置</font>：<a href="/default.htm" class="under">洪恩在线</a> 
+      -&gt; <a href="/pc/index.htm" class="under">电脑乐园</a> -&gt; CSS特效赏析</font></td>
+  </tr>
+</table>
+<table width="760" border=0 cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td height="15"></td>
+  </tr>
+</table>
+<table width="760" cellspacing="0" border=0 cellpadding="0" align="center">
+  <tr>
+    <td width="145" valign="top" bgcolor="#E8E8E8" align="left" style="color:blue" class="p1"> 
+      <br>
+      <table width="145" border="0" cellspacing="0" cellpadding="0" bordercolor="#F8AC0E" height="20">
+        <tr bgcolor="000099" valign="middle"> 
+          <td width="115" align="center" class="p2"><b><font color="#FFFFFF">CSS特效赏析</font></b></td>
+          <td height="20" bgcolor="#E8E8E8" width="13"><img src="/pc/img/title_00.gif" width="13" height="20"></td>
+          <td height="20" bgcolor="#E8E8E8" width="17">&nbsp;</td>
+        </tr>
+      </table>
+      <p class="p1" style="line-height:17pt" align="left"> 　1.<a href="csstx01.htm">动态改变样式</a><br>
+        　2.<a href="csstx02.htm">动态可视化效果</a><br>
+        　3.<a href="csstx03.htm">动态滤镜显示</a><br>
+        　4.<a href="csstx04.htm">Blentrans属性</a><br>
+        　5.<a href="csstx05.htm">Revealtrans属性</a><br>
+        　6.<a href="csstx06.htm">动态Glow属性</a><br>
+        　7.<a href="csstx07.htm">显示和隐藏</a><br>
+        　8.<a href="csstx08.htm">兼容两种浏览器</a><br>
+        　9.<a href="csstx09.htm">移动对象</a><br>
+        　10.<a href="csstx10.htm">对象的滑动</a><br>
+        　11.<a href="csstx11.htm">键盘控制对象</a><br>
+        　12.<a href="csstx12.htm">鼠标控制对象</a><br>
+        　13.<a href="csstx13.htm">Clip属性的应用</a><br>
+        　14.<a href="csstx14.htm">动态文字变换</a><br>
+        　15.动态改变页面样式<br>
+        　16.动态时钟控制<br>
+        　17.倒计时<br>
+        　18.动态刷新<br>
+      </p>
+      <p align="center" class=p1> <a href=/pc/bin/msg.pl?file_id=k_csstx target="_blank"><img src="/pc/img/message.gif" width="64" height="54" alt="请您留言" border="0"><br>
+        谈谈您的看法</a> <br>
+        <script language="javascript">
+speak_num="za"
+</script>
+        <script language="javascript" src=/pc/var/pc_k_csstx.js>
+</script>
+        <script language="javascript">
+var num=0
+if (!isNaN(speak_num)){
+	num=speak_num;
+}
+else{
+	num=0
+}
+document.writeln ("已有")
+document.writeln (num)
+document.writeln ("条发言")
+</script>
+      </p>
+      <p class="p1" style="line-height:17pt" align="left">&nbsp; </p>
+    </td>
+    <td width=1 bgcolor=#0586D7 height="123"><img src="/pc/img/blank.gif" width="1" height="1"> 
+    </td>
+    <td width=15 background="/pc/img/line.gif"> 
+      <p>&nbsp;</p>
+    </td>
+    <td valign="top" background="/pc/img/line.gif" width="584" height="123" class="p2"> 
+      <p align="center"><b><span class="p3"><br>
+        <font color="#3366CC">CSS特效赏析</font></span></b></p>
+      <p align="right" class="p1">　<a href="csstx06.htm">上一实例</a>　<a href="csstx08.htm">下一实例</a>&nbsp;&nbsp;&nbsp;</p>
+      <hr color=blue size=1>
+      <p class="p2" style="line-height:17pt">　　<font color="#336633"><b>7、显示和隐藏</b></font></p>
+      <p class="p2" style="line-height:17pt">　　我们来看一下这个例子，点击图片下方的文字使图片显示/隐藏</p>
+      <script LANGUAGE="JavaScript">
+ <!--
+
+    
+    ns4 = (document.layers)? true:false
+    ie4 = (document.all)? true:false
+    
+    function showObject() {     
+    
+      if (ns4) document.blockDiv.visibility = "show" 
+      else blockDiv.style.visibility = "visible" 
+    } 
+
+    function hideObject() { 
+        if (ns4) document.blockDiv.visibility = "hide" 
+        else blockDiv.style.visibility = "hidden" 
+} 
+  //-->
+  </SCRIPT>
+      <div id="blockDiv" style="visibility:visible;" align="center"> <img src="img/ss05050.jpg" border=0 alt="图片"></div>
+      <p class="p2" style="line-height:17pt" align="center"><A HREF="javascript:showObject()">显示- 
+        show</A> 　　　　　<A HREF="javascript:hideObject()">隐藏- hide</A> 
+      <p class="p2" style="line-height:17pt">　　我们来看一下这个例子的源代码： 
+      <p class="p2" style="line-height:17pt">　　&lt;html&gt; <br>
+        　　&lt;head&gt; <br>
+        　　&lt;script language="JavaScript"&gt; <br>
+        　　&lt;!--<br>
+        　　ns4 = (document.layers)? true:false <br>
+        　　ie4 = (document.all)? true:false <br>
+        　　function init() { <br>
+        　　if (ns4) block = document.blockDiv <br>
+        　　if (ie4) block = blockDiv.style }<font color="#CC3399">//*设置对象block*//</font> 
+        <br>
+        　　function showObject(obj) { <br>
+        　　if (ns4) obj.visibility = "show" <br>
+        　　else if (ie4) obj.visibility = "visible" } <br>
+        　　function hideObject(obj) { <br>
+        　　if (ns4) obj.visibility = "hide" <br>
+        　　else if (ie4) obj.visibility = "hidden" }<br>
+        　　<font color="#CC3399">//*定义两个函数分别用来显示、隐藏对象block*//</font> <br>
+        　　//--&gt; &lt;/script&gt; &lt;/head&gt; <br>
+        　　&lt;body onLoad="init()"&gt; <br>
+        　　&lt;a href="javascript:showObject(block)"&gt;显示-show&lt;/A&gt; <br>
+        　　&lt;a href="javascript:hideObject(block)"&gt;隐蔽-hide&lt;/A&gt; <br>
+        　　<font color="#CC3399">//*两个超链接调用javascript中的两个函数*//</font> <br>
+        　　&lt;div id="blockDiv" style="position:absolute; left:50; top:100;<br>
+        　　width:200; visibility:visible;"&gt; <br>
+        　　&lt;img src="ss01094.jpg" border=0&gt; &lt;/DIV&gt; <font color="#CC3399">//*导入一张图片*//</font> 
+        <br>
+        　　&lt;/body&gt; <br>
+        　　&lt;/html&gt; 
+      <p class="p2" style="line-height:17pt">　　我们看到这段代码有一些不同于前面的例子的特点。其实CSS大部分动态的特效都是<br>
+        DHTML的范畴。<br>
+        　　也就是说，它们都是CSS与JavaScript结合起来实现的一种效果。另外，上面这个例<br>
+        子还涉及到了IE和NS兼容的问题。我们将在下一节针对两种浏览器的兼容问题做详细讲<br>
+        解。 
+      <p class="p2" style="line-height:17pt"> 　 </p>
+      <hr color=blue size=1>
+      <p class="p1" align="right" width="280" height="185">　<a href="csstx06.htm">上一实例</a>　<a href="csstx08.htm">下一实例</a>&nbsp;&nbsp;&nbsp;</p>
+      <p>&nbsp;</p>
+      <p align="center" class=p2><a href=/pc/bin/msg.pl?file_id=k_csstx target="_blank"><img src="/pc/img/message.gif" width="64" height="54" alt="请您留言" border="0"><br>
+        谈谈您的看法</a> 
+        <script language="javascript">
+speak_num="za"
+</script>
+        <script language="javascript" src=/pc/var/pc_k_csstx.js>
+</script>
+        <script language="javascript">
+var num=0
+if (!isNaN(speak_num)){
+	num=speak_num;
+}
+else{
+	num=0
+}
+document.writeln ("已有")
+document.writeln (num)
+document.writeln ("条发言")
+</script>
+      </p>
+      <p>&nbsp;</p>
+    </td>
+    <td width=15 background="/pc/img/line.gif"> 
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table><!--底部开始--> 
+<script language="Javascript" src="/pub/js/foot.js"></script>
+<!--底部结束-->
+</body>
+</html>

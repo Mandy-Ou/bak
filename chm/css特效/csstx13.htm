@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>洪恩在线 - CSS特效赏析</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="/pub/css/home.css">
+<link rel="stylesheet" href="/pc/homepage/homepage.css">
+<meta name="keywords" content="电脑乐园,电脑,乐园,交互教程,交互,教程,教育,网页制作,CSS,特效,赏析">
+</head>
+<body bgcolor="white" text="black" topmargin="10" leftmargin="0" marginwidth="0" marginheight="10"> 
+<!--顶部开始--> 
+<script language="Javascript" src="/pub/js/head.js"></script>
+<!--顶部结束--> 
+<table width="760" height="20" border=0 cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td height=20 class="p1" bgcolor="#E8E8E8" align="left"><img src="/pc/img/blank.gif" width="12" height="8"><font color="#000000"><font color="#FF9966">当前位置</font>：<a href="/default.htm" class="under">洪恩在线</a> 
+      -&gt; <a href="/pc/index.htm" class="under">电脑乐园</a> -&gt; CSS特效赏析</font></td>
+  </tr>
+</table>
+<table width="760" border=0 cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td height="15"></td>
+  </tr>
+</table>
+<table width="760" cellspacing="0" border=0 cellpadding="0" align="center">
+  <tr>
+    <td width="145" valign="top" bgcolor="#E8E8E8" align="left" style="color:blue" class="p1"> 
+      <br>
+      <table width="145" border="0" cellspacing="0" cellpadding="0" bordercolor="#F8AC0E" height="20">
+        <tr bgcolor="000099" valign="middle"> 
+          <td width="115" align="center" class="p2"><b><font color="#FFFFFF">CSS特效赏析</font></b></td>
+          <td height="20" bgcolor="#E8E8E8" width="13"><img src="/pc/img/title_00.gif" width="13" height="20"></td>
+          <td height="20" bgcolor="#E8E8E8" width="17">&nbsp;</td>
+        </tr>
+      </table>
+      <p class="p1" style="line-height:17pt" align="left"> 　1.<a href="csstx01.htm">动态改变样式</a><br>
+        　2.<a href="csstx02.htm">动态可视化效果</a><br>
+        　3.<a href="csstx03.htm">动态滤镜显示</a><br>
+        　4.<a href="csstx04.htm">Blentrans属性</a><br>
+        　5.<a href="csstx05.htm">Revealtrans属性</a><br>
+        　6.<a href="csstx06.htm">动态Glow属性</a><br>
+        　7.<a href="csstx07.htm">显示和隐藏</a><br>
+        　8.<a href="csstx08.htm">兼容两种浏览器</a><br>
+        　9.<a href="csstx09.htm">移动对象</a><br>
+        　10.<a href="csstx10.htm">对象的滑动</a><br>
+        　11.<a href="csstx11.htm">键盘控制对象</a><br>
+        　12.<a href="csstx12.htm">鼠标控制对象</a><br>
+        　13.<a href="csstx13.htm">Clip属性的应用</a><br>
+        　14.<a href="csstx14.htm">动态文字变换</a><br>
+        　15.动态改变页面样式<br>
+        　16.动态时钟控制<br>
+        　17.倒计时<br>
+        　18.动态刷新<br>
+      </p>
+      <p align="center" class=p1> <a href=/pc/bin/msg.pl?file_id=k_csstx target="_blank"><img src="/pc/img/message.gif" width="64" height="54" alt="请您留言" border="0"><br>
+        谈谈您的看法</a> <br>
+        <script language="javascript">
+speak_num="za"
+</script>
+        <script language="javascript" src=/pc/var/pc_k_csstx.js>
+</script>
+        <script language="javascript">
+var num=0
+if (!isNaN(speak_num)){
+	num=speak_num;
+}
+else{
+	num=0
+}
+document.writeln ("已有")
+document.writeln (num)
+document.writeln ("条发言")
+</script>
+      </p>
+      <p class="p1" style="line-height:17pt" align="left">&nbsp; </p>
+    </td>
+    <td width=1 bgcolor=#0586D7 height="123"><img src="/pc/img/blank.gif" width="1" height="1"> 
+    </td>
+    <td width=15 background="/pc/img/line.gif"> 
+      <p>&nbsp;</p>
+    </td>
+    <td valign="top" background="/pc/img/line.gif" width="584" height="123" class="p2"> 
+      <p align="center"><b><span class="p3"><br>
+        <font color="#3366CC">CSS特效赏析</font></span></b></p>
+      <p align="right" class="p1">　<a href="csstx12.htm">上一实例</a>　<a href="csstx14.htm">下一实例</a>&nbsp;&nbsp;&nbsp;</p>
+      <hr color=blue size=1>
+      <p class="p2" style="line-height:17pt">　　<b><font color="#336633">13、Clip属性的应用</font></b></p>
+      <p class="p2" style="line-height:17pt"><b><font color="#336633"> </font></b>　　上一节说到了动态可视区的调整，实际上就是Clip属性的应用。<br>
+        　　Clipping的中文解释就是剪辑的意思，这个属性决定了对象的哪个部位可以被看到。它不会改变任何对象的性质。 <br>
+        　　Clipping 的区域是一个矩形， 而这个矩形的尺寸取决于于四个边的位置。 <br>
+        　　这四个边用 top, right, botton, left 来表示。 <br>
+        　　请注意：这四个边的位置是相对于对象的而不是相对于窗口的。 <br>
+        　　Clip属性的书写格式是这样的： </p>
+      <p class="p2" style="line-height:17pt">　　<font color="#336633">Clip rect（top，right，bottom，left）</font></p>
+      <p class="p2" style="line-height:17pt">　　在这里，top，right，bottom，left的值都是以像素pixels为单位的。</p>
+      <p class="p2" style="line-height:17pt"><img src="img/csssl01.gif" width="280" height="185" align="left" hspace="20" alt="原图" vspace="5">为了更好的理解相对于对象这个含义<br>
+        ，我们看一个例子，比如左面是一幅<br>
+        285×185的图片，我们对它加入下面这<br>
+        段代码： </p>
+      <p class="p2" style="line-height:17pt"><font color="#336633">style=&quot;clip:rect(0,200,100,0)&quot;<br>
+        </font></p>
+      <p class="p2" style="line-height:17pt">这段代码使图片将以200×100的形式显 <br>
+        示。这是因为rect中规定的200，代表了图片的右端距离是200pixels，也就 是图片的宽度是200pixels；同理， 100定义的则是图片的高度。这样图片就 
+        好象被剪辑了一样，将显示成右下图的样子：</p>
+      <p class="p2" style="line-height:17pt">&nbsp;<img src="img/csssl02.gif" style="clip:rect(-15,20,-15,20)" width="202" height="152" align="right" hspace="20" border="0" alt="clip后的图片"> 
+        　基本原理就介绍这么多，让我们来看两个例子<br>
+        ，一个是静态调整可视区域，一个是动态调整。 </p>
+      <p class="p2" style="line-height:17pt">　　在这两个例子中，您可以点击对应的链接，得<br>
+        到图片四条边的位置，可以点击链接使图片的可视<br>
+        区按照规定的范围显示，还有您可以点击后，使图<br>
+        片就像放电影一样，慢慢的展开。<br>
+        <br>
+        　　哇，怎么这么多功能啊！ <a href="sl/clip1.htm" target="_blank"><img src="img/link.gif" width="127" height="20" align="absmiddle" border="0" alt="链接"></a>看第一个例子吧。<a href="sl/clip2.htm" target="_blank"><img src="img/link.gif" width="127" height="20" align="absmiddle" border="0" alt="链接"></a>看第二个例子。</p>
+      <p class="p2" style="line-height:17pt">　　好了，本节介绍了Clip属性的应用实例，有关CSS-P的知识应用讲的差不多了，下<br>
+        一节我将向您介绍一个动态字幕变换的例子。 </p>
+      <p class="p2" style="line-height:17pt">　 </p>
+      <hr color=blue size=1>
+      <p class="p1" align="right" width="280" height="185">　<a href="csstx12.htm">上一实例</a>　<a href="csstx14.htm">下一实例</a>&nbsp;&nbsp;&nbsp;</p>
+      <p>&nbsp;</p>
+      <p align="center" class=p2><a href=/pc/bin/msg.pl?file_id=k_csstx target="_blank"><img src="/pc/img/message.gif" width="64" height="54" alt="请您留言" border="0"><br>
+        谈谈您的看法</a> 
+        <script language="javascript">
+speak_num="za"
+</script>
+        <script language="javascript" src=/pc/var/pc_k_csstx.js>
+</script>
+        <script language="javascript">
+var num=0
+if (!isNaN(speak_num)){
+	num=speak_num;
+}
+else{
+	num=0
+}
+document.writeln ("已有")
+document.writeln (num)
+document.writeln ("条发言")
+</script>
+      </p>
+      <p>&nbsp;</p>
+    </td>
+    <td width=15 background="/pc/img/line.gif"> 
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<!--底部开始--> 
+<script language="Javascript" src="/pub/js/foot.js"></script>
+<!--底部结束-->
+</body>
+</html>

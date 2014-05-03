@@ -1,0 +1,68 @@
+<HTML>
+ <HEAD>
+ <SCRIPT LANGUAGE="JavaScript">
+ <!--
+  ns4 = (document.layers)? true:false
+  ie4 = (document.all)? true:false
+
+  function init() {
+	if (ns4) block = document.blockDiv
+	if (ie4) block = blockDiv.style
+	block.xpos = parseInt(block.left)
+	block.ypos = parseInt(block.top)
+  }
+
+  function moveTo(obj,x,y) {
+	obj.xpos = x
+	obj.left = obj.xpos
+	obj.ypos = y
+	obj.top = obj.ypos
+  }
+
+  function moveBy(obj,x,y) {
+	obj.xpos += x
+	obj.left = obj.xpos
+	obj.ypos += y
+	obj.top = obj.ypos
+  }
+
+  function showObject(obj) {
+	if (ns4) obj.visibility = "show"
+	else if (ie4) obj.visibility = "visible"
+  }
+
+  function hideObject(obj) {
+	if (ns4) obj.visibility = "hide"
+	else if (ie4) obj.visibility = "hidden"
+  }
+
+ //-->
+ </SCRIPT>
+ </HEAD>
+
+ <BODY onLoad="init()">
+
+ Check Values:
+ <A HREF="javascript:alert('X: ' + block.xpos)">横向位置</A>,
+ <A HREF="javascript:alert('Y: ' + block.ypos)">竖向位置</A>
+ <BR>Visibility:
+ <A HREF="javascript:showObject(block)">显示</A>,
+ <A HREF="javascript:hideObject(block)">隐蔽</A>
+ <BR>移动到 MoveTo:
+ <A HREF="javascript:moveTo(block,100,200)">(100,200)</A>,
+ <A HREF="javascript:moveTo(block,200,260)">(200,260)</A>,
+ <A HREF="javascript:moveTo(block,300,340)">(300,340)</A>
+ <BR>相对移动 MoveBy:
+ <A HREF="javascript:moveBy(block,10,0)">(10,0)</A>,
+ <A HREF="javascript:moveBy(block,-10,0)">(-10,0)</A>,
+ <A HREF="javascript:moveBy(block,0,10)">(0,10)</A>,
+ <A HREF="javascript:moveBy(block,0,-10)">(0,-10)</A>
+
+ <DIV ID="blockDiv" 
+	STYLE="position:absolute; left:100; top:200; 
+	width:30; visibility:visible;">
+ <IMG SRC="ss05058.jpg" BORDER=0>
+ </DIV>
+
+ </BODY>
+ </HTML>

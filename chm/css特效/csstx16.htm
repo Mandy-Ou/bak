@@ -1,0 +1,160 @@
+<html>
+<head>
+<title>洪恩在线 - CSS特效赏析</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="/pub/css/home.css">
+<link rel="stylesheet" href="/pc/homepage/homepage.css">
+<meta name="keywords" content="电脑乐园,电脑,乐园,交互教程,交互,教程,教育,网页制作,CSS,特效,赏析">
+ 
+</head>
+<body bgcolor="white" text="black" topmargin="10" leftmargin="0" marginwidth="0" marginheight="10" onload="playHelp()"> 
+<!--顶部开始--> 
+<script language="Javascript" src="/pub/js/head.js"></script>
+<!--顶部结束--> 
+<table width="760" height="20" border=0 cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td height=20 class="p1" bgcolor="#E8E8E8" align="left"><img src="/pc/img/blank.gif" width="12" height="8"><font color="#000000"><font color="#FF9966">当前位置</font>：<a href="/default.htm" class="under">洪恩在线</a> 
+      -&gt; <a href="/pc/index.htm" class="under">电脑乐园</a> -&gt; CSS特效赏析</font></td>
+  </tr>
+</table>
+<table width="760" border=0 cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td height="15"></td>
+  </tr>
+</table>
+<table width="760" cellspacing="0" border=0 cellpadding="0" align="center">
+  <tr>
+    <td width="145" valign="top" bgcolor="#E8E8E8" align="left" style="color:blue" class="p1"> 
+      <br>
+      <table width="145" border="0" cellspacing="0" cellpadding="0" bordercolor="#F8AC0E" height="20">
+        <tr bgcolor="000099" valign="middle"> 
+          <td width="115" align="center" class="p2"><b><font color="#FFFFFF">CSS特效赏析</font></b></td>
+          <td height="20" bgcolor="#E8E8E8" width="13"><img src="/pc/img/title_00.gif" width="13" height="20"></td>
+          <td height="20" bgcolor="#E8E8E8" width="17">&nbsp;</td>
+        </tr>
+      </table>
+      <p class="p1" style="line-height:17pt" align="left"> 　1.<a href="csstx01.htm">动态改变样式</a><br>
+        　2.<a href="csstx02.htm">动态可视化效果</a><br>
+        　3.<a href="csstx03.htm">动态滤镜显示</a><br>
+        　4.<a href="csstx04.htm">Blentrans属性</a><br>
+        　5.<a href="csstx05.htm">Revealtrans属性</a><br>
+        　6.<a href="csstx06.htm">动态Glow属性</a><br>
+        　7.<a href="csstx07.htm">显示和隐藏</a><br>
+        　8.<a href="csstx08.htm">兼容两种浏览器</a><br>
+        　9.<a href="csstx09.htm">移动对象</a><br>
+        　10.<a href="csstx10.htm">对象的滑动</a><br>
+        　11.<a href="csstx11.htm">键盘控制对象</a><br>
+        　12.<a href="csstx12.htm">鼠标控制对象</a><br>
+        　13.<a href="csstx13.htm">Clip属性的应用</a><br>
+        　14.<a href="csstx14.htm">动态文字变换</a><br>
+        　15.<a href="csstx15.htm">动态改变页面样式</a><br>
+        　16.<a href="csstx16.htm">动态时钟控制</a><br>
+        　17.<a href="csstx17.htm">倒计时</a> 　<br>
+        　18.<a href="csstx18.htm">动态刷新</a><br>
+      </p>
+      <p align="center" class=p1> <a href=/pc/bin/msg.pl?file_id=k_csstx target="_blank"><img src="/pc/img/message.gif" width="64" height="54" alt="请您留言" border="0"><br>
+        谈谈您的看法</a> <br>
+        <script language="javascript">
+speak_num="za"
+</script>
+        <script language="javascript" src=/pc/var/pc_k_csstx.js>
+</script>
+        <script language="javascript">
+var num=0
+if (!isNaN(speak_num)){
+	num=speak_num;
+}
+else{
+	num=0
+}
+document.writeln ("已有")
+document.writeln (num)
+document.writeln ("条发言")
+</script>
+      </p>
+      <p class="p1" style="line-height:17pt" align="left">&nbsp; </p>
+    </td>
+    <td width=1 bgcolor=#0586D7 height="123"><img src="/pc/img/blank.gif" width="1" height="1"> 
+    </td>
+    <td width=15 background="/pc/img/line.gif">
+      <p>&nbsp;</p>
+    </td>
+    <td valign="top" background="/pc/img/line.gif" width="584" height="123" class="p2"> 
+      <p align="center"><b><span class="p3"><br>
+        <font color="#3366CC">CSS特效赏析</font></span></b></p>
+      <p align="right" class="p1">　<a href="csstx15.htm">上一实例</a>　<a href="csstx17.htm">下一实例</a>&nbsp;&nbsp;&nbsp;</p>
+      <hr color=blue size=1>
+      <p class="p2" style="line-height:17pt">　　<b><font color="#336633">16、动态时钟控制</font></b></p>
+      <p class="p2" style="line-height:17pt">　　这个例子会让您看上去觉得眼花缭乱，在输入栏中输入不同的时间间隔会以不同的速度显示。<a href="sl/dttimecontrol.htm" target="_blank"><img src="img/link.gif" width="127" height="20" align="absmiddle" border="0" alt="链接"></a><br>
+        　　这里面主要用的是revealtrans滤镜属性，在每一个区域内都添加了revealtrans属性，再让它们调用onfilterchange函数。而输入时间间隔是靠javascript的onchange<br>
+        事件实现的，下面我们把有关CSS的代码列出如下：</p>
+      <p class="p2" style="line-height:17pt"> 　　&lt;body onload="init()"&gt; <br>
+        　　&lt;span style="position:absolute;top:140;left:20;width:400;<br>
+        　　　　　　　　 text-align:center; font-size:12pt"&gt; <br>
+        　　&lt;p&gt;输入新的时间间隔。 <br>
+        　　&lt;input id="speed" onchange="updateTime()" size="20"&gt; &lt;/span&gt; 
+        &lt;/p&gt;<br>
+        　　<font color="#CC3399">//*定义输入文本框，调用updateTime（）函数*//</font> <br>
+        　　&lt;div id="div1"<br>
+        　　 style="position:absolute;top:20;left:20;width:100;height:100; <br>
+        　　　　　　font-size:100;text-align:center;background-color:blue; <br>
+        　　　　　　filter:revealtrans(transition=1,duration=1.5)"<br>
+        　　　　　　onfilterchange="done(1)"&gt;<br>
+        　　<font color="#CC3399">//*设置一个层，包括它的定位、字体和revealtrans滤镜属性，同时调用Done函数<br>
+        　　　改变滤镜显示样式，达到动态的目的，下面的三个层的设置内容与这个类似*//</font> <br>
+        　　&lt;p&gt;A&lt;/p&gt; &lt;/div&gt; <br>
+        　　&lt;div id="div2" <br>
+        　　style="position:absolute;top:20;left:140;width:100;height:100;<br>
+        　　　　　 font-size: 100;text-align:center;background-color:blue; <br>
+        　　　　　 filter:revealtrans(transition=2,duration=1.5)" <br>
+        　　　　　 onfilterchange="done(2)"&gt; <br>
+        　　 &lt;p&gt;A&lt;/p&gt; &lt;/div&gt; <br>
+        　　&lt;div id="div3" <br>
+        　　style="position:absolute;top:20;left:260;width:100;height:100;<br>
+        　　　　　 font- size:100;text-align:center;background-color:blue;<br>
+        　　　　 　filter:revealtrans(transition=3,duration=1.5)"<br>
+        　　　　　 onfilterchange="done(3)"&gt; <br>
+        　　 &lt;p&gt;A&lt;/p&gt; &lt;/div&gt; <br>
+        　　&lt;div id="div4" <br>
+        　　 style="position:absolute;top:20;left:380;width:100;height:100;<br>
+        　　　　　　font- size:100;text-align:center;background-color:blue;<br>
+        　　　　　　filter:revealtrans(transition=4,duration=1.5)"<br>
+        　　　　　　onfilterchange="done(4)"&gt; <br>
+        　　 &lt;p&gt;A&lt;/p&gt; &lt;/div&gt; <br>
+        　　&lt;/body&gt;</p>
+      <p class="p2" style="line-height:17pt">　　 好了，本节就介绍到这里，下一节将向您推荐一个倒计时的例子。<br>
+        　　 </p>
+      <hr color=blue size=1>
+      <p align="right" class="p1"><a href="csstx15.htm">上一实例</a>　<a href="csstx17.htm">下一实例</a></p>
+      <p align="center" class=p2><a href=/pc/bin/msg.pl?file_id=k_csstx target="_blank"><img src="/pc/img/message.gif" width="64" height="54" alt="请您留言" border="0"><br>
+        谈谈您的看法</a> 
+        <script language="javascript">
+speak_num="za"
+</script>
+        <script language="javascript" src=/pc/var/pc_k_csstx.js>
+</script>
+        <script language="javascript">
+var num=0
+if (!isNaN(speak_num)){
+	num=speak_num;
+}
+else{
+	num=0
+}
+document.writeln ("已有")
+document.writeln (num)
+document.writeln ("条发言")
+</script>
+      </p>
+      <p>&nbsp;</p>
+    </td>
+    <td width=15 background="/pc/img/line.gif">
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<!--底部开始--> 
+<script language="Javascript" src="/pub/js/foot.js"></script>
+<!--底部结束-->
+</body>
+</html>

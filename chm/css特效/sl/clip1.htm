@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<STYLE>
+  A {text-decoration:none; color:red}
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+/*************************************
+Code in this document is copyright of
+Dan Steinman of Industrial Dreams 1998
+Available at The Dynamic Duo
+http://www.dansteinman.com/dynduo/
+*************************************/
+
+ns4 = (document.layers)? true:false
+ie4 = (document.all)? true:false
+
+function init() {
+	if (ns4) block = document.blockDiv
+	if (ie4) block = blockDiv.style
+}
+
+function clipValues(obj,which) {
+	if (ns4) {
+		if (which=="t") return obj.clip.top
+		if (which=="r") return obj.clip.right
+		if (which=="b") return obj.clip.bottom
+		if (which=="l") return obj.clip.left
+	}
+	else if (ie4) {
+		var clipv = obj.clip.split("rect(")[1].split(")")[0].split("px")
+		if (which=="t") return Number(clipv[0])
+		if (which=="r") return Number(clipv[1])
+		if (which=="b") return Number(clipv[2])
+		if (which=="l") return Number(clipv[3])
+	}
+}
+
+function clipTo(obj,t,r,b,l) {
+	if (ns4) {
+		obj.clip.top = t
+		obj.clip.right = r
+		obj.clip.bottom = b
+		obj.clip.left = l
+	}
+	else if (ie4) obj.clip = "rect("+t+"px "+r+"px "+b+"px "+l+"px)"
+}
+
+function clipBy(obj,t,r,b,l) {
+	if (ns4) {
+		obj.clip.top = clipValues(obj,'t') + t
+		obj.clip.right = clipValues(obj,'r') + r
+		obj.clip.bottom = clipValues(obj,'b') + b
+		obj.clip.left = clipValues(obj,'l') + l
+	}
+	else if (ie4) obj.clip = "rect("+(this.clipValues(obj,'t')+t)+"px "+(this.clipValues(obj,'r')+r)+"px "+Number(this.clipValues(obj,'b')+b)+"px "+Number(this.clipValues(obj,'l')+l)+"px)"
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" onLoad="init()">
+<DIV ID="blockDiv" 
+STYLE="position:absolute; left:150 ; top:180; width:600; height:399; clip:rect(0,250,399,0); background-color:#FF0000; layer-background-color:#FF0000;">
+<IMG src="1118023l.jpg" border=0>
+</DIV>
+
+<center>
+这张照片的尺寸是 600 x 399, 请检查 Clip 四个边的值 <br>
+<A HREF="javascript:alert(clipValues(block,'t'))">top</A>,
+<A HREF="javascript:alert(clipValues(block,'r'))">right</A>,
+<A HREF="javascript:alert(clipValues(block,'b'))">bottom</A>,
+<A HREF="javascript:alert(clipValues(block,'l'))">left</A>
+
+<P>
+重新 Clip<br>
+<A HREF="javascript:clipTo(block,0,400,399,0)">clip 右边到 400</A>
+<BR><A HREF="javascript:clipTo(block,0,200,399,0)">clip 右边到 200</A>
+<BR><A HREF="javascript:clipBy(block,0,20,0,0)">clip 区域往右边扩大 20 pixels</A>
+<BR><A HREF="javascript:clipBy(block,0,-20,0,0)">clip 区域往左变缩小 20 pixels</A>
+</center>
+
+</BODY>
+</HTML>

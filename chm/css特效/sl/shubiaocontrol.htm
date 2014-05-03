@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<TITLE>Mouse Click Demo</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+ns4 = (document.layers)? true:false
+ie4 = (document.all)? true:false
+
+function init() {
+	if (ns4) block = document.blockDiv
+	if (ie4) block = blockDiv.style
+	block.xpos = parseInt(block.left)
+	block.active = false
+}
+
+function slide() {
+	if (block.active) {
+		block.xpos += 5
+		block.left = block.xpos
+		setTimeout("slide()",30)
+	}
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" onLoad="init()">
+
+请您点击“移动”两个字，再一直按住鼠标左键看一看
+<BR><A HREF="javascript:void(null)" onMouseDown="block.active=true; slide(); return false;" onMouseUp="block.active=false" onMouseOut="block.active=false">移动</A>
+
+<DIV ID="blockDiv" STYLE="position:absolute; left:50; top:100; width:250;height:180">
+<IMG SRC="ss07049.jpg" WIDTH=250 HEIGHT=180 BORDER=0>
+</DIV>
+
+</BODY>
+</HTML>

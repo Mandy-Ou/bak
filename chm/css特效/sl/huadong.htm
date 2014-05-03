@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<TITLE>Sliding Demo 1</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+ns4 = (document.layers)? true:false
+ie4 = (document.all)? true:false
+
+function init() {
+	if (ns4) block = document.blockDiv
+	if (ie4) block = blockDiv.style
+	block.xpos = parseInt(block.left)
+}
+
+function slide() {
+	if (block.xpos < 500) {
+		block.xpos += 5
+		block.left = block.xpos
+		setTimeout("slide()",10)
+	}
+}
+
+function moveTo(obj,x,y) {
+	obj.xpos = x
+	obj.ypos = y
+	obj.left = obj.xpos
+	obj.top = obj.ypos
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" onLoad="init()">
+<p>
+<A HREF="javascript:slide()">»¬¶¯</A> - <A HREF="javascript:moveTo(block,50,150)">·µ»Ø</A>
+<DIV ID="blockDiv" STYLE="position:absolute; left:50; top:150; width:400;">
+<IMG SRC="ss05058.jpg" WIDTH=250 HEIGHT=150 BORDER=0>
+</DIV>
+</BODY>
+</HTML>

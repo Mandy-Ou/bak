@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<STYLE>
+  A {text-decoration:none; color:red}
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+/*************************************
+Code in this document is copyright of
+Dan Steinman of Industrial Dreams 1998
+Available at The Dynamic Duo
+http://www.dansteinman.com/dynduo/
+*************************************/
+
+ns4 = (document.layers)? true:false
+ie4 = (document.all)? true:false
+
+function init() {
+	if (ns4) block = document.blockDiv
+	if (ie4) block = blockDiv.style
+}
+
+function clipValues(obj,which) {
+	if (ns4) {
+		if (which=="t") return obj.clip.top
+		if (which=="r") return obj.clip.right
+		if (which=="b") return obj.clip.bottom
+		if (which=="l") return obj.clip.left
+	}
+	else if (ie4) {
+		var clipv = obj.clip.split("rect(")[1].split(")")[0].split("px")
+		if (which=="t") return Number(clipv[0])
+		if (which=="r") return Number(clipv[1])
+		if (which=="b") return Number(clipv[2])
+		if (which=="l") return Number(clipv[3])
+	}
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" onLoad="init()">
+
+<DIV ID="blockDiv" STYLE="position:absolute; left:50; top:100; width:250; height:180; clip:rect(0,250,180,0); background-color:#FF0000; layer-background-color:#FF0000;">
+<IMG src="ss07075.jpg" border=0>
+</DIV>
+
+<center>
+这张照片的尺寸是 250 * 180, 请检查 Clip 四个边的值 <br>
+<A HREF="javascript:alert(clipValues(block,'t'))">top</A>
+<A HREF="javascript:alert(clipValues(block,'r'))">&nbsp;right</A>
+<A HREF="javascript:alert(clipValues(block,'b'))">&nbsp;bottom</A>
+<A HREF="javascript:alert(clipValues(block,'l'))">&nbsp;left</A>
+<center>
+
+</BODY>
+</HTML>

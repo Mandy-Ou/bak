@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>dt filter</title>
+    <script language="javascript">
+      <!--
+        function setfilter(){
+           myimage.filters.alpha.opacity=document.forms(0).opacity.value
+           myimage.filters.alpha.finishopacity=document.forms(0).finishopacity.value
+           myimage.filters.alpha.style=document.forms(0).setstyle.value
+        }
+      -->
+    </script>
+  </head>
+
+ <body onload="setfilter()">
+     <div id="mydiv">
+        <pre style="color:red;font-size:18px">
+         金洪恩电脑有限公司
+             洪恩在线
+             开天辟地
+             万事无忧
+             畅通无阻
+         </pre>
+     </div>
+     <p>
+      <img id="myimage" src="ss07075.jpg"
+        style="filter:alpha();position:absolute;top:10;left:0;"></p>
+     <div style="position:absolute;left:10;top:200;width:250">
+        <p>单击图片以外的任何地方使改变的值生效。</p>
+        <form>
+        <p>输入透明度
+        <input name="opacity" size="3" value="100" onchange="setfilter()"><br>
+         输入结束状态的透明度
+        <input name="finishopacity" size="3" value="0"
+        onchange="setfilter()"><br>
+        键入样式的值
+        <input name="setstyle" size="3" value="0" onchange="setfilter()"><br>
+        </P>
+        </form>
+     </div>
+     </body>
+ </html>

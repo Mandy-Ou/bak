@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+ns4 = (document.layers)? true:false
+ie4 = (document.all)? true:false
+
+function init() {
+	if (ns4) block = document.blockDiv
+	if (ie4) block = blockDiv.style
+	block.xpos = parseInt(block.left)
+	block.active = false
+
+	document.onkeydown = keyDown
+	document.onkeyup = keyUp
+	if (ns4) document.captureEvents(Event.KEYDOWN | Event.KEYUP)
+}
+
+function keyDown(e) {
+	if (ns4) {var nKey=e.which; var ieKey=0}
+	if (ie4) {var ieKey=event.keyCode; var nKey=0}
+	if ((nKey==97 || ieKey==65) && !block.active) {   // if "A" key is pressed
+		block.active = true
+		slide()
+	}
+}
+function keyUp(e) {
+	if (ns4) {var nKey=e.which; var ieKey=0}
+	if (ie4) {var ieKey=event.keyCode; var nKey=0}
+	if (nKey==97 || ieKey==65) {
+		block.active = false   // if "A" key is released
+	}
+}
+
+function slide() {
+	if (block.active) {
+		block.xpos += 5
+		block.left = block.xpos
+		status = block.xpos       // not needed, just for show
+		setTimeout("slide()",30)
+	}
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" onLoad="init()">
+
+请您按下“A”键来移动图片
+
+<DIV ID="blockDiv" STYLE="position:absolute; left:50; top:75; width:250;height:180">
+<IMG SRC="ss07049.jpg" BORDER=0>
+</DIV>
+
+</BODY>
+</HTML>
