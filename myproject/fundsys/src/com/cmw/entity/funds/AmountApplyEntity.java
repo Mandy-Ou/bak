@@ -491,7 +491,7 @@ public class AmountApplyEntity extends IdBaseEntity {
 
 	@Override
 	public String[] getFields() {
-		return new String[]{"id","entrustCustId","code","payBank","payAccount","accName","appAmount","yearLoan","monthLoan","payDate","endDate","setdayType","payDay","iamount","rateType","rate","unint","prange","productsId","doDate","clause","breed","procId","status"};
+		return new String[]{"id","entrustCustId","code","payBank","payAccount","accName","appAmount","yearLoan","monthLoan","payDate#yyyy-MM-dd","endDate#yyyy-MM-dd","setdayType","payDay","iamount","rateType","rate","unint","prange","productsId","doDate","clause","breed","procId","status"};
 	}
 
 }

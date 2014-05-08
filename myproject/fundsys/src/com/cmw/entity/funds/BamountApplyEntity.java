@@ -39,6 +39,13 @@ public class BamountApplyEntity extends IdBaseEntity {
 	 @Column(name="bamount" ,nullable=false )
 	 private BigDecimal bamount=new BigDecimal(0);
 	 
+	 @Description(remark="退还预付利息")
+	 @Column(name="biamount" ,nullable=false )
+	 private BigDecimal biamount=new BigDecimal(0);
+	 
+	 @Description(remark="实际支付金额")
+	 @Column(name="rpamount" ,nullable=false )
+	 private BigDecimal rpamount=new BigDecimal(0);
 	 
 	 @Description(remark="违约金额")
 	 @Column(name="wamount" ,nullable=false )
@@ -62,8 +69,10 @@ public class BamountApplyEntity extends IdBaseEntity {
 	 @Description(remark="状态")
 	 @Column(name="status" ,nullable=false )
 	 private Integer status = 0;
+	 @Description(remark="撤资状态")
+	 @Column(name="xstatus" ,nullable=false )
+	 private Integer xstatus = 0;
 
-	 
 	 
 
 	@Override
@@ -148,5 +157,28 @@ public class BamountApplyEntity extends IdBaseEntity {
 		this.backDate = backDate;
 	}
 
+	public BigDecimal getBiamount() {
+		return biamount;
+	}
+
+	public void setBiamount(BigDecimal biamount) {
+		this.biamount = biamount;
+	}
+
+	public BigDecimal getRpamount() {
+		return rpamount;
+	}
+
+	public void setRpamount(BigDecimal rpamount) {
+		this.rpamount = rpamount;
+	}
+
+	public Integer getXstatus() {
+		return xstatus;
+	}
+
+	public void setXstatus(Integer xstatus) {
+		this.xstatus = xstatus;
+	}
 
 }

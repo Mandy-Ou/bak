@@ -33,8 +33,11 @@ public class InterestEntity extends IdBaseEntity {
 	 @Description(remark="委托合同ID")
 	 @Column(name="entrustContractId" ,nullable=false )
 	 private Long entrustContractId;
-
-	 @Description(remark="应付息日期")
+	 
+	 @Description(remark="付息申请单ID")
+	 @Column(name="applyId")
+	 private Long applyId;
+	@Description(remark="应付息日期")
 	 @Column(name="xpayDate" )
 	 private Date xpayDate;
 	 
@@ -61,7 +64,7 @@ public class InterestEntity extends IdBaseEntity {
 	
 	 @Description(remark="总状态")
 	 @Column(name="status" ,nullable=false )
-	 private Integer status;
+	 private Integer status=0;
 	 
 	 
 	 
@@ -106,6 +109,14 @@ public class InterestEntity extends IdBaseEntity {
 		this.iamount = iamount;
 	}
 
+	public Long getApplyId() {
+		return applyId;
+	}
+
+	public void setApplyId(Long applyId) {
+		this.applyId = applyId;
+	}
+
 	public BigDecimal getYamount() {
 		return yamount;
 	}
@@ -140,12 +151,12 @@ public class InterestEntity extends IdBaseEntity {
 
 	@Override
 	public Object[] getDatas() {
-		return new Object[]{id,entrustCustId,entrustContractId,xpayDate,nextDate,iamount,yamount,riamount,lastDate,status};
+		return new Object[]{id,applyId,entrustCustId,entrustContractId,xpayDate,nextDate,iamount,yamount,riamount,lastDate,status};
 	}
 
 	@Override
 	public String[] getFields() {
-		return new String[]{"id","entrustCustId","entrustContractId","xpayDate#yyyy-MM-dd","nextDate#yyyy-MM-dd","iamount","yamount","riamount","lastDate#yyyy-MM-dd","status"};
+		return new String[]{"id","applyId","entrustCustId","entrustContractId","xpayDate#yyyy-MM-dd","nextDate#yyyy-MM-dd","iamount","yamount","riamount","lastDate#yyyy-MM-dd","status"};
 	}
 
 }
