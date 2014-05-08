@@ -50,6 +50,7 @@ public class ReceInterestAction extends BaseAction {
 			
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
 			map.put(SysConstant.USER_KEY, this.getCurUser());
+			map.put("receMsgId", getVal("receMsgId"));
 			DataTable dt = receInterestService.getResultList(map, getStart(),getLimit());
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
 		} catch (ServiceException ex) {
@@ -125,7 +126,7 @@ public class ReceInterestAction extends BaseAction {
 						}
 					}
 					receInterestService.batchSaveOrUpdateEntitys(receList);
-					result = ResultMsg.getSuccessMsg();
+					result = ResultMsg.getSuccessMsg(this,receList.get(0), ResultMsg.SAVE_SUCCESS);
 				}
 			}
 		} catch (ServiceException ex){
