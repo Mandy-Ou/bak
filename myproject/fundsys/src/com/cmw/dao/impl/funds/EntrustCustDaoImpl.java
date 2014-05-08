@@ -26,11 +26,13 @@ public class EntrustCustDaoImpl extends GenericDaoAbs<EntrustCustEntity, Long> i
 	public <K, V> DataTable getResultList(SHashMap<K, V> params, int offset,
 			int pageSize) throws DaoException {
 		params = SqlUtil.getSafeWhereMap(params);
-		StringBuilder sb = new StringBuilder();
-		sb.append("select A.isenabled,A.id,A.deadline,A.dlimit,A.code,A.name,A.sex,A.cardNum,A.birthday,A.appAmount,A.products,A.phone,")
-		.append(" A.contactTel,A.inAddress,creator,A.createTime,A.homeNo,A.job,A.maristal,A.nation,A.hometown,A.degree,A.workOrg,A.workAddress,A.contactor,A.email,A.zipcode,A.fax,A.qqmsnNum,A.status,A.ctype"
-				+ " from fu_EntrustCust A ")
-		.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");
+		StringBuilder sb = new StringBuilder();		
+		sb.append("select A.isenabled,A.id,")
+			.append(" (case A.dlimit when '1' then cast(A.deadline as varchar)+'年' when '2' then cast(A.deadline as varchar)+'个月' when '3' then cast(A.deadline as varchar)+'日' END )as deadline,")
+			.append("A.dlimit,A.code,A.name,A.sex,A.cardNum,A.birthday,A.appAmount,A.products,A.phone,")
+			.append(" A.contactTel,A.inAddress,A.creator,A.createTime,A.homeNo,A.job,A.maristal,A.nation,A.hometown,A.degree,A.workOrg,A.workAddress,A.contactor,A.email,A.zipcode,A.fax,A.qqmsnNum,A.status,A.ctype,A.prange"
+					+ " from fu_EntrustCust A ")
+	 		.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");	 
 		try {
 			UserEntity user = (UserEntity) params.getvalAsObj(SysConstant.USER_KEY);
 			String rightFilter = SqlUtil.getRightFilter(user, "A");
@@ -75,7 +77,7 @@ public class EntrustCustDaoImpl extends GenericDaoAbs<EntrustCustEntity, Long> i
 							"cardNum,birthday#yyyy-MM-dd,appAmount"+
 							",products,phone,contactTel,inAddress,"+
 							"creator,createTime#yyyy-MM-dd,homeNo,job,maristal,nation,hometown,degree,workOrg,"
-							+ "workAddress,contactor,email,zipcode,fax,qqmsnNum,status,ctype";
+							+ "workAddress,contactor,email,zipcode,fax,qqmsnNum,status,ctype,prange";
 			DataTable dt = findBySqlPage(sb.toString(),colNames, offset, pageSize);
 			return dt;
 		} catch (DataAccessException e) {

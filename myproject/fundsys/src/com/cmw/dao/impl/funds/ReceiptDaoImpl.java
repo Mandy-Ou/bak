@@ -37,7 +37,7 @@ public class ReceiptDaoImpl extends GenericDaoAbs<ReceiptEntity, Long> implement
 		String colNames = "id,isenabled,status,rnum,outMan," +
 				"pbank,endDate#yyyy-MM-dd,outDate#yyyy-MM-dd,amount,rtacname,"+
 				"rtaccount,rtbank,isbreceipt,isappInvoce,isabook," +
-				"recetDate#yyyy-mm-dd,omaccount,rcount,reman,name,breed,procId,manager";
+				"recetDate#yyyy-MM-dd,omaccount,rcount,reman,name,breed,procId,manager";
 		
 		sqlSb.append("select A.id,A.isenabled,A.status,A.rnum,A.outMan,")
 			.append("A.pbank,A.endDate,A.outDate,A.amount,A.rtacname,")
@@ -45,6 +45,7 @@ public class ReceiptDaoImpl extends GenericDaoAbs<ReceiptEntity, Long> implement
 			.append("A.recetDate,A.omaccount,A.rcount,A.reman,A.name,A.breed,A.procId,A.creator as manager")
 			.append(" from fu_receipt A")
 			.append(" where A.isenabled="+SysConstant.OPTION_ENABLED);
+		
 			UserEntity user = (UserEntity)params.getvalAsObj(SysConstant.USER_KEY);
 		try{
 			SqlHelper.addWhereByActionType(params, sqlSb, user);

@@ -63,4 +63,38 @@ public class InterestDaoImpl extends GenericDaoAbs<InterestEntity, Long> impleme
 		}
 	}
 	
+	/*处理利息支付申请*/
+	
+	@Override
+	public <K, V> DataTable getLoanRecordsList(SHashMap<K, V> params, int offset,
+			int pageSize)
+			throws DaoException {
+		params = SqlUtil.getSafeWhereMap(params);
+		StringBuilder sb = new StringBuilder();
+		sb.append("select A.id,A.xpayDate,A.entrustCustId,A.entrustContractId,A.nextDate,A.iamount,A.yamount,A.riamount,A.lastDate,A.status "
+				+ ",B.code,B.appAmount,B.yearLoan,B.monthLoan,B.rate,B.unint,C.name from fu_Interest A inner join fu_EntrustContract B on A.entrustContractId=B.id "
+				+ " inner join fu_EntrustCust C on A.entrustCustId=C.id")
+		.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");
+		try {
+//			String entrustCustId = params.getvalAsStr("entrustCustId");//id
+//				if(StringHandler.isValidStr(entrustCustId)){
+//					sb.append(" and A.entrustCustId ='"+entrustCustId+"' ");
+//				}
+//				String entrustContractId = params.getvalAsStr("entrustContractId");//id
+//				if(StringHandler.isValidStr(entrustContractId)){
+//					sb.append(" and A.entrustContractId ='"+entrustContractId+"' ");
+//				}
+			String colNames = "id,xpayDate#yyyy-MM-dd,entrustCustId,entrustContractId,nextDate#yyyy-MM-dd,iamount,"+
+							"yamount,riamount,lastDate#yyyy-MM-dd,status,code,appAmount,yearLoan,monthLoan,rate,unint,name";
+			DataTable dt = findBySqlPage(sb.toString(),colNames,offset,pageSize);
+			return dt;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		}
+	}
+	
 }

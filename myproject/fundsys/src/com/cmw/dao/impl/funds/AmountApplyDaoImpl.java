@@ -59,7 +59,7 @@ public class AmountApplyDaoImpl extends GenericDaoAbs<AmountApplyEntity, Long> i
 				}
 				String doDate = params.getvalAsStr("doDate");//委托产品
 				if(StringHandler.isValidStr(doDate)){
-					sb.append(" and A.doDate like '%"+doDate+"%' ");
+					sb.append(" and A.doDate = '"+doDate+"' ");
 				}
 				
 				String code = params.getvalAsStr("code");//编号

@@ -94,6 +94,37 @@ public class ProjectAmuntDaoImpl extends GenericDaoAbs<ProjectAmuntEntity, Long>
 //			throw new DaoException(e);
 //		}
 //}
+	
+	@Override
+	public <K, V> DataTable getResultList(SHashMap<K, V> params, int offset,
+			int pageSize) throws DaoException {try{
+				StringBuffer sqlSb = new StringBuffer();
+				sqlSb.append("select A.bussType,A.formId,A.itemType,A.direction,A.amount,A.yamount,A.lastDate,A.status")
+				.append(",A.creator,A.createTime,A.remark from fc_ProjectAmunt A");
+/*				.append(" where  A.bussTag in ("
+									+ BussStateConstant.AMOUNTRECORDS_BUSSTAG_4
+									+ ","
+									+ BussStateConstant.AMOUNTRECORDS_BUSSTAG_5
+									+ ","
+									+ BussStateConstant.AMOUNTRECORDS_BUSSTAG_6
+									+ ")");
+*/				params = SqlUtil.getSafeWhereMap(params);
+				String ids = params.getvalAsStr("ids");
+				if(StringHandler.isValidStr(ids)){//
+				sqlSb.append(" and A.id in ("+ids+") ");
+				}
+				long totalCount = getTotalCountBySql(sqlSb.toString());	//
+				String sqlStr = sqlSb.toString();
+				String colNames = "bussType,formId,itemType,direction,amount,yamount"
+				+ ",lastDate#yyyy-MM-dd,status,creator,createTime#yyyy-MM-dd,remark";
+					DataTable dt = findBySqlPage(sqlStr, colNames, offset, pageSize,totalCount);
+					return dt;
+				} catch (DataAccessException e) {
+					e.printStackTrace();
+					throw new DaoException(e);
+				}
+}
+	
 	/**
 	 * 逾期还款详情页面的grid中取数据的方法
 	 */

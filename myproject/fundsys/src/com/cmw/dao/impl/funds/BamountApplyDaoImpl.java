@@ -34,54 +34,56 @@ public class BamountApplyDaoImpl extends GenericDaoAbs<BamountApplyEntity, Long>
 	public <K, V> DataTable getResultList(SHashMap<K, V> params, int offset,
 			int pageSize) throws DaoException {		params = SqlUtil.getSafeWhereMap(params);
 			StringBuilder sb = new StringBuilder();
-			sb.append("select B.code,B.name,B.appAmount,A.id,A.isenabled,A.remark,A.breed,A.procId,A.creator as manager,A.status,A.bamount,A.wamount,A.isNotExpiration,A.backDate,B.prange")
+			sb.append("select C.code,B.name,B.appAmount,A.id,A.isenabled,A.remark,A.breed,A.procId,"
+					+ "A.creator as manager,A.status,A.bamount,A.wamount,A.isNotExpiration,A.backDate,"
+					+ "B.prange,C.payDate,C.endDate,C.rate,C.unint")
 			.append(" from fu_BamountApply A")
 			.append(" inner join fu_EntrustCust B on A.entrustCustId=B.id ")
+			.append(" inner join fu_EntrustContract C on C.id=A.entrustContractId ")
 			.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");
 			UserEntity user = (UserEntity)params.getvalAsObj(SysConstant.USER_KEY);
 			try {
 					addWhereByActionType(params, sb, user);
-					String appAmount = params.getvalAsStr("appAmount");
-					if(StringHandler.isValidObj(appAmount) && Double.parseDouble(appAmount) > 0){
-						String eqopAmount = params.getvalAsStr("eqopAmount");
-						if(!StringHandler.isValidObj(eqopAmount)){
-							eqopAmount = " = ";
-						}
-						sb.append(" and A.appAmount "+eqopAmount+" '"+appAmount+"' ");
-					}
+					
 					Long id = params.getvalAsLng("id");
 					if(StringHandler.isValidObj(id)){
 						sb.append(" and A.id ='"+id+"' ");
 					}
-					String payAccount = params.getvalAsStr("payAccount");//银行帐号
-					if(StringHandler.isValidStr(payAccount)){
-						sb.append(" and A.payAccount like '%"+payAccount+"%' ");
-					}
-					String accName = params.getvalAsStr("accName");//银行
-					if(StringHandler.isValidStr(accName)){
-						sb.append(" and A.accName like '%"+accName+"%' ");
-					}
-					String doDate = params.getvalAsStr("doDate");//委托产品
-					if(StringHandler.isValidStr(doDate)){
-						sb.append(" and A.doDate like '%"+doDate+"%' ");
+					/*委托人姓名:name，委托合同编号:code，委托金额:eqopAmount,appAmount，
+					撤资金额:eqopBamount,bamount，撤资类型:isNotExpiration，*/
+					String name = params.getvalAsStr("name");//银行帐号
+					if(StringHandler.isValidStr(name)){
+						sb.append(" and B.name like '%"+name+"%' ");
 					}
 					String code = params.getvalAsStr("code");//编号
 					if(StringHandler.isValidStr(code)){
-						sb.append(" and A.code like '%"+code+"%' ");
+						sb.append(" and C.code like '%"+code+"%' ");
 					}
-					String payDate = params.getvalAsStr("payDate");
-					if(StringHandler.isValidStr(payDate)){
-						sb.append(" and A.payDate >= '"+payDate+"' ");
+					String eqopAmount = params.getvalAsStr("eqopAmount");
+					if(StringHandler.isValidStr(eqopAmount)){
+						Double appAmount = params.getvalAsDob("appAmount");
+						if(null != appAmount && appAmount.doubleValue() > 0){
+							sb.append(" and B.appAmount "+eqopAmount+" '"+appAmount+"' ");
+						}
 					}
-					String endDate = params.getvalAsStr("endDate");
-					if(StringHandler.isValidStr(endDate)){
-						endDate = DateUtil.addDays(endDate, 1);
-						sb.append(" and A.endDate < '"+endDate+"' ");
+					String eqopBamount = params.getvalAsStr("eqopBamount");
+					if(StringHandler.isValidStr(eqopBamount)){
+						Double bamount = params.getvalAsDob("bamount");
+						if(null != bamount && bamount.doubleValue() > 0){
+							sb.append(" and A.bamount "+eqopBamount+" '"+bamount+"' ");
+						}
 					}
+					String isNotExpiration = params.getvalAsStr("isNotExpiration");
+					if(StringHandler.isValidStr(isNotExpiration)){
+						sb.append(" and A.isNotExpiration like '%"+isNotExpiration+"%' ");
+					}
+				long count = getTotalCountBySql(sb.toString());
 				sb.append(" order by A.id desc ");
 				String colNames = "code,name,appAmount,id,isenabled,remark,breed,procId,manager,status,bamount,wamount,isNotExpiration,"+
-								"backDate#yyyy-MM-dd,prange";
-				DataTable dt = findBySqlPage(sb.toString(),colNames, offset, pageSize);
+								"backDate#yyyy-MM-dd,prange,payDate#yyyy-MM-dd,endDate#yyyy-MM-dd,rate,unint";
+				DataTable dt = findBySqlPage(sb.toString(),colNames,offset, pageSize,count);
+				//dt.setSize(totalCount);
+				
 				return dt;
 			} catch (DataAccessException e) {
 				e.printStackTrace();
@@ -91,6 +93,7 @@ public class BamountApplyDaoImpl extends GenericDaoAbs<BamountApplyEntity, Long>
 				throw new DaoException(e);
 			}
 	}
+	
 	/**
 	 * 根据动作类型，添加过滤条件
 	 * @param params
@@ -139,24 +142,40 @@ public class BamountApplyDaoImpl extends GenericDaoAbs<BamountApplyEntity, Long>
 		sqlSb.append(" and A.procId in (SELECT procId FROM ts_auditrecords B where creator='"+userId+"')");
 	}
 	
+	
 	@Override
 	public <K, V> DataTable getLoanRecordsList(SHashMap<K, V> params,
 			int offset, int pageSize) throws DaoException {
 		params = SqlUtil.getSafeWhereMap(params);
-		StringBuilder sb = new StringBuilder();
-		sb.append("select A.isenabled,A.id,B.id as entrustContractId,B.appAmount,A.status,B.code,A.name,A.sex,A.cardNum,A.birthday,A.deadline,A.products,A.phone,")
-		.append(" A.contactTel,A.inAddress,A.creator,A.createTime from fu_EntrustCust A right join fu_EntrustContract B on A.id=B.entrustCustId")
-		.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");
+		String mark=params.getvalAsStr("mark");
+		StringBuilder sb = new StringBuilder();		
+		sb.append("select A.isenabled,A.id,B.id as entrustContractId,B.appAmount,B.code,A.name,B.yearLoan,")
+		.append("B.monthLoan,B.doDate,B.rate,B.payDate,B.endDate,B.iamount,B.unint,B.rateType  ") ;
+		if(StringHandler.isValidObj(mark))
+			sb.append(",I.nextDate");
+		sb.append(" from fu_EntrustCust A right join fu_EntrustContract B on A.id=B.entrustCustId ");
+		if(StringHandler.isValidObj(mark))
+			sb.append(" left join fu_Interest I on B.id=I.entrustContractId");
+		sb.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");
 		try {
 			String name = params.getvalAsStr("name");
 			if(StringHandler.isValidStr(name)){
 				sb.append(" and A.name like '%"+name+"%'");
 			}
+			if(StringHandler.isValidObj(mark)){
+				String backDate=params.getvalAsStr("backDate");
+				if(StringHandler.isValidStr(backDate)){
+					sb.append(" and I.nextDate> '"+backDate+"' ");
+				}			
+			}
 			sb.append(" order by A.id desc ");
-			String colNames = "isenabled,id,entrustContractId,appAmount,status,code,name,sex,"+
-							"cardNum,birthday#yyyy-MM-dd,"+
-							"deadline,products,phone,contactTel,inAddress,"+
-							"creator,createTime#yyyy-MM-dd";
+			if(StringHandler.isValidObj(mark))
+				sb.append(",I.nextDate asc");
+				
+			String colNames = "isenabled,id,entrustContractId,appAmount,code,name,yearLoan,monthLoan,doDate#yyyy-MM-dd,"+
+							"rate,payDate#yyyy-MM-dd,endDate#yyyy-MM-dd,iamount,unint,rateType";
+			if(StringHandler.isValidObj(mark))
+				colNames+=",nextDate";
 			DataTable dt = findBySqlPage(sb.toString(),colNames, offset, pageSize);
 			return dt;
 		} catch (DataAccessException e) {
