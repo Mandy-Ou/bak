@@ -68,8 +68,9 @@ public class ReceiptMsgAction extends BaseAction {
 	 */
 	public String list() throws Exception {
 		try {
-			
-			SHashMap<String, Object> map = getQParams("receMsgId#L");
+			String qCmns = "rnum,name,serviceMan,amount,ticketMan,operational,outDate,endDate";//根据条件进行查询
+			//SHashMap<String, Object> map = getQParams("receMsgId#L");
+			SHashMap<String, Object> map = getQParams(qCmns);
 			map.put(SysConstant.USER_KEY, this.getCurUser());
 			DataTable dt = receiptMsgService.getResultList(map, getStart(),getLimit());
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
@@ -134,7 +135,6 @@ public class ReceiptMsgAction extends BaseAction {
 						BigDecimal tiamount = settlementEntity.getTiamount();
 						appendParams.put("settleId", settleId);
 						appendParams.put("amount", amount);
-						appendParams.put("amount", rate);
 						appendParams.put("tiamount", tiamount);
 						appendParams.put("rate", rate);
 					}else {

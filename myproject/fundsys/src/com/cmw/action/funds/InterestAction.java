@@ -4,6 +4,7 @@ package com.cmw.action.funds;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -66,6 +67,35 @@ public class InterestAction extends BaseAction {
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
 			map.put(SysConstant.USER_KEY, this.getCurUser());
 			DataTable dt = interestRecordsService.getResultList(map,getStart(),getLimit());
+			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr(new JsonDataCallback(){
+				public void makeJson(JSONObject jsonObj) {/*
+					Long creator = jsonObj.getLong("creator");
+					try {
+						UserEntity creatorObj = UserCache.getUser(creator);
+						if(null != creatorObj) jsonObj.put("creator", creatorObj.getEmpName());
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
+				*/}
+			});
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+	
+	public String paylist()throws Exception {
+		try {
+			SHashMap<String, Object> map = new SHashMap<String, Object>();
+//			map.put(SysConstant.USER_KEY, this.getCurUser());
+			DataTable dt = interestService.getLoanRecordsList(map,getStart(),getLimit());
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr(new JsonDataCallback(){
 				public void makeJson(JSONObject jsonObj) {/*
 					Long creator = jsonObj.getLong("creator");
@@ -193,7 +223,8 @@ public class InterestAction extends BaseAction {
 				entity.setXpayDate(entity.getXpayDate());}}
 				Integer mongth=(yearLoan*12)+monthLoan;//共有多少个下个月
 				BeanUtil.setCreateInfo(user, entity);
-				interestService.saveOrUpdateEntity(entity);
+				
+//				interestService.saveOrUpdateEntity(entity);
 				DataTable dt=interestService.getResultList(map,-1,-1);
 				dt.appendData("ids", new String[]{"-3"});
 				result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonObjStr();
@@ -284,6 +315,55 @@ public class InterestAction extends BaseAction {
 		outJsonString(result);
 		return null;
 	}
+	
+	
+	/**
+	 * 生成还息计划 
+	 * @return
+	 * @throws Exception
+	 */
+	public String saveInterests()throws Exception {
+		try {
+			String entrustCon=getVal("entrustContract");
+			EntrustContractEntity entrustContract=FastJsonUtil.convertJsonToObj(entrustCon, EntrustContractEntity.class);
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("user", this.getCurUser());
+			map.put("entrustContract", entrustContract);
+			interestService.doComplexBusss(map);
+			result = ResultMsg.getSuccessMsg(this,entrustContract, ResultMsg.SAVE_SUCCESS);
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+			}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+			}
+		outJsonString(result);
+		return null;
+	}
+	
+	/**
+	 * 根据指定参数查询利息支付信息
+	 */
+	public String getByParams()throws Exception {
+		try {
+			String entrustContractId=getVal("entrustContractId");
+			SHashMap< String, Object> map=new SHashMap<String, Object>();
+			map.put("entrustContractId", entrustContractId);
+			DataTable dt = interestService.getResultList(map,getStart(),getLimit());
+			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
+		} catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+	
+	
 	/**
 	 * 新增  委托客户资料 
 	 * @return

@@ -1,6 +1,7 @@
 package com.cmw.action.funds;
 
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,11 +45,14 @@ import com.cmw.service.inter.sys.VarietyService;
 public class CapitalPairAction extends BaseAction {
 	@Resource(name="capitalPairService")
 	private CapitalPairService capitalPairService;
+	@Resource(name="entrustCustService")
+	private EntrustCustService entrustCustService;
 	@Resource(name="restypeService")
 	private RestypeService restypeService;
 	@Resource(name="varietyService")
 	private VarietyService varietyService;
 	private String result = ResultMsg.GRID_NODATA;
+	
 	/**
 	 * 获取 委托客户资料 列表
 	 * @return
@@ -59,17 +63,57 @@ public class CapitalPairAction extends BaseAction {
 		try {
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
 			map.put(SysConstant.USER_KEY, this.getCurUser());
-			DataTable dt = capitalPairService.getResultList(map,getStart(),getLimit());
+			DataTable dt = capitalPairService.getLoanRecordsList(map,getStart(),getLimit());
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr(new JsonDataCallback(){
 				public void makeJson(JSONObject jsonObj) {
-					Long creator = jsonObj.getLong("creator");
+					Long entrustCustId = jsonObj.getLong("entrustCustId");
 					try {
-						UserEntity creatorObj = UserCache.getUser(creator);
-						if(null != creatorObj) jsonObj.put("creator", creatorObj.getEmpName());
+						BigDecimal amt=jsonObj.getBigDecimal("amt");
+						EntrustCustEntity entrust = entrustCustService.getEntity(entrustCustId);
+						if(null != entrust) jsonObj.put("name", entrust.getName());
+						if(null != entrust) jsonObj.put("code", entrust.getCode());
+						jsonObj.put("uamount", amt);
 					} catch (ServiceException e) {
 						e.printStackTrace();
 					}
 				}
+			});
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+	/**
+	 * 获取 委托客户资料 列表
+	 * @return
+	 * @throws Exception
+	 */
+	
+	public String custBol()throws Exception {
+		try {
+			SHashMap<String, Object> map = new SHashMap<String, Object>();
+			map.put(SysConstant.USER_KEY, this.getCurUser());
+			DataTable dt = capitalPairService.getResultList(map,getStart(),getLimit());
+			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr(new JsonDataCallback(){
+				public void makeJson(JSONObject jsonObj) {/*
+					Long entrustCustId = jsonObj.getLong("entrustCustId");
+					try {
+						BigDecimal amt=jsonObj.getBigDecimal("amt");
+						EntrustCustEntity entrust = entrustCustService.getEntity(entrustCustId);
+						if(null != entrust) jsonObj.put("name", entrust.getName());
+						if(null != entrust) jsonObj.put("code", entrust.getCode());
+						jsonObj.put("uamount", amt);
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
+				*/}
 			});
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());

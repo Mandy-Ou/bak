@@ -226,14 +226,14 @@ public class CpairDetailAction extends BaseAction {
 	public String save() throws Exception {
 		try {
 			String Edit = getVal("Edit");
-			String content = getVal("content");
 			UserEntity userEntity = this.getCurUser();
-			JSONArray jsonArray = FastJsonUtil.convertStrToJSONArr(content);
+//			String content = getVal("content");
+			JSONArray jsonArray = FastJsonUtil.convertStrToJSONArr(Edit);
 			for (int i = 0; i < jsonArray.size(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				BigDecimal amt = jsonObject.getBigDecimal("amt");
-				Long id = jsonObject.getLong("id");
-				EntrustContractEntity entrustContractEntity = entrustContractService.getEntity(id);
+				Long eid = jsonObject.getLong("eid");
+				EntrustContractEntity entrustContractEntity = entrustContractService.getEntity(eid);
 				BigDecimal appamount = entrustContractEntity.getAppAmount();
 				entrustContractEntity.setUamount(BigDecimalHandler.sub2BigDecimal(appamount, amt));
 			}

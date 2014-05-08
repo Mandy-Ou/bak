@@ -119,7 +119,8 @@ public class AmountApplyAction extends BaseAction {
 public String auditlist()throws Exception {
 	try {
 		UserEntity user = this.getCurUser();
-		SHashMap<String, Object> map = getQParams("custType#I,custName,eqopAmount,endAmount,startDate1,endDate1,startDate2,endDate2,eqextAmount,extAmount,status");
+//		SHashMap<String, Object> map = getQParams("custType#I,custName,eqopAmount,endAmount,startDate1,endDate1,startDate2,endDate2,eqextAmount,extAmount,status");
+		SHashMap<String, Object> map = getQParams("payAccount,doDate,payDate,endDate,code,eqopAmount,accName,appAmount");
 		map.put(SysConstant.USER_KEY, user);
 		map.put("actionType", SysConstant.ACTION_TYPE_APPLYFORM_AUDIT_1);
 		String procIds = bussProccFlowService.getProcIdsByUser(user);
@@ -152,7 +153,8 @@ public String auditlist()throws Exception {
 public String  auditAll()throws Exception {
 	try {
 		UserEntity user = this.getCurUser();
-		SHashMap<String, Object> map = getQParams("custType#I,custName,eqopAmount,endAmount,startDate1,endDate1,startDate2,endDate2,eqextAmount,extAmount,status");
+//		SHashMap<String, Object> map = getQParams("custType#I,custName,eqopAmount,endAmount,startDate1,endDate1,startDate2,endDate2,eqextAmount,extAmount,status");
+		SHashMap<String, Object> map = getQParams("payAccount,doDate,payDate,endDate,code,eqopAmount,accName,appAmount");
 		map.put(SysConstant.USER_KEY, user);
 		map.put("actionType", SysConstant.ACTION_TYPE_APPLYFORM_AUDIT_3);
 		String procIds = bussProccFlowService.getProcIdsByUser(user);
@@ -185,14 +187,22 @@ public String  auditAll()throws Exception {
 public String auditHistory()throws Exception {
 	try {
 		UserEntity user = this.getCurUser();
-		SHashMap<String, Object> map = getQParams("custType#I,custName,eqopAmount,endAmount,startDate1,endDate1,startDate2,endDate2,eqextAmount,extAmount,status");
+//		SHashMap<String, Object> map = getQParams("custType#I,custName,eqopAmount,endAmount,startDate1,endDate1,startDate2,endDate2,eqextAmount,extAmount,status");
+		SHashMap<String, Object> map = getQParams("payAccount,doDate,payDate,endDate,code,eqopAmount,accName,appAmount");
 		map.put(SysConstant.USER_KEY, user);
 		map.put("actionType", SysConstant.ACTION_TYPE_APPLYFORM_AUDIT_2);
 		String procIds = bussProccFlowService.getProcIdsByUser(user);
-		if(StringHandler.isValidStr(procIds)){
+		if(StringHandler.isValidStr(procIds)){//productsId
 			map.put("procIds", procIds);
 		}
 		DataTable dt = amountApplyService.getResultList(map,getStart(),getLimit());
+		for(int i=0,count=dt.getRowCount();i<count;i++){
+			String productsId=	dt.getString("productsId");
+			if(null!=productsId&&StringHandler.isValidObj(productsId)){
+				VarietyEntity vEntiey=	varietyService.getEntity(Long.parseLong(productsId));
+				dt.setCellData(i, "productsId", vEntiey.getName());
+				}
+			}
 		result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr();
 	} catch (ServiceException ex){
 		result = ResultMsg.getFailureMsg(this,ex.getMessage());
@@ -206,8 +216,6 @@ public String auditHistory()throws Exception {
 	outJsonString(result);
 	return null;
 }
-
-	
 	/**
 	 * 获取 委托合同 详情
 	 * @return
@@ -217,15 +225,21 @@ public String auditHistory()throws Exception {
 		try {
 			String id = getVal("id");
 			if(!StringHandler.isValidStr(id)) throw new ServiceException(ServiceException.ID_IS_NULL);
-//			SHashMap<Object, String> map =new SHashMap<Object, String>();
-//			map.put("id", id);
-//			DataTable entity = amountApplyService.getResultList(map);
 			AmountApplyEntity entity=	amountApplyService.getEntity(Long.parseLong(id));
 			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
-				public void execute(JSONObject jsonObj) {
-					
-				}
-			});
+					@Override
+					public void execute(JSONObject jsonObj) {
+						Long productsId = jsonObj.getLong("productsId");
+						try {
+							if(StringHandler.isValidObj(productsId)){
+								VarietyEntity creatorObj=varietyService.getEntity(productsId);
+								if(null != creatorObj) jsonObj.put("productsId", creatorObj.getName());
+							}
+						} catch (ServiceException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
 			if(null == result) result = ex.getMessage();

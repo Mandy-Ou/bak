@@ -27,6 +27,7 @@ import com.cmw.entity.funds.AgreeBookEntity;
 import com.cmw.entity.funds.CapitalPairEntity;
 import com.cmw.entity.funds.CpairDetailEntity;
 import com.cmw.entity.funds.EntrustContractEntity;
+import com.cmw.entity.funds.EntrustCustEntity;
 import com.cmw.entity.funds.ReceiptEntity;
 import com.cmw.entity.sys.UserEntity;
 import com.cmw.service.impl.cache.UserCache;
@@ -35,6 +36,7 @@ import com.cmw.service.inter.funds.AgreeBookService;
 import com.cmw.service.inter.funds.CapitalPairService;
 import com.cmw.service.inter.funds.CpairDetailService;
 import com.cmw.service.inter.funds.EntrustContractService;
+import com.cmw.service.inter.funds.EntrustCustService;
 import com.cmw.service.inter.sys.RestypeService;
 import com.cmw.service.inter.sys.VarietyService;
 
@@ -52,6 +54,8 @@ public class AgreeBookAction extends BaseAction {
 	private AgreeBookService agreeBookService;
 	@Resource(name = "restypeService")
 	private RestypeService restypeService;
+	@Resource(name = "entrustCustService")
+	private EntrustCustService entrustCustService;
 	private String result = ResultMsg.GRID_NODATA;
 
 	/**
@@ -146,8 +150,32 @@ public class AgreeBookAction extends BaseAction {
 		outJsonString(result);
 		return null;
 	}
+	/*根据id获取对应的名字*/
+	public String getId() throws Exception {
+		try {
+			Long formId = getLVal("id");
+			if(!StringHandler.isValidObj(formId))
+				throw new ServiceException(ServiceException.ID_IS_NULL);
+			EntrustCustEntity entity = entrustCustService.getEntity(formId);
+			result = FastJsonUtil.convertJsonToStr(entity, new Callback() {
+				public void execute(JSONObject jsonObj) {
 
-
+				}
+			});
+		} catch (ServiceException ex) {
+			result = ResultMsg.getFailureMsg(this, ex.getMessage());
+			if (null == result)
+				result = ex.getMessage();
+			ex.printStackTrace();
+		} catch (Exception ex) {
+			result = ResultMsg.getFailureMsg(this, ResultMsg.SYSTEM_ERROR);
+			if (null == result)
+				result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
 	/**
 	 * 保存 委托客户资料
 	 * 

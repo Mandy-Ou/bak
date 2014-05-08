@@ -25,6 +25,7 @@ import com.cmw.core.util.SHashMap;
 import com.cmw.core.util.StringHandler;
 import com.cmw.entity.funds.EntrustCustEntity;
 import com.cmw.entity.sys.BussProccEntity;
+import com.cmw.entity.sys.ProvinceEntity;
 import com.cmw.entity.sys.RestypeEntity;
 import com.cmw.entity.sys.UserEntity;
 import com.cmw.entity.sys.VarietyEntity;
@@ -32,6 +33,7 @@ import com.cmw.service.impl.cache.UserCache;
 import com.cmw.service.inter.funds.EntrustCustService;
 import com.cmw.service.inter.sys.BussProccService;
 import com.cmw.service.inter.sys.GvlistService;
+import com.cmw.service.inter.sys.ProvinceService;
 import com.cmw.service.inter.sys.RestypeService;
 import com.cmw.service.inter.sys.VarietyService;
 
@@ -221,6 +223,7 @@ public class EntrustCustAction extends BaseAction {
 		outJsonString(result);
 		return null;
 	}
+	
 	public String lget()throws Exception {
 		try {
 			Long id= getLVal("id");
@@ -228,19 +231,14 @@ public class EntrustCustAction extends BaseAction {
 			map.put("id",id);
 			map.put(SysConstant.USER_KEY, this.getCurUser());
 			DataTable dt = entrustCustService.getResultList(map,-1,-1);
-//			if(s!=""&&null!=s){
-//				Long products=Long.parseLong(s);
-//				RestypeEntity entity=restypeService.getEntity(products);
-//				if(null != products) jsonobj.put("products", entity.getName());
-//			}
-			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA :dt.toString();
-			for(int i=0;i<result.length();i++){
-				JSONObject jsonobj=dt.getJsonObj();
-				String s= (String) jsonobj.get("products");
-				
-				dt.setCellData(i, "products", dtName);
-				
+			for(int i=0,count=dt.getRowCount();i<count;i++){
+			String productsId=dt.getString("products");
+			if(null!=productsId&&StringHandler.isValidObj(productsId)){
+				VarietyEntity vEntiey=	varietyService.getEntity(Long.parseLong(productsId));
+				dt.setCellData(i, "products", vEntiey.getName());
+				}
 			}
+		result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA :dt.getJsonObjStr();
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
 			if(null == result) result = ex.getMessage();
@@ -253,11 +251,13 @@ public class EntrustCustAction extends BaseAction {
 		outJsonString(result);
 		return null;
 	}
+	
 	/**
 	 * 获取 委托客户资料 列表
 	 * @return
 	 * @throws Exception
 	 */
+	
 	public String getName()throws Exception {
 		try {
 			Long sysId=getLVal("sysId");
@@ -298,9 +298,19 @@ public class EntrustCustAction extends BaseAction {
 			String id = getVal("id");
 			if(!StringHandler.isValidStr(id)) throw new ServiceException(ServiceException.ID_IS_NULL);
 			EntrustCustEntity entity = entrustCustService.getEntity(Long.parseLong(id));
+			
 			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
+				@Override
 				public void execute(JSONObject jsonObj) {
-					
+					String products = jsonObj.getString("products");
+					try {
+						if(StringHandler.isValidObj(products)){
+							VarietyEntity creatorObj=varietyService.getEntity(Long.valueOf(products).longValue());
+							if(null != creatorObj) jsonObj.put("products", creatorObj.getName());
+						}
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
 				}
 			});
 		} catch (ServiceException ex){

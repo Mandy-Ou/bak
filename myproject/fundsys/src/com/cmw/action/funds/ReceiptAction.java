@@ -424,7 +424,7 @@ public class ReceiptAction extends BaseAction {
 		formParams.put("procId", procId);
 		formParams.put(SysConstant.USER_KEY, this.getCurUser());
 		formParams.put("bussType", SysConstant.SYSTEM_BUSSTYPE_BUSSPROCC_APPLY);
-		formParams.put("bussCode", SysCodeConstant.BUSS_PROCC_CODE_EXTENSION);
+		formParams.put("bussCode", SysCodeConstant.BUSS_PROCC_CODE_RECEIPT);
 		formParams.put("formId", id);
 		final JSONObject bussFormDatas = formCfgService.getBussFormDatas(formParams);
 		return bussFormDatas;

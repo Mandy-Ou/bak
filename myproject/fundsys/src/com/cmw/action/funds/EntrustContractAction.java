@@ -1,6 +1,7 @@
 package com.cmw.action.funds;
 
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.cmw.core.base.action.BaseAction;
 import com.cmw.core.base.annotation.Description;
 import com.cmw.core.base.exception.ServiceException;
 import com.cmw.core.util.BeanUtil;
+import com.cmw.core.util.BigDecimalHandler;
 import com.cmw.core.util.CodeRule;
 import com.cmw.core.util.DataTable;
 import com.cmw.core.util.FastJsonUtil;
@@ -101,13 +103,59 @@ public class EntrustContractAction extends BaseAction {
 	public String get()throws Exception {
 		try {
 			String applyId = getVal("applyId");
-			if(!StringHandler.isValidStr(applyId)) throw new ServiceException(ServiceException.ID_IS_NULL);
+			String id = getVal("id");
+			if(!StringHandler.isValidStr(applyId) && !StringHandler.isValidStr(id)) throw new ServiceException(ServiceException.ID_IS_NULL);
 			SHashMap<Object, Object> map=new SHashMap<Object, Object>();
 			map.put("applyId", applyId);
-			EntrustContractEntity entity = entrustContractService.getEntity(map);
+			map.put("id", id);
+			final EntrustContractEntity entity = entrustContractService.getEntity(map);
 			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
 				@Override
 				public void execute(JSONObject jsonObj) {
+					jsonObj.put("payDate", StringHandler.dateFormatToStr("yyyy-MM-dd", entity.getPayDate()));
+					jsonObj.put("endDate", StringHandler.dateFormatToStr("yyyy-MM-dd", entity.getEndDate()));
+					jsonObj.put("doDate", StringHandler.dateFormatToStr("yyyy-MM-dd", entity.getDoDate()));
+					jsonObj.put("backDate", StringHandler.dateFormatToStr("yyyy-MM-dd", entity.getBackDate()));
+					/*
+					Long productsId = jsonObj.getLong("productsId");
+					try {
+						if(StringHandler.isValidObj(productsId)){
+							VarietyEntity creatorObj=varietyService.getEntity(productsId);
+							if(null != creatorObj) jsonObj.put("productsId", creatorObj.getName());
+						}
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}*/
+				}
+			});
+		} catch (ServiceException ex){
+			result = ResultMsg.getFailureMsg(this,ex.getMessage());
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}catch (Exception ex){
+			result = ResultMsg.getFailureMsg(this,ResultMsg.SYSTEM_ERROR);
+			if(null == result) result = ex.getMessage();
+			ex.printStackTrace();
+		}
+		outJsonString(result);
+		return null;
+	}
+	/**
+	 * 获取 委托合同 详情
+	 * @return
+	 * @throws Exception
+	 */
+	public String detial()throws Exception {
+		try {
+			String applyId = getVal("applyId");
+			if(!StringHandler.isValidStr(applyId)) throw new ServiceException(ServiceException.ID_IS_NULL);
+			SHashMap<Object, Object> map=new SHashMap<Object, Object>();
+			map.put("applyId", applyId);
+			final EntrustContractEntity entity = entrustContractService.getEntity(map);
+			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
+				@Override
+				public void execute(JSONObject jsonObj) {
+					/*
 					Long productsId = jsonObj.getLong("productsId");
 					try {
 						if(StringHandler.isValidObj(productsId)){
@@ -117,7 +165,7 @@ public class EntrustContractAction extends BaseAction {
 					} catch (ServiceException e) {
 						e.printStackTrace();
 					}
-				}
+				*/}
 			});
 		} catch (ServiceException ex){
 			result = ResultMsg.getFailureMsg(this,ex.getMessage());
@@ -167,6 +215,9 @@ public class EntrustContractAction extends BaseAction {
 	public String save()throws Exception {
 		try {
 			EntrustContractEntity entity = BeanUtil.copyValue(EntrustContractEntity.class,getRequest());
+			String appAmount=getVal("appAmount");
+			BigDecimal big=new BigDecimal(appAmount);
+			entity.setUamount(big);
 			entrustContractService.saveOrUpdateEntity(entity);
 			Map<String,Object> appnendMap = new HashMap<String, Object>();
 			appnendMap.put("id", entity.getId());
