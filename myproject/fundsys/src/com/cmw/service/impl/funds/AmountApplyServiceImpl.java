@@ -2,14 +2,15 @@ package com.cmw.service.impl.funds;
 
 
 import java.util.HashMap;
-import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cmw.constant.SysConstant;
+import com.cmw.core.base.action.BaseAction;
 import com.cmw.core.base.annotation.Description;
 import com.cmw.core.base.dao.GenericDaoInter;
 import com.cmw.core.base.exception.DaoException;
@@ -17,17 +18,15 @@ import com.cmw.core.base.exception.ServiceException;
 import com.cmw.core.base.service.AbsService;
 import com.cmw.core.util.DataTable;
 import com.cmw.core.util.SHashMap;
-import com.cmw.core.util.SqlUtil;
 import com.cmw.core.util.StringHandler;
-import com.cmw.entity.funds.AmountApplyEntity;
-import com.cmw.entity.funds.EntrustContractEntity;
-import com.cmw.entity.sys.BussProccEntity;
-import com.cmw.entity.sys.UserEntity;
 import com.cmw.dao.inter.funds.AmountApplyDaoInter;
-import com.cmw.dao.inter.funds.EntrustContractDaoInter;
+import com.cmw.entity.funds.AmountApplyEntity;
+import com.cmw.entity.sys.UserEntity;
+import com.cmw.entity.sys.VarietyEntity;
 import com.cmw.service.inter.funds.AmountApplyService;
-import com.cmw.service.inter.funds.EntrustContractService;
 import com.cmw.service.inter.sys.BussProccService;
+import com.cmw.service.inter.sys.UserService;
+import com.cmw.service.inter.sys.VarietyService;
 
 
 /**
@@ -42,6 +41,10 @@ public class AmountApplyServiceImpl extends AbsService<AmountApplyEntity, Long> 
 	private AmountApplyDaoInter amountApplyDao;
 	@Resource(name="bussProccService")
 	private BussProccService bussProccService;
+	@Resource(name="varietyService")
+	private VarietyService varietyService;
+	@Resource(name="userService")
+	private UserService userService;
 	
 	@Override
 	public GenericDaoInter<AmountApplyEntity, Long> getDao() {
@@ -66,30 +69,20 @@ public class AmountApplyServiceImpl extends AbsService<AmountApplyEntity, Long> 
 	 * @param dt
 	 * @throws ServiceException
 	 */
-	private void setNameProce(DataTable dt) throws ServiceException {
-		SHashMap<Object, Object> params = new SHashMap<Object, Object>();
-		params.put("isenabled", SqlUtil.LOGIC_NOT_EQ+SqlUtil.LOGIC+SysConstant.OPTION_DEL);
+	private void setNameProce(DataTable dt) throws ServiceException {        
 		for(int i=0,count = dt.getRowCount();i<count;i++){
 			String productsId = dt.getString(i, "productsId");
 			if(StringHandler.isValidStr(productsId)){
-				if(params.validKey("id")){
-					params.remove("id");
+				Long breed=Long.parseLong(productsId);
+				VarietyEntity creatorObj=varietyService.getEntity(breed);
+//							StringBuffer sb = new StringBuffer();
+//							String dtName = StringHandler.RemoveStr(sb);
+				if(StringHandler.isValidObj(creatorObj)){
+					dt.setCellData(i, "productsId", creatorObj.getName());
 				}
-				params.put("id", SqlUtil.LOGIC_IN+SqlUtil.LOGIC+productsId);
-				List<BussProccEntity>  bussProccEntityList = bussProccService.getEntityList(params);
-				if( bussProccEntityList != null && bussProccEntityList.size()>0){
-					StringBuffer sb = new StringBuffer();
-					for(BussProccEntity x : bussProccEntityList){
-						String name = x.getName();
-						sb.append(name+",");
-					}
-					String dtName = StringHandler.RemoveStr(sb);
-					dt.setCellData(i, "productsId", dtName);
-				}
-				
-			}
-		}
-	}
+			}}
+}
+	
 	/**
 	 * 获取展期申请单详情
 	 * @param id	申请单ID
