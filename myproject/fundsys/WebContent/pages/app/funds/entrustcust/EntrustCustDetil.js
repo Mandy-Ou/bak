@@ -17,6 +17,7 @@ define(function(require, exports) {
 		detailPanlId : Ext.id(null, 'OneCustLoanDetailPanl'),
 		bussKey : null,/* 钥匙KEY */
 		sysId : null,
+		attachMentFs:null,
 		appgrid_1 : null,
 		contractId : null,
 		setParams : function(parentCfg) {
@@ -49,7 +50,9 @@ define(function(require, exports) {
 			if (!this.appWin) {
 				this.createAppWindow();
 			}
-			
+			var params = {sysId:-1,formType:ATTACHMENT_FORMTYPE.FType_43,formId:this.parent.getSelId()};
+        	this.attachMentFs.clearAll();
+        	this.attachMentFs.reload(params);
 			this.appWin.optionType = this.optionType;
 			this.appWin.show(this.parent.getEl());
 			this.loadData();
@@ -69,8 +72,9 @@ define(function(require, exports) {
 		 */
 		refresh : function(data) {
 			var _this = exports.WinEdit;
-			if (_this.parentCfg.self.refresh)
-				_this.parentCfg.self.refresh(_this.optionType, data);
+			if (_this.parentCfg.self.refresh){
+			_this.parentCfg.self.refresh(_this.optionType, data);
+			}
 		},
 		createToolBar : function() {
 			var _this = this;
@@ -97,15 +101,14 @@ define(function(require, exports) {
 					'<tr><th colspan="15" style="font-weight:bold;text-align:left;" >&nbsp;&nbsp;基本信息>>></th><tr>',
 					'<tr><th col="code">编号</th> <td col="code" >&nbsp;</td><th col="name">姓名</th> <td col="name" >&nbsp;</td><th col="sex">性别</th> <td col="sex" >&nbsp;</td></tr>',
 					'<tr><th col="birthday">出生日期</th> <td col="birthday" >&nbsp;</td><th col="cardNum">身份证号码</th> <td col="cardNum" >&nbsp;</td><th col="job">职务</th> <td col="job" >&nbsp;</td></tr>',
-					'<tr><th col="maristal">婚姻</th> <td col="maristal" >&nbsp;</td><th col="hometown">籍贯</th> <td col="deadline" >&nbsp;</td><th col="prange">委托产品范围</th> <td col="prange" >&nbsp;</td></tr>',
-					'<tr><th col="products">委托产品</th> <td col="products" >&nbsp;</td><th col="maristal">婚姻状况</th> <td col="maristal" >&nbsp;</td><th col="hometown">籍贯</th> <td col="hometown" >&nbsp;</td></tr>',
+					'<tr><th col="maristal">婚姻</th> <td col="maristal" >&nbsp;</td><th col="prange">委托产品范围</th> <td col="prange" >&nbsp;</td><th col="products">委托产品</th> <td col="products" >&nbsp;</td></tr>',
 					'<tr><th col="nation">民族</th> <td col="nation" >&nbsp;</td><th col="inAddress">现居住地址</th> <td col="inAddress" >&nbsp;</td><th col="homeNo">住宅号</th> <td col="homeNo" >&nbsp;</td></tr>',
 					'<tr><th colspan="6" style="font-weight:bold;text-align:left;" >&nbsp;&nbsp;委托意向信息>>></th><tr>',
 					'<tr><th col="ctype">委托人类型</th> <td col="ctype" >&nbsp;</td><th col="appAmount">委托金额</th> <td col="appAmount" >&nbsp;</td><th col="deadline">委托期限</th> <td col="deadline" >&nbsp;</td></tr></tr>',
 					'<tr><th colspan="6" style="font-weight:bold;text-align:left;" >&nbsp;&nbsp;联系信息>>></th><tr>',
 					'<tr><th col="phone">手机</th> <td col="phone" >&nbsp;</td><th col="contactTel">联系电话</th> <td col="contactTel" >&nbsp;</td><th col="contactor">联系人</th> <td col="contactor" >&nbsp;</td></tr>',
 					'<tr><th col="email">电子邮件</th> <td col="email">&nbsp;</td><th col="fax">传真</th> <td col="fax" >&nbsp;</td><th col="qqmsnNum">QQ或MSN号码</th> <td col="qqmsnNum" >&nbsp;</td></tr>',
-					'<tr><th col="workOrg">工作单位</th> <td col="workOrg">&nbsp;</td><th col="workAddress">单位地址</th> <td col="workAddress">&nbsp;</td></tr>'];
+					'<tr><th col="workOrg">工作单位</th> <td col="workOrg">&nbsp;</td><th col="workAddress">单位地址</th> <td col="workAddress">&nbsp;</td><th col="hometown">籍贯</th> <td col="hometown" >&nbsp;</td></tr>'];
 			var detailCfgs_1 = [{
 						cmns : 'THREE',
 						/* ONE , TWO , THREE */
@@ -117,43 +120,30 @@ define(function(require, exports) {
 						// 国际化资源对象
 						htmls : htmlArrs_1,
 						url : './fuEntrustCust_lget.action',
-						params : {
-							id : _this.selId
-						},
 						callback : {
 							sfn : function(jsonData) {
-								switch(jsonData["sex"]){
-								case '0':
-									 jsonData["sex"]='男';
-									break;
-								case '1':
-									jsonData["sex"]='女';
-									break;
-								}
-								switch(jsonData["ctype"]){
-								case '0':
-									 jsonData["ctype"]='内部委托人';
-									break;
-								case '1':
-									jsonData["ctype"]='外部委托人';
-									break;
-								}
+								if(jsonData["maristal"]){
+							jsonData["maristal"]=	Render_dataSource.gvlistRender('100003',jsonData["maristal"]);}
+								if(jsonData["hometown"]){
+							jsonData["hometown"]=	Render_dataSource.gvlistRender('100004',jsonData["hometown"]);}
+								if(jsonData["nation"]){
+								jsonData["nation"]=Render_dataSource.gvlistRender('100005',jsonData["nation"]);}
+								if(jsonData["degree"]){
+							jsonData["degree"]=	Render_dataSource.gvlistRender('100006',jsonData["degree"]);}
+								jsonData["sex"]=Render_dataSource.entrussexRender(jsonData["sex"]);
+								jsonData["ctype"]=Render_dataSource.eCusRender(jsonData["ctype"]);
+								jsonData["appAmount"]=Render_dataSource.moneyRender(jsonData["appAmount"]);
+								jsonData["prange"]=Render_dataSource.ecustIdRender(jsonData["prange"]);
 							}
 						}
 					}];
-			var attachLoad = function(params, cmd) {
-				/* 在面板执行上一条，下一条查询时，会调用此事件 to do .. */
-				// Cmw.print(params);
-				// Cmw.print(cmd);
-			}
 			var detailPanel = new Ext.ux.panel.DetailPanel({
 						width : 780,
-						detailCfgs : detailCfgs_1,
-						attachLoad : function(params, cmd) {}
+						detailCfgs : detailCfgs_1
 					});
 
-			var attachMentFs = this.createAttachMentFs(this);
-			detailPanel.add(attachMentFs);
+			this.attachMentFs = this.createAttachMentFs(this);
+			detailPanel.add(this.attachMentFs);
 			return detailPanel;
 		},
 
@@ -163,35 +153,25 @@ define(function(require, exports) {
 		 * @return {}
 		 */
 		createAttachMentFs : function(_this, dir, params) {
-			var dir = 'ecustomerinfo_path';
-			/*
-			 * ----- 参数说明： isLoad 是否实例化后马上加载数据 dir : 附件上传后存放的目录， mortgage_path
-			 * 定义在 resource.properties 资源文件中 isSave : 附件上传后，是否保存到 ts_attachment
-			 * 表中。 true : 保存 params : {sysId:系统ID,formType:业务类型,参见 公共平台数据字典中
-			 * ts_attachment 中的说明,formId:业务单ID，如果有多个用","号分隔} 当 isLoad = false 时，
-			 * params 可在 reload 方法中提供 ----
-			 */
-			var cfg = {
-				title : '相关材料附件',
-				isLoad : true,
-				dir : dir,
-				isSave : true,
-				disabled : true,
-				isNotDisenbaled : true
-			};
-			if (!params) {
-				var uuid = Cmw.getUuid();
-				params = {
-//					formType : -1,
-//					formId : uuid,
-//					sysId : _this.params.sysId,
-					isNotDisenbaled : true
-				};
-			}
-			cfg.params = params;
-			var attachMentFs = new Ext.ux.AppAttachmentFs(cfg);
-			return attachMentFs;
-		},
+					/*
+					 * ----- 参数说明： isLoad 是否实例化后马上加载数据 dir : 附件上传后存放的目录，
+					 * mortgage_path 定义在 resource.properties 资源文件中 isSave :
+					 * 附件上传后，是否保存到 ts_attachment 表中。 true : 保存 params :
+					 * {sysId:系统ID,formType:业务类型,参见 公共平台数据字典中 ts_attachment
+					 * 中的说明,formId:业务单ID，如果有多个用","号分隔} 当 isLoad = false 时，
+					 * params 可在 reload 方法中提供 ----
+					 */
+					var uuid=Cmw.getUuid();
+					var attachMentFs = new Ext.ux.AppAttachmentFs({
+								title : '相关材料附件',
+								isLoad : false,
+								dir : 'mort_path',
+								isSave : true,
+								isNotDisenbaled : true,
+								params:{sysId:-1,formType:ATTACHMENT_FORMTYPE.FType_43,formId:_this.selId}
+							});
+					return attachMentFs;
+				},
 
 		/**
 		 * 关闭窗口

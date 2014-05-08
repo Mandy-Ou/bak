@@ -22,7 +22,6 @@ define(function(require, exports) {
 			 * finishBussCallback : 当业务表单保存后，更新必做或选做事项为已做,
 			 * unFinishBussCallback : 当删除业务表单后，取消已做标识
 			 * */
-			Cmw.print(tab);
 			this.finishBussCallback = tab.finishBussCallback;
 			this.setParams(tab, params);
 			if(!this.appMainPanel){
@@ -131,6 +130,7 @@ define(function(require, exports) {
 					EventManager.get("./fuRqueryApply_save.action",{params:params,
 						sfn : function(json_data) {
 							 ExtUtil.alert({msg:'数据保存成功'});
+							 document.location.reload();
 							 if(_this.finishBussCallback) _this.finishBussCallback(json_data);
 						},ffn:function(json_data){
 						 	ExtUtil.alert({msg:'数据保存失败'});

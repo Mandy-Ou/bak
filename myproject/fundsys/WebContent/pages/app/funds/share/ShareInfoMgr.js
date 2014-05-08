@@ -47,7 +47,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ShareInfoMgr,Ext.util.MyObservable,{
 			var appPanel = new Ext.Panel({autoScroll:true,border : false,id:'panel1'});
 			this.globalMgr.appgrid=this.getAppGrid();
 			var heightVal=400;
-			appPanel.add({items:[this.getToolBar(),this.getDetailPanel(),this.globalMgr.appgrid]});
+			appPanel.add({items:[this.globalMgr.appgrid,this.getToolBar(),this.getDetailPanel()]});
 			return appPanel;
 		},
 		/**
@@ -90,6 +90,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ShareInfoMgr,Ext.util.MyObservable,{
 		return toolBar;
 		},
 		 getAppGrid:function(){
+		 	var _this=this;
 				var structure_1 = [{
 					header :'id',
 					name:'id',
@@ -106,12 +107,12 @@ Ext.extend(skythink.cmw.workflow.bussforms.ShareInfoMgr,Ext.util.MyObservable,{
 					},
 				{
 				    header: '出借人名称',
-				    name: 'sex',
+				    name: 'loanName',
 				    width: 60
 				},
 				{
 				    header: '收件日期',
-				    name: 'phone',
+				    name: 'starDate',
 				    width: 90
 				},
 				{
@@ -132,9 +133,30 @@ Ext.extend(skythink.cmw.workflow.bussforms.ShareInfoMgr,Ext.util.MyObservable,{
 				var appgrid = new Ext.ux.grid.AppGrid({
 				    structure: structure_1,
 			  		 url : './fuShareData_list.action',
-				    needPage: false,
-				    height:300
+				    needPage: false
 				});
+				appgrid.setGH(600);
+//				_this.globalMgr.appgrid=appgrid;
+				appgrid.addListener('dblclick',function(e){
+				var jsonData=appgrid.getCmnVals("id,remark");//返回对jsondata的对象
+				Cmw.print(jsonData);
+//				_this.globalMgr.appform.setJsonVals(jsonData);
+				_this.globalMgr.appform.setVs(jsonData);
+				var id = appgrid.getSelId();
+				if(!id)return;
+//				 	EventManager.get('./fuCpairDetail_save.action',
+//										{
+//											params : {id:id
+//											},
+//											sfn : function(json_data) {
+//												
+//												},
+//											ffn : function() {
+//												
+//											}
+//										})
+				
+			});
 				return appgrid;},
 		/**	
 		 * 创建详情面板
@@ -218,7 +240,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ShareInfoMgr,Ext.util.MyObservable,{
 					url : './fuShareData_save.action'
 				};
 				var applyForm = FormUtil.createLayoutFrm(frm_cfg, layout_fields);
-				this.attach = this.globalMgr.createAttachMentFs(this);
+				this.attach = _this.globalMgr.createAttachMentFs(this);
 				applyForm.add(this.attach);    
 				_this.globalMgr.appform=applyForm;
 				return applyForm;},

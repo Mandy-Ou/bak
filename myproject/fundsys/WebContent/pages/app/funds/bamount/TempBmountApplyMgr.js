@@ -1,7 +1,7 @@
 Ext.namespace("cmw.skythink");
 /**
  * @author 李听
- * 增资申请暂存
+ * 暂存的撤资申请
  */
 cmw.skythink.TempAmountApplyMgr = function() {
 	this.init(arguments[0]);
@@ -22,48 +22,21 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 			},
 			/**
 			 * 获取查询Form 表单
+			 * 委托人姓名，委托合同编号，委托金额，撤资金额，撤资类型，金额要采用大于小于之类的比较
 			 */
 				getQueryFrm : function() {
 				var self = this;
-				var txt_Name = FormUtil.getTxtField({
-							fieldLabel : '银行帐号',
-							name : 'payAccount'
-						});
-				var txt_doDate = FormUtil.getDateField({
-							name : 'doDate',
-							fieldLabel : '合同签订日期'
-						});
-				var txt_startDate1 = FormUtil.getDateField({
-							name : 'payDate',
-							width : 90
-						});
-				
-				var txt_endDate1 = FormUtil.getDateField({
-							name : 'endDate',
-							width : 90
-						});
-				
-				var comp_appDate = FormUtil.getMyCompositeField({
-							itemNames : 'payDate,endDate',
-							sigins : null,
-							fieldLabel : '委托日期范围',
-							width : 210,
-							sigins : null,
-							name : 'comp_estartDate',
-							items : [txt_startDate1, {
-										xtype : 'displayfield',
-										value : '至'
-									}, txt_endDate1]
-						});
-				
+				var wd=135;
 				var txt_code = FormUtil.getTxtField({
-							fieldLabel : '编号',
-							name : 'code'
+							fieldLabel : '委托合同编号',
+							name : 'code',
+							width:wd
 						});
 				
-				var txt_contactTel = FormUtil.getTxtField({
-							fieldLabel : '账户名',
-							name : 'accName'
+				var txt_name = FormUtil.getTxtField({
+							fieldLabel : '委托人姓名',
+							name : 'name',
+							width:wd
 						});
 		
 				var cbo_eqopAmount = FormUtil.getEqOpLCbox({
@@ -73,21 +46,53 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 				var txt_endAmount = FormUtil.getMoneyField({
 							fieldLabel : '委托金额',
 							name : 'appAmount',
-							width : 70
+							width : 100
 						});
 				
 				var txt_inAddress = FormUtil.getMyCompositeField({
 							fieldLabel : '委托金额',
-							width : 150,
+							width : 175,
 							sigins : null,
-							itemNames : 'eqopAmount,appAmount',
-							name : 'comp_appAmount',
+							name : 'appAmount',
 							items : [cbo_eqopAmount, txt_endAmount]
 						});
+				var cbo_eqopBamount = FormUtil.getEqOpLCbox({
+							name : 'eqopBamount'
+						});
+				
+				var txt_endBamount = FormUtil.getMoneyField({
+							fieldLabel : '撤资金额',
+							name : 'bamount',
+							width : 100
+						});
+				
+				var txt_bamount = FormUtil.getMyCompositeField({
+							fieldLabel : '撤资金额',
+							width : 175,
+							sigins : null,
+							itemNames : 'eqopBamount,bamount',
+							name : 'comp_bamount',
+							items : [cbo_eqopBamount, txt_endBamount]
+						});
+				var txt_isNotExpiration = FormUtil.getRadioGroup({
+						fieldLabel : '撤资类型',
+						name : 'isNotExpiration',
+						//"allowBlank" : false,
+						"width" : '135',
+						"maxLength" : 50,
+						"items" : [{
+									"boxLabel" : "正常撤资",
+									"name" : "isNotExpiration",
+									"inputValue" : 1
+									},{
+									"boxLabel" : "异常撤资",
+									"name" : "isNotExpiration",
+									"inputValue" : 0
+								}]
+					});	
 				var layout_fields = [{
 					cmns : 'THREE',
-					fields : [txt_code, txt_Name, txt_contactTel, txt_doDate,
-							comp_appDate, txt_inAddress]
+					fields : [txt_name, txt_code, txt_inAddress,txt_isNotExpiration,txt_bamount]
 				}]
 				var queryFrm = FormUtil.createLayoutFrm(null, layout_fields);
 				return queryFrm;
@@ -114,38 +119,16 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 							handler : function() {
 								self.queryFrm.reset();
 							}
-						},/* {
-						token : '添加',
-						text : Btn_Cfgs.INSERT_BTN_TXT,
-						iconCls : Btn_Cfgs.INSERT_CLS,
-						tooltip : Btn_Cfgs.INSERT_TIP_BTN_TXT,
-						handler : function() {
-								self.globalMgr.winEdit.show({
-											key : "添加",
-											self : self,
-											optionType : OPTION_TYPE.ADD
-										});
-							}
-						}, */{
+						},{
 							token : '编辑',
 							text : Btn_Cfgs.MODIFY_BTN_TXT,
 							iconCls : 'page_edit',
 							tooltip : Btn_Cfgs.MODIFY_TIP_BTN_TXT,
 							handler : function() {
-
-								self.globalMgr.doApplyByOp(self,OPTION_TYPE.EDIT/*{
-										key : "编辑",
-										self : self,
-										optionType : OPTION_TYPE.EDIT
-									}*/);
+								self.globalMgr.doApplyByOp(self,OPTION_TYPE.EDIT
+									);
 						
-								/*
-									self.globalMgr.winEdit.show({
-											key : "编辑",
-											self : self,
-											optionType : OPTION_TYPE.EDIT
-										});
-							*/}
+								}
 						}, {
 							token : '详情',
 							text : Btn_Cfgs.DETAIL_BTN_TXT,
@@ -196,8 +179,7 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 							tooltip : Btn_Cfgs.DELETE_TIP_BTN_TXT,
 							handler : function() {
 									EventManager.deleteData('./fuBamountApply_delete.action',{type:'grid',cmpt:self.appgrid,optionType:OPTION_TYPE.DEL,self:self});}
-						},
-							{
+						},{
 							token : '导出',
 							text : Btn_Cfgs.EXPORT_BTN_TXT,
 							iconCls : 'page_exportxls',
@@ -205,6 +187,7 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 							handler : function() {
 								self.globalMgr.doExport(self);
 							}
+							
 						}];
 					toolBar = new Ext.ux.toolbar.MyCmwToolbar({
 							aligin : 'right',
@@ -222,50 +205,63 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 			getAppGrid : function() {
 				var _this = this;
 				var structure_1 = [{
-					header : '委托客户编号',
+					header : '委托合同编号',
 					name : 'code'
 				}, {
-					header : '委托人',
+					header : '委托人姓名',
 					name : 'name'
 				}, {
 					header : '委托金额',
 					name : 'appAmount',
 					renderer: function(val) {
-					    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';}
+					    return (val && val>0) ? Cmw.getThousandths(val): '';}
+				}, {
+					header : '委托利率',
+					name : 'rate',
+					renderer:function(v,d,r){
+						return v+Render_dataSource.rateUnit_datas(r.get("unint"));
+					}
+				}, {
+					header : '委托单位',
+					name : 'unint',
+					renderer:Render_dataSource.rateUnit_datas,
+					hidden:true
+				},  {
+					header : '委托生效日期',
+					name : 'payDate'	
+				}, {
+					header : '委托失效日期',
+					name : 'endDate'
 				}, {
 					header : '撤资金额',
 					name : 'bamount',
 					renderer: function(val) {
-					    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';}
-				}, {
-					header : '违约金额',
-					name : 'wamount',
+					    return (val && val>0) ? Cmw.getThousandths(val): '';}
+				},  {
+					header : '撤资类型',
+					name : 'isNotExpiration',
 					renderer: function(val) {
-					    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';}
+						switch (val) {
+			        		case '-1' :
+			          	 		val = "作废";
+			          	 		break;
+			        		case '0':
+			          	 		val = "异常撤资";
+			          	 		break;
+			        		case '1':
+			          	 		val = "正常撤资";
+			          	 		break;
+			       		 	}
+			       			return val;
+			   			 }
 				}, {
 					header : '撤资日期',
 					name : 'backDate'
-				}, {
-					header : '是否期满',
-					name : 'isNotExpiration'
-						,
-						renderer: function(val) {
-							switch (val) {
-				        		case '-1' :
-				          	 		val = "作废";
-				          	 		break;
-				        		case '0':
-				          	 		val = "不可用";
-				          	 		break;
-				        		case '1':
-				          	 		val = "可用";
-				          	 		break;
-				       		 	}
-				       			return val;
-				   			 }
-				}, {
-					header : '备注',
-					name : 'remark'
+				},{
+					header : '违约金额',
+					name : 'wamount',
+					renderer: function(val) {
+					    return (val && val>0) ? Cmw.getThousandths(val): '';}
 				}];
 				var appgrid = new Ext.ux.grid.AppGrid({// 创建表格
 					title : '委托人信息',
@@ -396,7 +392,7 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 									function(module) {// 导入包的，有重构
 										_this.appCmpts[winkey] = module.WinEdit;
 										_this.appCmpts[winkey].show(parentCfg);
-									});
+									});									
 						}
 					}
 				}

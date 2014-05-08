@@ -167,26 +167,31 @@ Ext.extend(skythink.cmw.workflow.bussforms.EntrustcontractMgr,Ext.util.MyObserva
 //     	formDiyCfg : {sysId:sysId,formdiyCode:FORMDIY_IND.FORMDIY_LOAN,formIdName:'id'},
 	    callback: {
 	        sfn: function(jsonData) {
+	          _this.globalMgr.AddBtn.disable();
+		  	 _this.globalMgr.show();
 		      if(jsonData["prange"]='2'){
 		       	  jsonData["prange"]='指定产品';
 		      }
 		      if(jsonData["prange"]='1'){
 		       	  jsonData["prange"]='所有产品';
 		      }
-	          _this.globalMgr.AddBtn.disable();
-		      _this.globalMgr.show();
-		      jsonData["appAmount"] = Cmw.getThousandths(jsonData["appAmount"])+'元';
+		      jsonData["appAmount"]= Cmw.getThousandths(jsonData["appAmount"])+'元';
 		      jsonData["payDay"] = jsonData["payDay"]+'号';
 		      jsonData["iamount"] = Cmw.getThousandths(jsonData["iamount"])+'元';
+		      jsonData["uamount"] = Cmw.getThousandths(jsonData["uamount"])+'元';
 		      var tdote=new Date(jsonData["doDate"]);
 		      jsonData["doDate"]=Ext.util.Format.date(tdote,'Y-m-d');
 		      var tpayDate=new Date(jsonData["payDate"]);
 		      jsonData["payDate"]=Ext.util.Format.date(tpayDate,'Y-m-d');
 		      var tendDate=new Date(jsonData["endDate"]);
 		      jsonData["endDate"]=Ext.util.Format.date(tendDate,'Y-m-d');
+		       jsonData["rate"] =jsonData["rate"]+Render_dataSource.rateUnit_datas(jsonData["rate"]);
+		  	  jsonData["bstatus"]=Render_dataSource.sDetailRender(jsonData["bstatus"]);
+		      }
+		      
 	        }
 	    }
-	}];
+	];
 	var detailPanel_1 = new Ext.ux.panel.DetailPanel({
 	    autoWidth : true,
 	    detailCfgs: detailCfgs_1,

@@ -143,7 +143,7 @@ Ext.extend(cmw.skythink.AmountApplyHistory,Ext.util.MyObservable,{
 						return Render_dataSource.entrusIsenRender(val);
 					}
 				}, {
-					header : '合同编号',
+					header : '申请单编号',
 					name : 'code'
 				}, {
 					header : '收款银行',

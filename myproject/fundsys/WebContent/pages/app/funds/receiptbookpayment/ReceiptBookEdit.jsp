@@ -34,7 +34,7 @@
 	String endDateVal = "";
 	if(null != request.getParameter("endDate"))endDateVal= request.getParameter("endDate");;
 	String rcountVal ="";
-	if(null != request.getParameter("rcount"))rcountVal = request.getParameter("rcount");;
+	if(null != request.getParameter("rcount"))rcountVal = new String(request.getParameter("rcount").getBytes("iso8859-1"),"utf-8");
 	//票数转换为大写  第48行代码
 	//汇票承诺书
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//转换格式 不加"yyyy-MM-dd" ，效果： 14-1-29 上午12:00
@@ -279,9 +279,11 @@
 	var amountVal = <%=amountVal%>;
 	amountVal = idCardNoUtil.cmycurd(amountVal);
 	$("#tamount").val(amountVal);
-	var rcountVal = <%=rcountVal%>
+	var rcountVal ="<%=rcountVal%>";
 	rcountVal = idCardNoUtil.cmycurd(rcountVal);
-	$("#tcount").val(rcountVal.split("元整")[0]); //转换之后变成 "壹元整" 需要截取  效果等同于下面的语句
+	var tcount=document.getElementById("tcount").value;
+	if(!isNaN(tcount))
+		$("#tcount").val(rcountVal.split("元整")[0]); //转换之后变成 "壹元整" 需要截取  效果等同于下面的语句
 	//$("#tcount").html(rcountVal.substring(0,rcountVal.lastIndexOf("元整")));
 	});
 	function date(){
@@ -380,11 +382,12 @@ input{
 	<input id="id" name="id" style="visibility : hidden" value="<%=receiptBookEditId %>" />
 	<input id="receiptId" name="id" style="visibility : hidden" value="<%=idVal %>" />
 	<h2>银行承兑汇票转让承诺书</h2>
+	<h3 id="validation" style="text-align:center; color: red"></h3>
 		<p style="text-align : left">由于本公司急需资金，先将我公司合法拥有的银行承兑汇票共计<input type="text" class="data" id="tcount" name="tcount" value="<%=rcountVal %>">张，共计金额:<input type="text" id="tamount" class="data" style="width:150px;" value=<%=tamount %>>有偿转让给被转让方。（汇票信息详见下表 ）</p>
 		<table class="receiptbookId" border="1" style="border-collapse:collapse;">
 			<tr>
 				<th>票号</th>
-				<th style = "width : 100px;">金额</th>
+				<th style = "width : 120px;">金额</th>
 				<th>付款行全称</th>
 				<th>出票日期</th>
 				<th>汇票到期日</th>
@@ -398,13 +401,19 @@ input{
 				<td><input type="text" id="endDate" name="endDate" disabled="disabled" value=<%=endDateVal %>></td>
 			 -->
 				<td><%=rnumVal %></td>
-				<td id="amountVal"><%=amountVal %></td>
+				<td id="amountVal" style="display: none;"><%=amountVal %></td>
+				<td id="amountVals"><%=amountVal %></td>
 				<td><%=pbankVal %></td>
 				<td><%=outDateVal %></td>
 				<td><%=endDateVal %></td>
-	
 			</tr>
 		</table>
+		<script type="text/javascript">
+			var amountValObj=document.getElementById("amountVals");
+			var val=amountValObj.innerHTML;
+			val=parent.Cmw.getThousandths(val)+"元";
+			amountValObj.innerHTML=val;
+		</script>
 		<br/>
 		<table>
 			<tr>

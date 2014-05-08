@@ -41,6 +41,21 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 		getAppCmpt : function(){
 			var _this = this;
 			var selId  = null;
+			EventManager.get('./fuCpairDetail_getCusName.action', {//fuEntrustContract_list
+			params : {
+				id : _this.params.applyId
+			},
+			sfn : function(json_data) {
+			alert(_this.params.applyId);
+				alert(json_data);
+//			_this.globalMgr.onel=json_data;
+				Cmw.print(json_data);
+			},ffn:function(json_data){
+				alert(json_data);
+				
+			}
+		});
+			
 			var appPanel = new Ext.Panel({autoScroll:true,border : false});
 			this.globalMgr.appgrid=this.getAppGrid();
 			var heightVal=400;
@@ -109,22 +124,21 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 		 getAppGrid:function(){
 			var _this = this;
 			var structure_1 = [{
-			    header: '客户编号',
+			    header: '委托客户编号',
 			    name: 'code',
 			    width: 120
 			},{
-			    header: '用戶名',
+			    header: '委托客户名称',
 			    name: 'name',
 			    width: 120
 			},
-				{
+			{
 			    header: '委托金额',
 			    name: 'uamount',
 			    width: 120,
 					renderer: function(val) {
 				    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';
 				    }
-
 			},{
 			    header: 'contractId',
 			    name: 'contractId',
@@ -143,10 +157,11 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 			}];
 			
 			var hid_formId = FormUtil.getMoneyField({
-				    name: 'name',
+				    name: 'uamount',
 				    "width": 135,
 				    "allowBlank": false,id:'appountId'
 				});
+				
 			var appgrid = new Ext.ux.grid.MyEditGrid({
 			    structure: structure_1,
 			    needPage: false,
@@ -176,13 +191,24 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 			    /*i18n : UI_Menu.appDefault,*/
 			    //国际化资源对象
 			    htmls: htmlArrs_1,
-			    url: './fuCpairDetail_getCusName.action',
+//			    url: './fuCpairDetail_getCusName.action',
 			    params: {
 			        id: _this.params.applyId
 			    },
 			    reload:true,
 			    callback: {
 			        sfn: function(jsonData) {
+			        	if(jsonData["mgrtype"]){
+			        		switch(jsonData["mgrtype"]){
+			        		 case 0:
+			        		 jsonData["mgrtype"]='不收管理费';
+			        		 break;
+			        		 case 1:
+			        		 jsonData["mgrtype"]='按还款方式算法收取';
+			        		  break;
+			        		}
+			        	}
+		        	jsonData["mrate"]=jsonData["mrate"]+"&nbsp;%";
 			        var appAmount = jsonData["appAmount"];
 	         	      var tdote=new Date(jsonData["payDate"]);//转换为时间格式（返回值类型是时间）
 	    		      jsonData["payDate"]=Ext.util.Format.date(tdote,'Y-m-d');//进行时间的格式化
@@ -206,7 +232,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 							for(var i=0;i<record.length;i++){
 								_this.globalMgr.date=record[i].data;
 								record[i].data.entrustCustId=record[i].data.id;
-								record[i].data.amt=record[i].data.appAmount;
+								record[i].data.uamount=record[i].data.uamount;
 								record[i].data.contractId=_this.globalMgr.LoanId;
 								_this.globalMgr.appgrid.addRecord(record[i].data);
 							}
@@ -231,11 +257,12 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 			var arr = [];
 			for(var i=0,count = store.getCount(); i<count; i++){
 				var record = store.getAt(i);
-				var id = record.id;
+//				var id = record.id;
+				var eid = record.get('eid');
 				var entrustCustId = record.get('entrustCustId');
 				var contractId = record.get('contractId');
-				var amt = record.get('amt');
-				arr[arr.length] = {entrustCustId:entrustCustId,contractId:contractId,amt:amt};
+				var amt = record.get('uamount');
+				arr[arr.length] = {eid:eid,entrustCustId:entrustCustId,contractId:contractId,amt:amt};
 			}
 			return arr;
 		},
@@ -279,7 +306,6 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 				var parent ={};
 				_this.globalMgr.formId = _this.params.applyId;
 				parent.formId = _this.globalMgr.formId;
-//				parent.appgrid = _this.globalMgr.appgrid;
 				parent.AddBtn  = _this.globalMgr.AddBtn;
 				parent.sysId = _this.globalMgr.sysId;
 				parentCfg.parent = parent;
@@ -292,30 +318,30 @@ Ext.extend(skythink.cmw.workflow.bussforms.CapitalPairMgr,Ext.util.MyObservable,
 							var RowVal = _this.globalMgr.appgrid.getModRowVals();
 							if (params) {
 								var Edit=_this.getBatchDatas();
-								var content=_this.getDatas();//返回的数组对象:Ext.encode( Mixed o ) : String ;把对象转换为字符串，用这个方法可以在ajax提交时返回数据
-								if(content){
+//								var content=_this.getDatas();
+								//返回的数组对象:Ext.encode( Mixed o) : String ;把对象转换为字符串，用这个方法可以在ajax提交时返回数据
+								if(Edit){
 									var sum=0;
-									for(var i=0;i<content.length;i++){
-										var amt=content[i].amt;
+									for(var i=0;i<Edit.length;i++){
+										var amt=Edit[i].amt;
 										sum=parseInt(sum);
 										sum+=parseInt(amt);
 										}
-										alert(sum);
 										if(sum!=_this.globalMgr.appAmount){
 											Ext.MessageBox.alert("提示","没有正确匹配金额:"+_this.globalMgr.appAmount+"<span style='color:red;'>元</span>");
 										}else{
 										EventManager.get('./fuCpairDetail_save.action',
 										{
 											params : {
-												Edit : Ext.encode(Edit),
-												content : Ext.encode(content)
+												Edit : Ext.encode(Edit)
 											},
 											sfn : function(json_data) {
 												Ext.MessageBox.alert("提示:","数据保存成功！");
 												},
 											ffn : function() {
 												Ext.MessageBox.alert("提示:","数据保存失败！");
-											}})}}
+											}
+											})}}
 							}
 				}
 			}			

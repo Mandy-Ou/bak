@@ -1,3 +1,4 @@
+<%@page import="com.cmw.core.util.StringHandler"%>
 <%@page import="java.math.BigDecimal"%>
 <%@page import="com.cmw.service.impl.funds.ReceiptServiceImpl"%>
 <%@page import="com.cmw.entity.funds.ReceiptEntity"%>
@@ -46,8 +47,8 @@
 		outMan = receiptEntity.getOutMan();
 		omaccount = receiptEntity.getOmaccount();
 		pbank = receiptEntity.getPbank();
-		outDate = receiptEntity.getOutDate().toString();
-		endDate = receiptEntity.getEndDate().toString();
+		outDate = StringHandler.dateFormatToStr("yyyy-MM-dd", receiptEntity.getOutDate());
+		endDate = StringHandler.dateFormatToStr("yyyy-MM-dd",receiptEntity.getEndDate());
 		amount = receiptEntity.getAmount();
 		rtacname = receiptEntity.getRtacname();
 		rtaccount = receiptEntity.getRtaccount();
@@ -128,7 +129,7 @@ table{margin:0 auto}/*让表单进行居中显示  */
 				<td><input type="text" id = "outDate"  name = "outDate" onclick = "WdatePicker()" class="{required:true,dateISO : true}" value="<%=outDate%>"></td>
 			</tr>
 			<tr>
-				<td class="txt-right" >到票期日：</td>
+				<td class="txt-right" >到票日期：</td>
 				<td><input type="text" id = "endDate" name = "endDate" onclick = "WdatePicker()" class="{required:true,dateISO : true }" value="<%=endDate%>"></td>
 			</tr>
 			<tr>

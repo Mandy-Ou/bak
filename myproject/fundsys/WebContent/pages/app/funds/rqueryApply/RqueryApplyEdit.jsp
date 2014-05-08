@@ -33,6 +33,7 @@
 	
 	Long receiptId = null;
 	String count = request.getParameter("rcount");
+	count="";
 	
 	
 	RqueryApplyEntity rqueryApplyEntity = null;
@@ -74,6 +75,8 @@
 		SHashMap params=new SHashMap();
 		params.put("receiptId", Long.parseLong(receiptIds));
 		rqueryApplyEntity = rqueryApplyService.getEntity(params);
+		ReceiptService receiptService=(ReceiptService)wc.getBean("receiptService");
+		ReceiptEntity receipt=receiptService.getEntity(Long.parseLong(receiptIds));
 		if( null != rqueryApplyEntity){
 			id = rqueryApplyEntity.getId();
 			qbank = rqueryApplyEntity.getQbank();
@@ -93,13 +96,20 @@
 				aday = time.split("-")[2];
 			}
 			receiptId = rqueryApplyEntity.getReceiptId();
-			ReceiptService receiptService = (ReceiptService)wc.getBean("receiptService");
+			ReceiptService receiptSer = (ReceiptService)wc.getBean("receiptService");
 			SHashMap param = new SHashMap();
 			param.put("id", Long.parseLong(receiptIds));
-			receiptEntity = receiptService.getEntity(param);
+			receiptEntity = receiptSer.getEntity(param);
 			count = receiptEntity.getRcount();
 			//只读
 			orgtype = "3";
+		}else if(receipt !=null){
+			rnum = receipt.getRnum();
+			amount = receipt.getAmount();
+			payMan = receipt.getOutMan();
+			rtacname = receipt.getRtacname();
+			pbank =receipt.getPbank();
+			
 		}
 	}
 %>
@@ -165,7 +175,7 @@ input{
 			<tr>
 				<td class="txt-right">账号：</td>
 				<td><input type="text" id="account" name="account" style="width: 200px"  class="{required:true,maxlength:30}" value=<%=account %>></td>
-				<td>现收到银行承兑汇票<input type="text" id="count" name="count" style="width:30px;" readonly="readonly" value=<%=count %> >张</td>
+				<td>现收到银行承兑汇票<input type="text" id="count" name="count" style="width:30px;"  value=<%=count %> >张</td>
 			</tr>
 			<tr>
 				<td class="txt-right">票号:</td>

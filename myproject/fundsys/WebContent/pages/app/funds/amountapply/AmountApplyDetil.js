@@ -98,10 +98,9 @@ define(function(require, exports) {
 			var _this=this;
 			var htmlArrs_1 = [
 					'<tr><th col="code">申请单编号</th> <td col="code" >&nbsp;</td><th col="payBank">收款银行</th> <td col="payBank" >&nbsp;</td><th col="payAccount">收款账号</th> <td col="payAccount" >&nbsp;</td></tr>',
-					'<tr><th col="accName">账户名</th> <td col="accName" >&nbsp;</td><th col="cardNum">身份证号码</th> <td col="cardNum" >&nbsp;</td><th col="appAmount">委托金额</th> <td col="appAmount" >&nbsp;</td></tr>',
-					'<tr><th col="payDate">委托生效日期</th> <td col="payDate" >&nbsp;</td><th col="endDate">委托失效日期</th> <td col="endDate" >&nbsp;</td><th col="setdayType">结息日类型</th> <td col="setdayType" >&nbsp;</td></tr>',
-					'<tr><th col="payDay">每月结息日</th> <td col="payDay" >&nbsp;</td><th col="iamount">每月收益金额</th> <td col="iamount" >&nbsp;</td><th col="rateType">利率类型</th> <td col="rateType" >&nbsp;</td></tr>',
-					'<tr><th col="rate">利率</th> <td col="rate" >&nbsp;</td><th col="unint">利率单位</th> <td col="unint" >&nbsp;</td><th col="prange">委托产品范围</th> <td col="prange" >&nbsp;</td></tr>'];
+					'<tr><th col="accName">账户名</th> <td col="accName" >&nbsp;</td><th col="appAmount">委托金额</th> <td col="appAmount" >&nbsp;</td><th col="rate">利率</th> <td col="rate" >&nbsp;</td></tr>',
+					'<tr><th col="payDate">委托生效日期</th> <td col="payDate" >&nbsp;</td><th col="endDate">委托失效日期</th> <td col="endDate" >&nbsp;</td><th col="prange">委托产品范围</th> <td col="prange" >&nbsp;</td></tr>',
+					'<tr><th col="payDay">每月结息日</th> <td col="payDay" >&nbsp;</td><th col="iamount">每月收益金额</th> <td col="iamount" >&nbsp;</td><th col="productsId">委托产品</th> <td col="productsId" >&nbsp;</td></tr>'];
 			var detailCfgs_1 = [{
 						cmns : 'THREE',
 						/* ONE , TWO , THREE */
@@ -119,9 +118,16 @@ define(function(require, exports) {
 						},
 						callback : {
 							sfn : function(jsonData) {
-								/* 可在对页面进行赋值前，对数据进行转换处理 to do .. */
-								// jsonData["leaf"] =
-								// (jsonData["leaf"]=="false") ? "否" : "是";
+									jsonData["appAmount"]=Cmw.getThousandths(jsonData["appAmount"]);
+									jsonData["iamount"]=Cmw.getThousandths(jsonData["iamount"]);
+									jsonData["payDay"]=jsonData["payDay"]+'号';
+									jsonData["rate"]=jsonData["rate"]+Render_dataSource.rateUnit_datas(jsonData["unint"])+'（'+Render_dataSource.rateTypeRender(jsonData["rateType"])+'）';
+									jsonData["prange"]=Render_dataSource.prangeUnit_datas(jsonData["prange"]);
+									var payDate=new Date(jsonData["payDate"]);//转换为时间格式（返回值类型是时间）
+									var endDate=new Date(jsonData["endDate"]);
+		     						jsonData["payDate"]=Ext.util.Format.date(payDate,'Y-m-d');//进行时间的格式化
+		     						jsonData["endDate"]=Ext.util.Format.date(endDate,'Y-m-d');
+									
 							}
 						}
 					}];
@@ -129,7 +135,7 @@ define(function(require, exports) {
 						width : 780,
 						detailCfgs : detailCfgs_1
 					});
-			var attachMentFs = this.createAttachMentFs(this);
+			var attachMentFs = this.createAttachMentFs(this)
 			detailPanel.add(attachMentFs);
 			return detailPanel;
 			},

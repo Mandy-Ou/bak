@@ -42,15 +42,15 @@ Ext.extend(skythink.cmw.workflow.bussforms.InterestMgr, Ext.util.MyObservable,{
 				var appPanel = new Ext.Panel({border : false,autoScroll : true});
 				EventManager.get('./fuInterest_getTest.action', {params : {applyId : this.params.applyId},
 					sfn : function(json_data) {
-						Cmw.print(json_data);
 						if (!json_data.id) {
 							appPanel.update("<H4 style='color:red;font-size:33px'><center>先添加委托合同之后再进行付息</center></H4>");
 							appPanel.doLayout();
 						} else {
-							 _this.globalMgr.id=json_data["id"];
-							_this.createDetailPnl(_this);
+							_this.globalMgr.id=json_data["id"];
+							_this.globalMgr.createInterest(json_data,appPanel);
+							_this.createDetailPnl(_this);	
 							appPanel.add({items : [_this.toolBar,_this.globalMgr.detailPanel_1]});
-							appPanel.doLayout();
+//							appPanel.doLayout();
 						}
 					}
 				});
@@ -402,6 +402,30 @@ Ext.extend(skythink.cmw.workflow.bussforms.InterestMgr, Ext.util.MyObservable,{
 						};
 						parentCfg.parent = parent;
 					}
-				}
+				},
+				/**
+				 * 生成还息计划
+				 * @param {} json_data
+				 */
+				createInterest:function(json_data,_this){
+					//获取还息计划
+					var datas=[];
+					EventManager.get("./fuEntrustCust_get.action",{params:{id:json_data.entrustCustId},sfn : function(jsonData){
+						if(jsonData.ctype=='2'){
+							EventManager.get("./fuInterest_getByParams.action",{params:{entrustContractId:json_data.id},sfn : function(jsonDt){
+								if(!jsonDt.totalSize){
+									//保存还息计划
+									EventManager.get("./fuInterest_saveInterests.action",{params:{entrustContract:Ext.encode(json_data)},sfn : function(jsonData){
+										_this.doLayout();
+									}});	
+								
+								}else{
+									_this.doLayout();
+								}
+							}});	
+						}
+						}
+					});	
+			}
 			}
 		});

@@ -45,7 +45,8 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 		if (!this.appPanel) {
 			this.appPanel = new Ext.Panel({autoScroll:true});
 			Cmw.mask(this.appPanel,"正在加载数据,请稍等...");
-			EventManager.get('./fuReceiptMsg_get.action',{params:{receiptId:this.globalMgr.applyId},sfn:function(json_data){
+			EventManager.get('./fuReceiptMsg_get.action',
+				{params:{receiptId:this.globalMgr.applyId},sfn:function(json_data){
 				if(json_data==-1){
 					ExtUtil.alert({msg:"汇票结算单业务没有办理,不能做汇票信息登记！"});
 					toolBar.disable(); 
@@ -67,6 +68,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 					appDetail.reload({id:json_data.id});
 					appGrid.show();
 					appGrid.reload({receMsgId:json_data.id});
+					_this.globalMgr.receMsgId=json_data.id;
 				}
 				appFormPnl.setFieldValues(json_data);
 				Cmw.unmask(_this.appPanel);
@@ -115,6 +117,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 		params : null,
 		appMainPanel :null,
 		appFormPnl : null,
+		receMsgId :null,
 		appDetail : null,
 		appGrid : null,	
 		applyId  : this.params.applyId,
@@ -126,8 +129,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 		 * @param {} _this
 		 */
 		saveData : function(_this){
-			var data = _this.globalMgr.appFormPnl.getValues();
-			EventManager.get('./fuReceiptMsg_save.action',{params:data,sfn:function(json_data){
+			EventManager.frm_save(_this.globalMgr.appFormPnl,{sfn:function(json_data){
 				_this.globalMgr.appFormPnl.hide();
 				_this.globalMgr.appDetail.show();
 				var buttons = _this.globalMgr.toolBar.getSomeButtons(Btn_Cfgs.MODIFY_BTN_TXT+","+Btn_Cfgs.SAVE_BTN_TXT);
@@ -140,6 +142,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 					_this.globalMgr.appGrid.show();
 					_this.globalMgr.appGrid.reload({receMsgId:id});
 				}
+				_this.finishBussCallback(json_data);
 			},ffn:function(json_data){
 				ExtUtil.alert({msg:"加载数据出错！"});
 				return;
@@ -195,11 +198,11 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 			
 			var rnum_txtField =  FormUtil.getReadTxtField({name:'rnum',fieldLabel:'票号',"width" : 135,allowBlank : false,maxLength:30});
 			
-			var amount_mon =  FormUtil.getMoneyField({name:'amount',fieldLabel:'金额',"width" : 135,allowBlank : false});
+			var amount_mon =  FormUtil.getMoneyField({name:'amount',fieldLabel:'金额',"width" : 130,unitText:"元",allowBlank : false});
 			
-			var rate_Doub =  FormUtil.getDoubleField({name:'rate',fieldLabel:'利息',"width" : 130,allowBlank: false,decimalPrecision:2,unitText:'%'});
+			var rate_Doub =  FormUtil.getDoubleField({name:'rate',fieldLabel:'利率',"width" : 130,allowBlank: false,decimalPrecision:2,unitText:'%'});
 			
-			var tiamount_mom =  FormUtil.getMoneyField({name:'tiamount',fieldLabel:'汇票收费',"width" : 130,allowBlank : false});
+			var tiamount_mom =  FormUtil.getMoneyField({name:'tiamount',fieldLabel:'汇票收费',"width" : 125,unitText:"元",allowBlank : false});
 			
 			var name_txtField =  FormUtil.getReadTxtField({name:'name',fieldLabel:'供票人',"width" : 135,allowBlank : false,maxLength:50});
 			
@@ -237,10 +240,10 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 			var txt_ticketMan =   FormUtil.getTxtField({allowBlank : true,fieldLabel:'收票人',width: 135,name:'ticketMan',maxLength:30,allowBlank: false});
 			var dat_fundsDate =  FormUtil.getDateField({allowBlank : true,fieldLabel:'资金到账日期',width: 135,name:'fundsDate',allowBlank: false});
 			var ticketRate_Doub =  FormUtil.getDoubleField({name:'ticketRate',fieldLabel:'贴现利率',"width" : 130,allowBlank : false,decimalPrecision:2,unitText:'%'});
-			var charge_mon =  FormUtil.getMoneyField({name:'charge',fieldLabel:'贴现收费',"width" : 135,allowBlank : false});
-			var funds_mon =  FormUtil.getMoneyField({name:'funds',fieldLabel:'到账金额',"width" : 135,allowBlank : false});
-			var adultMoney_mon =  FormUtil.getMoneyField({name:'adultMoney',fieldLabel:'提成',"width" : 135,allowBlank : false});
-			var interest_mon =  FormUtil.getMoneyField({name:'interest',fieldLabel:'利润',"width" : 135,allowBlank : false});
+			var charge_mon =  FormUtil.getMoneyField({name:'charge',fieldLabel:'贴现收费',"width" : 130,unitText:"元",allowBlank : false});
+			var funds_mon =  FormUtil.getMoneyField({name:'funds',fieldLabel:'到账金额',"width" : 130,unitText:"元",allowBlank : false});
+			var adultMoney_mon =  FormUtil.getMoneyField({name:'adultMoney',fieldLabel:'提成',"width" : 130,unitText:"元",allowBlank : false});
+			var interest_mon =  FormUtil.getMoneyField({name:'interest',fieldLabel:'利润',"width" : 130,unitText:"元",allowBlank : false});
 			var remark  =  FormUtil.getTAreaField({height:50,fieldLabel:'备注',maxLength:100,"width" : 500});
 			var fset2 = FormUtil.createLayoutFieldSet({
 				title : '汇票贴现信息'
@@ -274,7 +277,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 							'<th col="amount">金额</th> <td col="amount" >&nbsp;</td>' +
 						'</tr>', 
 						'<tr>' +
-							'<th col="rate">利润</th> <td col="rate" >&nbsp;</td>' +
+							'<th col="rate">利率</th> <td col="rate" >&nbsp;</td>' +
 							'<th col="tiamount">收费</th> <td col="tiamount" >&nbsp;</td>' +
 							'<th col="name">供票人</th> <td col="name" >&nbsp;</td>' +
 						'</tr>', 
@@ -295,7 +298,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 						'</tr>', 
 						'<tr>' +
 							'<th col="adultMoney">提成</th> <td col="adultMoney" >&nbsp;</td>' +
-							'<th col="interest">利率</th> <td col="interest" colspan=3>&nbsp;</td>' +
+							'<th col="interest">利润</th> <td col="interest" colspan=3>&nbsp;</td>' +
 						'</tr>', 
 						'<tr height = "50">' +
 							'<th col="remark">备注</th> <td col="remark"  colspan=5 >&nbsp;</td>' +
@@ -388,7 +391,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 			    name: 'adultMan'
 			},
 			{
-			    header: '提成比例',
+			    header: '提成比例(%)',
 			    name: 'adultProp'
 			},
 			{
@@ -408,8 +411,8 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 			    hidden : true
 			}];
 			var adultMan_txt = FormUtil.getTxtField({fieldLabel : '提成人',name:'adultMan'});
-			var adultProp_Int = FormUtil.getIntegerField({fieldLabel : '提成比例',name:'adultProp'});
-			var adultMoney_mon = FormUtil.getMoneyField({fieldLabel : '提成金额',name:'adultMoney'});
+			var adultProp_Int = FormUtil.getDoubleField({fieldLabel : '提成比例',name:'adultProp'});
+			var adultMoney_mon = FormUtil.getMoneyField({fieldLabel : '提成金额',unitText:"元",name:'adultMoney'});
 			var remark = FormUtil.getTAreaField({fieldLabel : '备注',name:'remark'});
 			var editEles = {0:adultMan_txt,1:adultProp_Int,2:adultMoney_mon,3:remark};
 			var appgrid = new Ext.ux.grid.MyEditGrid({
@@ -455,11 +458,12 @@ Ext.extend(skythink.cmw.workflow.bussforms.ReceiptMsgMgr,Ext.util.MyObservable,{
 			var batchDatas = Ext.encode(data);
 			EventManager.get('./fuReceInterest_save.action',{params:{batchDatas:batchDatas},
 				sfn:function(json_data){
-				ExtUtil.alert({msg:"数据保存成功！"});
-				return;
-			},ffn:function(json_data){
-				ExtUtil.alert({msg:"加载数据出错！"});
-				return;
+					_this.globalMgr.appGrid.reload({receMsgId:_this.globalMgr.receMsgId});
+					ExtUtil.alert({msg:"数据保存成功！"});
+					return;
+				},ffn:function(json_data){
+					ExtUtil.alert({msg:"加载数据出错！"});
+					return;
 			}});
 			
 		},

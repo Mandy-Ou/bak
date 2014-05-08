@@ -146,7 +146,7 @@ Ext.extend(cmw.skythink.AuditCustApplyMgr,Ext.util.MyObservable,{
 						return Render_dataSource.entrusIsenRender(val);
 					}
 				}, {
-					header : '合同编号',
+					header : '申请单编号',
 					name : 'code'
 				}, {
 					header : '收款银行',
@@ -220,7 +220,7 @@ Ext.extend(cmw.skythink.AuditCustApplyMgr,Ext.util.MyObservable,{
 			var sysId = _this.params.sysid;
 			var contractId = codeObj.contractId;
 			var entrustCustId = codeObj.entrustCustId;
-			 ExtUtil.confirm({title:'提示',msg:'确定提交编号为："'+codeObj.code+'"的展期申请单?',fn:function(){
+			 ExtUtil.confirm({title:'提示',msg:'确定提交编号为："'+codeObj.code+'"的增资申请单?',fn:function(){
 		 	  		if(arguments && arguments[0] != 'yes') return;
 					var params = {isnewInstance:true,sysId:sysId,applyId:applyId,contractId:contractId,procId:null,bussProccCode:'B8888',entrustCustId:entrustCustId};
 					tabId = CUSTTAB_ID.bussProcc_auditMainUITab.id;

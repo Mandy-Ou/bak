@@ -1,3 +1,5 @@
+<%@page import="com.cmw.entity.funds.ReceiptEntity"%>
+<%@page import="com.cmw.service.inter.funds.ReceiptService"%>
 <%@page import="com.cmw.service.inter.funds.SettlementService"%>
 <%@page import="com.cmw.entity.funds.SettlementEntity"%>
 <%@page import="com.cmw.entity.funds.ReceiptBookEntity"%>
@@ -52,6 +54,7 @@
 	WebApplicationContext wc = (WebApplicationContext)this.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 	
 	BackReceiptEntity backReceiptEntity = null;
+	ReceiptEntity receiptEntity = null;
 	BackInvoceEntity backInvoceEntity = null;
 	if( null != orgtype && "3".equals(orgtype)){
 	if(null != idVal && !"".equals(idVal)){
@@ -89,14 +92,17 @@
 		SHashMap backparam = new SHashMap();
 		backparam.put("backReceiptId", backReceiptEntity.getId());
 		backInvoceEntity = backInvoceService.getEntity(backparam);
-		if(null != backInvoceEntity.getSdate()){
-			sdate = backInvoceEntity.getSdate().toString();
+		if(backInvoceEntity!=null){
+			if(null != backInvoceEntity.getSdate()){
+				sdate = backInvoceEntity.getSdate().toString();
+			}
+			rate=backInvoceEntity.getRate();
+			sname = backInvoceEntity.getName();
+			samount = backInvoceEntity.getAmount();
+			tiamount = backInvoceEntity.getTiamount();
+			bamount = backInvoceEntity.getBamount();
+			pamount = backInvoceEntity.getPamount();
 		}
-		sname = backInvoceEntity.getName();
-		samount = backInvoceEntity.getAmount();
-		tiamount = backInvoceEntity.getTiamount();
-		bamount = backInvoceEntity.getBamount();
-		pamount = backInvoceEntity.getPamount();
 		
 		//根据backReceiptEntity.getReceiptId() 在receiptBook
 		
@@ -105,21 +111,24 @@
 		reparam.put("receiptId", backReceiptEntity.getReceiptId());
 		rbrelationEntity = rbrelationService.getEntity(reparam);
 		//获取汇票承诺书的id
-		Long receiptBookId = rbrelationEntity.getReceiptBookId();
-		SettlementService settlementService = (SettlementService)wc.getBean("settlementService");
-		SHashMap settlementparam = new SHashMap();
-		settlementparam.put("receiptBookId", receiptBookId);
-		settlementEntity = settlementService.getEntity(settlementparam);
-		receiptAmount = settlementEntity.getRamount();
-		
+		if(rbrelationEntity!=null){
+			Long receiptBookId = rbrelationEntity.getReceiptBookId();
+			SettlementService settlementService = (SettlementService)wc.getBean("settlementService");
+			SHashMap settlementparam = new SHashMap();
+			settlementparam.put("receiptBookId", receiptBookId);
+			settlementEntity = settlementService.getEntity(settlementparam);
+			receiptAmount = settlementEntity.getRamount();
+		}
 		}
 	}
 	
 	if( null != receiptId && !"".equals(receiptId)){
 		BackReceiptService backReceiptService = (BackReceiptService)wc.getBean("backReceiptService");		
+		ReceiptService receiptService = (ReceiptService)wc.getBean("receiptService");		
 		SHashMap params=new SHashMap();
 		params.put("receiptId", Long.parseLong(receiptId));
 		backReceiptEntity = backReceiptService.getEntity(params);
+		receiptEntity = receiptService.getEntity(Long.parseLong(receiptId));
 		if( null != backReceiptEntity){
 			id = backReceiptEntity.getId();
 			name = backReceiptEntity.getName();
@@ -154,6 +163,7 @@
 			if(null != backInvoceEntity.getSdate()){
 				sdate = backInvoceEntity.getSdate().toString();
 			}
+			rate=backInvoceEntity.getRate();
 			sname = backInvoceEntity.getName();
 			samount = backInvoceEntity.getAmount();
 			tiamount = backInvoceEntity.getTiamount();
@@ -167,13 +177,71 @@
 			reparam.put("receiptId", backReceiptEntity.getReceiptId());
 			rbrelationEntity = rbrelationService.getEntity(reparam);
 			//获取汇票承诺书的id
+			if(rbrelationEntity!=null){
+				Long receiptBookId = rbrelationEntity.getReceiptBookId();
+				SettlementService settlementService = (SettlementService)wc.getBean("settlementService");
+				SHashMap settlementparam = new SHashMap();
+				settlementparam.put("receiptBookId", receiptBookId);
+				settlementEntity = settlementService.getEntity(settlementparam);
+				receiptAmount = settlementEntity.getRamount();
+			}
+			//只读
+		}else if(receiptEntity!=null){
+/* 
+			id = receiptEntity.getId();
+			name = receiptEntity.getName();
+			reman = receiptEntity.getReman(); */
+			rcount = receiptEntity.getRcount();
+			rnum = receiptEntity.getRnum();
+			outMan = receiptEntity.getOutMan();
+			omaccount = receiptEntity.getOmaccount();
+			pbank = receiptEntity.getPbank();
+			if( null != receiptEntity.getOutDate()){
+				outDate = receiptEntity.getOutDate().toString();
+			}
+			if( null != receiptEntity.getEndDate() ){
+				endDate = receiptEntity.getEndDate().toString();
+			}
+			amount = receiptEntity.getAmount();
+			rtacname = receiptEntity.getRtacname();
+			rtaccount = receiptEntity.getRtaccount();
+			rtbank = receiptEntity.getRtbank();
+			if( null != receiptEntity.getRecetDate()){
+				String time = receiptEntity.getRecetDate().toString();
+				recetDate = time.split("-")[0];
+				bmonth = time.split("-")[1];
+				bday = time.split("-")[2];
+			}
+			
+		/* 	 //汇票结算单
+			BackInvoceService backInvoceService = (BackInvoceService)wc.getBean("backInvoceService");
+			SHashMap backparam = new SHashMap();
+			backparam.put("backReceiptId", id);
+			backInvoceEntity = backInvoceService.getEntity(backparam);
+			if(null != backInvoceEntity.getSdate()){
+				sdate = backInvoceEntity.getSdate().toString();
+			}
+			sname = backInvoceEntity.getName();
+			samount = backInvoceEntity.getAmount();
+			tiamount = backInvoceEntity.getTiamount();
+			bamount = backInvoceEntity.getBamount();
+			pamount = backInvoceEntity.getPamount();
+			
+			//根据receiptEntity.getReceiptId() 在receiptBook
+			
+			RbrelationService rbrelationService = (RbrelationService)wc.getBean("rbrelationService");
+			SHashMap reparam = new SHashMap();
+			reparam.put("receiptId", receiptEntity.getReceiptId());
+			rbrelationEntity = rbrelationService.getEntity(reparam);
+			//获取汇票承诺书的id
 			Long receiptBookId = rbrelationEntity.getReceiptBookId();
 			SettlementService settlementService = (SettlementService)wc.getBean("settlementService");
 			SHashMap settlementparam = new SHashMap();
 			settlementparam.put("receiptBookId", receiptBookId);
 			settlementEntity = settlementService.getEntity(settlementparam);
-			receiptAmount = settlementEntity.getRamount();
+			receiptAmount = settlementEntity.getRamount(); */
 			//只读
+		
 		}
 	}
 		//orgtype = "3";
@@ -256,6 +324,7 @@ table{margin:0 auto}/*让表单进行居中显示  */
 	<form method = "post" action=""  id="backreceipt"> 
 		<h1 style="text-align:center">　　回 款 收 条</h1>
 			<input id="id" name="id" style="visibility : hidden" value="<%=id %>" />
+			<h3 id="validation" style="text-align:center; color: red"></h3>
 		<table>
 			<tr >
 				<td colspan="10">
@@ -308,14 +377,14 @@ table{margin:0 auto}/*让表单进行居中显示  */
 		<p style="margin-left : 100px;"><span style="color: red">注：</span>此收条款到后自动作废。</p>	
 		
 		<p style="margin-left : 400px;"><input type="text" class="time" onclick = "WdatePicker()" id="myYear" value=<%=recetDate%>>年<input type="text" class="time"  id="myMonth" readonly="readonly" value = <%=bmonth %>>月<input type="text" class="time" id="myDay" readonly="readonly" value=<%=bday%>>日</p>		
-	   <input type="text" id = "time" style="visibility:hidden" />
+	   <input type="text" id = "time" style="visibility:hidden" value=<%=recetDate%> />
 		<table border="1px" style="border-collapse:collapse;" id="backinvoce" >
 			<tr>
 				<th colspan="6">汇票结算单</th>
 			</tr>
 			<tr>
 				<td rowspan="2"><strong>日期</strong></td>
-				<td rowspan="2"><input type="text" id="sdate" name="sdate" onclick = "WdatePicker()" value=<%=sdate %>></td>
+				<td rowspan="2"><input type="text" id="sdate"  name="sdate" onclick = "WdatePicker()" value=<%=sdate %>></td>
 				<td rowspan="2"><strong>贴息</strong></td>
 				<td style="font-size:10px;width:75px;"><strong>贴息利率(%)</strong></td>
 				<td><input type="text" id="rate" name="rate" style="width:60px;" value=<%=rate %>></td>

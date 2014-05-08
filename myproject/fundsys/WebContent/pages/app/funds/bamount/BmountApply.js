@@ -1,5 +1,5 @@
 /**
- * 增资申请页面
+ * 撤资申请页面
  * 
  * @author 李听
  */
@@ -13,6 +13,7 @@ define(function(require, exports) {
 		customerDialog : null,/* 客户选择弹窗 */
 		gopinionDialog : null,/* 担保人意见弹窗 */
 		params : null,
+		rate:null,
 		uuid : Cmw.getUuid(),/* 用于新增时，临时代替申请单ID */
 		applyId : null,/* 申请单ID */
 		btnIdObj : {
@@ -45,11 +46,12 @@ define(function(require, exports) {
 						items : [this.customerPanel, this.applyPanel]
 					});
 		},
-		createCustomerPanel : function() {
+		createCustomerPanel : function() {	
 			var htmlArrs_1 = [
-					'<tr><th colspan="6" style="font-weight:bold;text-align:left;font-size:33px" ><center>撤资申请</center></th><tr>',
-					'<tr><th col="code">编号</th> <td col="code" >&nbsp;</td><th col="name">委托人姓名</th> <td col="name" >&nbsp;</td><th col="cardNum">身份证</th> <td col="cardNum" >&nbsp;</td></tr>',
-					'<tr><th col="phone">手机号码</th> <td col="phone" >&nbsp;</td><th col="inAddress">住宅地址</th> <td col="inAddress" >&nbsp;</td><th col="homeNo">住宅号</th> <td col="homeNo" >&nbsp;</td></tr></tr>'];
+					'<tr><th colspan="7" style="font-weight:bold;text-align:left;font-size:35px" ><center>撤资申请</center></th><tr>',	
+					'<tr><th col="code">合同编号</th> <td col="code" >&nbsp;</td><th col="yearLoan">委托期限</th> <td col="yearLoan" >&nbsp;</td><th col="rate">贷款利率</th> <td col="rate" >&nbsp;</td></tr>',
+					'<tr><th col="payDate">委托生效日期</th> <td col="payDate" >&nbsp;</td><th col="endDate">失效日期</th> <td col="endDate" >&nbsp;</td><th col="iamount">每月收益金额</th> <td col="iamount" >&nbsp;</td></tr></tr>',
+					'<tr><th col="doDate">合同签订日期</th> <td col="doDate">&nbsp;</td><th col=""></th> <td col="" >&nbsp;</td><th col=""></th> <td col="" >&nbsp;</td></tr></tr>'];
 			var detailCfgs_1 = [{
 				cmns : 'THREE',
 				/* ONE , TWO , THREE */
@@ -60,23 +62,32 @@ define(function(require, exports) {
 				/* i18n : UI_Menu.appDefault, */
 				// 国际化资源对象
 				htmls : htmlArrs_1,
-				url : './fuEntrustCust_get.action',
-				prevUrl : './fuEntrustCust_getContract.action',
-				nextUrl : './fuEntrustCust_getContract.action',
+				url : './fuEntrustContract_get.action',
+				prevUrl : './fuEntrustContract_getContract.action',
+				nextUrl : './fuEntrustContract_getContract.action',
 				params : {
 			// id : _this.applyId
 				},
 				callback : {
 					sfn : function(jsonData) {
-						_this.applyPanel.setFieldValue("contractId",
-								jsonData.id);
+							_this.applyPanel.setFieldValue("contractId",jsonData.id);
+							if(jsonData["unint"]==1){
+								jsonData["rate"]=jsonData["rate"]+"%";
+							}else if(jsonData["unint"]==2){
+								jsonData["rate"]=jsonData["rate"]+"‰";
+							}
+							if(jsonData["monthLoan"]==0){
+								jsonData["yearLoan"]=jsonData["yearLoan"]+"&nbsp;年&nbsp;";
+							}else{
+								jsonData["yearLoan"]=jsonData["yearLoan"]+"&nbsp;年&nbsp;"+jsonData["monthLoan"]+"&nbsp;月";
+							}
 					}
 				}
 			}];
 			var btnChoseCustHtml = this.getButtonHml(
-					this.btnIdObj.btnChoseCust, '选择委托人');
+					this.btnIdObj.btnChoseCust, '选择合同');
 			this.customerPanel = new Ext.ux.panel.DetailPanel({
-						title : '委托人客户资料' + btnChoseCustHtml,
+						title : '委托合同信息' + btnChoseCustHtml,
 						collapsible : true,
 						border : false,
 						isLoad : false,
@@ -136,69 +147,125 @@ define(function(require, exports) {
 						unitStyle : 'margin-left:2px;color:red;font-weight:bold'
 					});
 			
-			var mon_appAmountss = FormUtil.getMoneyField({
+			var mon_bamount = FormUtil.getMoneyField({
 				fieldLabel : '撤资金额',
 				name : 'bamount',
 				"allowBlank" : false,
 				"width" : 160,
 				autoBigAmount : true,
 				unitText : '大写金额',
-				unitStyle : 'margin-left:2px;color:red;font-weight:bold'
+				unitStyle : 'margin-left:2px;color:red;font-weight:bold',
+				listeners : {
+							'change' : payDateChangeListener
+						}
 			});
-			var mon_appAmounsstss = FormUtil.getMoneyField({
+			var txt_prange = FormUtil.getRadioGroup({
+						fieldLabel : '撤资类型',
+						name : 'isNotExpiration',
+						"allowBlank" : false,
+						"width" : '150',
+						"maxLength" : 50,
+						"items" : [{
+									"boxLabel" : "正常撤资",
+									"name" : "isNotExpiration",
+									"inputValue" : 1
+									},{
+									"boxLabel" : "异常撤资",
+									"name" : "isNotExpiration",
+									"inputValue" : 0
+								}]
+			});			
+			var bdat_backDate = FormUtil.getDateField({
+						fieldLabel : '撤资日期',
+						name : 'backDate',
+						"allowBlank" : false,
+						"width" : 125,
+						listeners : {
+							'change' : payDateChangeListener
+						}
+					});
+			
+			var mon_wamount = FormUtil.getMoneyField({
 				fieldLabel : '违约金额',
 				name : 'wamount',
 				"allowBlank" : false,
 				"width" : 160,
 				autoBigAmount : true,
 				unitText : '大写金额',
+				unitStyle : 'margin-left:2px;color:red;font-weight:bold',
+				listeners : {
+							'change' : payDateChangeListener
+						}
+			});
+			/* 退还利息=撤资金额*委托利率/30*天数 */
+			function payDateChangeListener() {
+					var entrustContractId=hide_entrustCustId.getValue();//委托合同ID
+					var wamount=mon_wamount.getValue();//违约金额
+					var backDate=bdat_backDate.getValue();//撤资日期
+					var bamount=mon_bamount.getValue(); //撤资金额-->表单元素名获取对应值 返回 code 文本框对象的值
+				if(wamount&&backDate&&bamount){
+					params = {
+							entrustContractId:entrustContractId,
+							backDate: Ext.util.Format.date(backDate,'Y-m-d'),
+							bamount:bamount,
+							wamount:wamount
+						};
+					EventManager.get("./fuBamountApply_biamount.action",{params:params,
+						sfn:function(json_data){
+							_this.applyPanel.setFieldValue("biamount",json_data.biamount);
+							_this.applyPanel.setFieldValue("rpamount",json_data.rpamount);
+							
+					}});
+				}
+				
+			}
+			
+			var mon_biamount = FormUtil.getMoneyField({
+				fieldLabel : '退还预付利息',
+				name : 'biamount',
+				"allowBlank" : false,
+				"width" : 160,
+				autoBigAmount : true,
 				unitStyle : 'margin-left:2px;color:red;font-weight:bold'
 			});
-			var bdat_endDate = FormUtil.getDateField({
-						fieldLabel : '撤资日期',
-						name : 'backDate',
-						"allowBlank" : false,
-						"width" : 125
-					});
-			var txt_prange = FormUtil.getRadioGroup({
-						fieldLabel : '是否期满',
-						name : 'isNotExpiration',
-						"allowBlank" : false,
-						"width" : '150',
-						"maxLength" : 50,
-						"items" : [{
-									"boxLabel" : "未满",
-									"name" : "isNotExpiration",
-									"inputValue" : 0
-								}, {
-									"boxLabel" : "满期",
-									"name" : "isNotExpiration",
-									"inputValue" : 1
-								}]
-					});
-
+			
+			//3、实际支付金额=撤资金额-退还预付息金额-违约金额（自动计算）
+			var mon_rpamount = FormUtil.getMoneyField({
+				fieldLabel : '实际支付金额',
+				name : 'rpamount',
+				"allowBlank" : false,
+				"width" : 160,
+				autoBigAmount : true,
+				unitStyle : 'margin-left:2px;color:red;font-weight:bold'
+			});
 			
 			var txt_textarea = FormUtil.getTAreaField({
 						fieldLabel : '备注',
-						name : 'clause',
+						name : 'remark',
 						"width" : "300"
 					});
 			/*----------- 基本合同信息设置 ------------*/
 			var fset_1 = FormUtil.createLayoutFieldSet({
 						title : '基本合同信息'/* ,height:800 */
-					}, [
-							{
-								cmns : FormUtil.CMN_THREE,
-								fields : [txt_code,mon_appAmount,mon_appAmountss,mon_appAmounsstss,bdat_endDate,txt_prange]
-							},txt_textarea,hide_id,hide_entrustCustId,txt_procId,txt_breed]);
+					}, [{
+						/**
+						 * 	txt_code,mon_appAmount,mon_bamount,txt_prange,bdat_backDate,mon_wamount,
+						 * 	mon_biamount,mon_rpamount,mon_paymentAmount,mon_accountId,mon_rectDate
+						 */
+							cmns : FormUtil.CMN_THREE,
+							fields : [
+								txt_code,mon_appAmount,mon_bamount,txt_prange,bdat_backDate,mon_wamount,
+						 		mon_biamount,mon_rpamount
+							]
+						},txt_textarea,hide_id,hide_entrustCustId,txt_procId,txt_breed]);
 			var formDiyContainer = new Ext.Container({
 						layout : 'fit'
 					});
 			var layout_fields = [fset_1, formDiyContainer];
 			var btnTempSaveHtml = this.getButtonHml(this.btnIdObj.btnTempSave,
-					'暂存合同');
-			var btnSaveHtml = this.getButtonHml(this.btnIdObj.btnSave, '提交合同');
-			var title = '撤资申请合同信息&nbsp;&nbsp;' + btnTempSaveHtml + btnSaveHtml
+					'暂存撤资');
+			var btnSaveHtml = this.getButtonHml(this.btnIdObj.btnSave, '提交撤资');
+			var title = '撤资申请&nbsp;&nbsp;' + btnTempSaveHtml + btnSaveHtml
 			/* + '提示：[<span style="color:red;">带"*"的为必填项，金额默认单位为 "元"</span>]' */;
 			var frm_cfg = {
 				title : title,
@@ -216,7 +283,6 @@ define(function(require, exports) {
 				labelWidth : 115
 			};
 			var applyForm = FormUtil.createLayoutFrm(frm_cfg, layout_fields);
-			var _this = this;
 			applyForm.addListener('afterRender', function(panel) {
 						_this.addListenersToCustButtons([{
 									btnId : _this.btnIdObj.btnTempSave,
@@ -305,10 +371,12 @@ define(function(require, exports) {
 			var name=data.name;
 			var appAmount=data.appAmount;
 			var entrustContract=data.entrustContractId;
+			var rate=data.rate;
 			var entrustCustId = _this.applyPanel.findFieldByName("entrustCustId");
 			var entrustContractId = _this.applyPanel.findFieldByName("entrustContractId");
 			var names = _this.applyPanel.findFieldByName("name");
 			var appAmounts = _this.applyPanel.findFieldByName("appAmount");
+			_this.rate=rate;
 			appAmounts.setValue(appAmount);
 			entrustCustId.setValue(customerId);
 			names.setValue(name);
@@ -346,7 +414,6 @@ define(function(require, exports) {
 					}
 					if (_this.applyId) {
 						var attachParams = _this.getAttachParams(_this.applyId);
-						_this.attachMentFs.updateTempFormId(attachParams);
 					}
 					if (_this.uuid)
 						_this.uuid = null;
@@ -364,8 +431,7 @@ define(function(require, exports) {
 						var code = formDatas["code"];
 						var procId = _this.applyPanel.getValueByName("procId");
 						var sysId = _this.params.sysid;
-						var contractId = _this.applyPanel
-								.getValueByName('contractId');
+						var contractId = _this.applyPanel.getValueByName('contractId');
 						var msg = '';
 						if (code) {
 							msg = '确定提交编号为："' + code + '"的增资申请单?';
@@ -463,9 +529,7 @@ define(function(require, exports) {
 				if (!applyId) {
 					errMsg[errMsg.length] = "必须传入参数\"applyId\"!<br/>";
 				}
-//				if (!contractId) {
-//					errMsg[errMsg.length] = "必须传入参数\"contractId\"!<br/>";
-//				}
+
 				if (null != errMsg && errMsg.length > 0) {
 					errMsg = "修改时传参发生错误：<br/>" + errMsg.join(" ");
 					ExtUtil.alert({
@@ -476,26 +540,15 @@ define(function(require, exports) {
 				this.applyPanel.enable();
 				this.applyPanel.reset();
 
-//				this.customerPanel.reload({
-//							contractId : contractId
-//						});
-//				this.applyPanel.setValues('./fuEntrustCust_get.action', {
-//							params : {
-//								id : _this.applyId
-//							},
-//							sfn : function(json_data) {
-//								_this.applyPanel.setFieldValue("contractId",json_data.id);
-//
-//							}
-//						});
-//				this.attachMentFs.reload(this.getAttachParams(applyId));
-				
+			
 				this.applyPanel.setValues('./fuBamountApply_get.action', {
 					params : {
 						id : applyId
 					},
 					sfn : function(json_data) {
-						_this.applyPanel.setFieldValue("contractId",json_data.id);},
+						_this.applyPanel.setFieldValue("contractId",json_data.id);
+						_this.customerPanel.reload({id:json_data.entrustContractId});
+						},
 						ffn : function(json_data) {
 							
 						}

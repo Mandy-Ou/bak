@@ -69,6 +69,14 @@ define(function(require, exports) {
 		 */
 		show : function(_parentCfg){
 			var _this = this;
+			//如果是详情，隐藏保存按钮
+			if(_parentCfg.orgtype==3){
+				if(_this.tbar)
+					_this.tbar.buttons[0].hide();
+			}else{
+				if(_this.tbar)
+					_this.tbar.buttons[0].show();
+			}
 			if(_parentCfg) this.setParentCfg(_parentCfg);
 			var id = this.globalMgr.id;
 			var orgtype = this.globalMgr.orgtype;
@@ -84,6 +92,7 @@ define(function(require, exports) {
 				Cmw.mask(this.appWin,Msg_SysTip.msg_loadingUI);
 				window.parent.frames[this.iframeId].location= url;
 			}
+			
 			this.appWin.show();
 			
 			/*var _this = this;
@@ -173,7 +182,7 @@ define(function(require, exports) {
 				EventManager.get('./fuReceipt_save.action',{
 						params : param,  
 						sfn : function(json_data) {
-							_this.appWin.close();
+							_this.appWin.hide();
 							if(_this.parentCfg.self.refresh)_this.parentCfg.self.refresh(json_data);
 						},ffn:function(json_data){
 						 	ExtUtil.alert({msg:'数据保存失败'});

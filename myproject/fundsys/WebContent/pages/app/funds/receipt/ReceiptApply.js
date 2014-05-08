@@ -97,8 +97,8 @@ define(function(require, exports) {
 					'<tr><th col="rnum">票号</th> <td col="rnum" >&nbsp;</td><th col="name">客户姓名</th> <td col="name" >&nbsp;</td><th col="outMan">出票人</th> <td col="outMan" >&nbsp;</td></tr>',
 					'<tr><th col="outDate">出票日期</th> <td col="outDate" >&nbsp;</td><th col="endDate">到票日期</th> <td col="endDate" >&nbsp;</td><th col="amount">金额</th> <td col="amount" >&nbsp;</td></tr>',
 					'<tr><th col="rtacname">收款人账户名</th> <td col="rtacname" >&nbsp;</td><th col="rtaccount">收款人账号</th> <td col="rtaccount" >&nbsp;</td><th col="rtbank">收款人开户行</th> <td col="rtbank" >&nbsp;</td></tr>',
-					'<tr><th col="omaccount">出票人账号</th> <td col="omaccount" >&nbsp;</td><th col="reman">收条接收人</th> <td col="reman" >&nbsp;</td><th col="amount">金额</th> <td col="amount" >&nbsp;</td></tr>',
-					'<tr><th col="pbank">付款行</th> <td col="pbank" >&nbsp;</td><th col="rcount">汇票数量(单位:张)</th> <td col="rcount" >&nbsp;</td><th col="recetDate">收条签收日期</th> <td col="recetDate" >&nbsp;</td></tr>'];
+					'<tr><th col="omaccount">出票人账号</th> <td col="omaccount" >&nbsp;</td><th col="reman">收条接收人</th> <td col="reman" >&nbsp;</td><th col="pbank">付款行</th> <td col="pbank" >&nbsp;</td></tr>',
+					'<tr><th col="rcount">汇票数量(单位:张)</th> <td col="rcount" >&nbsp;</td><th col="recetDate">收条签收日期</th> <td col="recetDate" >&nbsp;</td></tr>'];
 				return htmlArrs_1;
 		},
 		getOrderDetailPanel : function() {
@@ -137,7 +137,8 @@ define(function(require, exports) {
 			var customerParams = {parent : _this.appPanel};
 			_this.viewDetailInfo(custTabId,customerParams,url,custTitle);
 			var orgtype  = 3;
-			var sysid = _this.params.sysId			
+			var sysid = _this.params.sysId	
+			jsonData["amount"]=Render_dataSource.moneyRender(jsonData["amount"]);
             var extensionParams = {sysid:sysid,formId:jsonData["id"],id : this.applyId,orgtype : orgtype};
 			_this.viewExtensionDetailInfo(codeid,extensionParams);
 			

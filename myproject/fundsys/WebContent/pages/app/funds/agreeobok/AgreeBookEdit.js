@@ -15,6 +15,7 @@ define(function(require, exports) {
 		custType : null,
 		sysid : null,
 		formId : null,
+		detailPanel_1:null,
 		customerId : null,
 		setParams : function(parentCfg) {
 			this.parentCfg = parentCfg;
@@ -35,7 +36,8 @@ define(function(require, exports) {
 						appFrm : this.appFrm,
 						isNotSetVs : true,
 						optionType : this.optionType,
-						refresh : this.refresh
+						refresh : this.refresh,
+						eventMgr:{saveData:this.saveData}
 					});
 		},
 		/**
@@ -72,10 +74,19 @@ define(function(require, exports) {
 			var parent = exports.WinEdit.parent;
 			var formId = parent.applyid;
 			var customerId= parent.customerId;
+		
 			var cfg = null;
 			var _customerId = _this.appFrm.findFieldByName("customerId");
 			// 1 : 新增 , 2:修改
 			if (this.optionType == OPTION_TYPE.ADD) { // --> 新增
+					EventManager.get('./fuAgreeBook_getId.action', {
+						params : {id:customerId},
+						sfn : function(json_data) {
+							Cmw.pritn(json_data);
+							var _code = _this.appFrm.findFieldByName("comitMan");
+							_code.setValue(json_data.name);
+						}
+					});
 				/*--- 添加 URL --*/
 				cfg = {
 					params : {
@@ -125,12 +136,12 @@ define(function(require, exports) {
 		/**
 		 * 当数据保存成功后，执行刷新方法 [如果父页面存在，则调用父页面的刷新方法]
 		 */
-		refresh : function(data) {
+		refresh : function(data) {/*
 			var _this = exports.WinEdit;
 			if (_this.parentCfg.self.refresh){
 				_this.parentCfg.self.refresh(_this.optionType, data);
 			}
-		},
+		*/},
 		/**
 		 * 创建Form表单
 		 */
@@ -369,8 +380,8 @@ define(function(require, exports) {
 						});
 				var layout_fields = [{
 					cmns : FormUtil.CMN_THREE,
-					fields : [txt_bman,bdat_comitDate,txt_yearLoassn,txt_comitMan,txt_unint,txt_overan ,txt_punint,txt_unint2,txt_ovean2,
-							 txt_lateDays, txt_domonthes,txt_punint,txt_customerId,txt_formId,hide_id]}];
+					fields : [txt_bman,bdat_comitDate,txt_yearLoassn,txt_comitMan,txt_unint,txt_overan ,txt_unint2,txt_ovean2,
+							 txt_domonthes,txt_lateDays,txt_punint]},txt_customerId,txt_formId,hide_id];
 			var frm_cfg = {
 				title : '借款承诺书信息编辑',
 				labelWidth : 110,
@@ -399,7 +410,17 @@ define(function(require, exports) {
 		/**
 		 * 保存数据
 		 */
-		saveData : function() {},
+		saveData : function() {
+				var _this = exports.WinEdit;
+				var cfg={
+					sfn:function(jsonData){
+							_this.appWin.hide();
+						_this.parent.detailPanel_1.reload();
+					}
+				};
+				EventManager.frm_save(_this.appFrm,cfg);
+			 	
+		},
 		/**
 		 * 重置数据
 		 * 

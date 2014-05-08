@@ -237,7 +237,8 @@ Ext.extend(skythink.cmw.workflow.bussforms.AgreeBookMgr,Ext.util.MyObservable,{
 				parent={
 					sysid : _this.globalMgr.sysId,
 					applyid:_this.globalMgr.applyId,
-					customerId : _this.globalMgr.customerId
+					customerId : _this.globalMgr.customerId,
+					detailPanel_1:_this.globalMgr.detailPanel_1
 				};
 				parentCfg.parent = parent;
 				if(_this.appCmpts[winkey]){

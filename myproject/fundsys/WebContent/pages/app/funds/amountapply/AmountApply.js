@@ -14,8 +14,10 @@ define(function(require, exports) {
 		customerDialog : null,/* 客户选择弹窗 */
 		gopinionDialog : null,/* 担保人意见弹窗 */
 		params : null,
+		appgrid:null,
 		uuid : Cmw.getUuid(),/* 用于新增时，临时代替申请单ID */
 		applyId : null,/* 申请单ID */
+		selId:null,
 		entrustCustId : null,/* 申请单ID */
 		btnIdObj : {
 			btnChoseCust : Ext.id(null, 'btnChoseCust'),/* 客户选择 */
@@ -108,14 +110,13 @@ define(function(require, exports) {
 		renderDispData : function(jsonData) {
 			var _this = this;
 			var codeid = this.addAHtml(jsonData, 'code', '点击查看申请单详情！');//为展期申请单添加连接
-			var sysid = _this.params.sysId;			
+			var sysid = jsonData["id"];		
             var extensionParams = {sysid:sysid,formId:jsonData["id"]};
 			_this.viewExtensionDetailInfo(codeid,extensionParams);
 			var params = {
 				isAapply : true,
 				parent : {selId : jsonData["id"]
 			}};},
-			
 				/**
 				 * 展期申请单详情
 				 */
@@ -220,6 +221,7 @@ define(function(require, exports) {
 			var comp_loanLimit = FormUtil.getMyCompositeField({
 						fieldLabel : '贷款期限',
 						width : 215,
+						name:'cpt_deadline',
 						sigins : null,
 						items : [int_yearLoan, {
 									xtype : 'displayfield',
@@ -370,19 +372,6 @@ define(function(require, exports) {
 						"allowBlank" : false,
 						"width" : 150
 					});
-			var mon_iamount = FormUtil.getMyCompositeField({
-						itemNames : 'iamount',
-						sigins : null,
-						name:'cpt_iamount',
-						fieldLabel : '每月收益金额',
-						width : rightH,
-						sigins : null,
-						name : 'comp_artDate',
-						items : [mon_iamounts, {
-									xtype : 'displayfield',
-									value : '元'
-								}]
-					});
 			var txt_prange = FormUtil.getRadioGroup({
 						fieldLabel : '委托产品范围',
 						name : 'prange',
@@ -456,7 +445,7 @@ define(function(require, exports) {
 										mon_appAmount, bdat_payDate,
 										bdat_endDate, txt_rate, txt_payBank,
 										txt_payAccount, txt_accName,
-										txt_remark, txt_payDay, mon_iamount,
+										txt_remark, txt_payDay, mon_iamounts,
 										txt_prange, txt_products, txt_doDate]
 							},txt_textarea, hide_id, hide_entrustCustId,
 							txt_breed,
@@ -553,9 +542,10 @@ define(function(require, exports) {
 			var _this = this;
 			var customerId = record.get("id");
 			var data = record.data;
-			var entrustCustId = _this.applyPanel
-					.findFieldByName("entrustCustId");
+			var entrustCustId = _this.applyPanel.findFieldByName("entrustCustId");
 			entrustCustId.setValue(customerId);
+			var breed = _this.applyPanel.findFieldByName("breed");
+			breed.setValue(this.breed);
 			EventManager.get('./fuAmountApply_add.action', {
 						params : {},
 						sfn : function(json_data) {
@@ -600,6 +590,7 @@ define(function(require, exports) {
 //						var attachParams = _this.getAttachParams(_this.applyId);
 //						_this.attachMentFs.updateTempFormId(attachParams);
 //					}
+					
 					if (_this.uuid)
 						_this.uuid = null;
 					if (currTabId) {
@@ -711,13 +702,14 @@ define(function(require, exports) {
 			var sysId = this.params.sysid;
 			var optionType = this.params.optionType;
 			var breed = this.params.breed;
-			var applyId = _this.params.applyId;
+//			params.appgrid
+//			var applyId = _this.params.applyId;
 			var entrustCustId = this.params.entrustCustId;
 			var contractId = this.params.contractId;
 			if (optionType && optionType == OPTION_TYPE.EDIT) {
 				// 修改 
 				var errMsg = [];// ["修改时传参发生错误："];
-				if (!applyId) {
+				if (!_this.applyId) {
 					errMsg[errMsg.length] = "必须传入参数\"applyId\"!<br/>";
 				}
 				if (null != errMsg && errMsg.length > 0) {
@@ -730,42 +722,32 @@ define(function(require, exports) {
 				this.applyPanel.reset();
 				this.applyPanel.setValues('./fuAmountApply_get.action', {
 							params : {
-								id : applyId
+								id : _this.applyId
 							},
 							sfn : function(json_data) {
 								if(json_data.payDate){
-									var payDate=new Date(json_data["payDate"]);
-								_this.applyPanel.setFieldValue("payDate",Ext.util.Format.date(payDate,'Y-m-d'));
-								}
-								if(json_data.endDate){
-									var endDate=new Date(json_data["endDate"]);
-								_this.applyPanel.setFieldValue("endDate",Ext.util.Format.date(endDate,'Y-m-d'));
-								}
-								if(json_data.yearLoan){
-								_this.applyPanel.setFieldValue("yearLoan",json_data["yearLoan"]);
-								}
-								if(json_data.monthLoan){
-								_this.applyPanel.setFieldValue("monthLoan",json_data["monthLoan"]);
-								}
-								if(json_data.doDate){
-									var doDate=new Date(json_data["doDate"]);
-								_this.applyPanel.setFieldValue("doDate",Ext.util.Format.date(doDate,'Y-m-d'));
-									}
-									if(json_data["iamount"]){
-//									_this.applyPanel.setFieldValue("monthLoan",json_data["monthLoan"]);
-									var _deadline=_this.applyPanel.getValueByName("cpt_iamount").iamount;
-									_deadline.setValue(json_data["iamount"]);
-									}
-								},
-								ffn : function(json_data) { 
-									
-								}
+							var payDate=new Date(json_data["payDate"]);
+							_this.applyPanel.setFieldValue("payDate",Ext.util.Format.date(payDate,'Y-m-d'));
+							}
+							if(json_data.endDate){
+							var endDate=new Date(json_data["endDate"]);
+							_this.applyPanel.setFieldValue("endDate",Ext.util.Format.date(endDate,'Y-m-d'));
+							}
+							var doDate=new Date(json_data["doDate"]);
+							_this.applyPanel.setFieldValue("doDate",Ext.util.Format.date(doDate,'Y-m-d'));
+							var cpt_deadline = _this.applyPanel.findFieldByName("cpt_deadline");
+							Cmw.print(cpt_deadline);
+							var yearLoan = json_data["yearLoan"] || 0;
+							var monthLoan = json_data["monthLoan"] || 0;
+							cpt_deadline.setValue({yearLoan:yearLoan,monthLoan:monthLoan});
+							},
+						ffn : function(json_data) {}
 						});
 //				this.attachMentFs.reload(this.getAttachParams(applyId));
 			} else {/* 新增 */
 				// this.attachMentFs.params = this.getAttachParams(this.uuid);
 				this.applyPanel.setJsonVals({
-							breed : breed
+							breed : this.breed
 						});
 				this.applyPanel.enable();
 				this.applyPanel.disable();

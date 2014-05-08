@@ -9,6 +9,7 @@ define(function(require, exports) {
 		params : null,
 		codeObj : null,//接受父页面传过来的id、票号、金额、付款行、出票日期、汇票到期日、汇票数量
 		iframeId :　null,
+		toolBar:null,
 		finishBussCallback : null,
 		/**
 		 * 获取主面板
@@ -44,6 +45,7 @@ define(function(require, exports) {
 				'<iframe id="'+this.iframeId+'" name="'+this.iframeId+'"  style="width:100%; height:100%;overflow:auto;" frameborder="0" ></iframe>'//,
 			];
 			var tbar = this.getToolBar();
+			this.toolBar=tbar;
 			this.appMainPanel = new Ext.Panel({title:'收条承诺书',xtype : 'fit',height : 630,tbar:tbar,html : htmlArr.join(" ")});
 //			this.appWin = new Ext.ux.window.MyWindow({title : "添加收条",width:1000,height:1700,autoScroll:true,draggable:true,maximizable:true,minimizable:true,tbar:this.tbar,html : htmlArr.join(" ")});
 //			this.appWin.show();
@@ -67,8 +69,6 @@ define(function(require, exports) {
 				iconCls:Btn_Cfgs.SAVE_CLS,
 				tooltip:Btn_Cfgs.SAVE_TIP_BTN_TXT,
 				handler : function(){
-					toolBar.enableButtons(Btn_Cfgs.MODIFY_BTN_TXT+","+Btn_Cfgs.PRINT_BTN_TXT);
-					toolBar.disableButtons(Btn_Cfgs.SAVE_BTN_TXT);
 					_this.makeDatas(2);
 				}
 			},{
@@ -123,12 +123,15 @@ define(function(require, exports) {
 				}case 2 :{/*保存*/
 					var document = iframeEle.document;
 					var beforeData = _this.dataBeforeSave(document);
+					if(!beforeData)return;
 					var params  = {};
 					params.backReceipt =Ext.encode(beforeData[0]);
 					params.backInvoce =Ext.encode(beforeData[1]);
 //					params.id = document.getElementById("receiptBookId").value;
 					EventManager.get("./fuBackReceipt_save.action",{params:params,
 						sfn : function(json_data) {
+							_this.toolBar.enableButtons(Btn_Cfgs.MODIFY_BTN_TXT+","+Btn_Cfgs.PRINT_BTN_TXT);
+							_this.toolBar.disableButtons(Btn_Cfgs.SAVE_BTN_TXT);
 							 ExtUtil.alert({msg:'数据保存成功'});
 							 _this.refresh();
 							 if(_this.finishBussCallback) _this.finishBussCallback(json_data);
@@ -146,9 +149,6 @@ define(function(require, exports) {
 		 * 在这里加载数据
 		 */
 		loadDatas : function(printaction){
-			for(var i in printaction){
-				Cmw.print(printaction[i]+"...");
-			}
 			this.appMainPanel.doLayout();
 			var id = this.params.applyId;
 			this.codeObj = this.params.codeObj;
@@ -181,6 +181,7 @@ define(function(require, exports) {
 					/**
 					 * 回款收条
 					 */
+					var validation = ment.getElementById("validation");
 					var id = ment.getElementById("id").value;
 					var receiptId = this.params.applyId;//汇票收条ID
 					var name = ment.getElementById("name").value; // 客户姓名
@@ -197,11 +198,21 @@ define(function(require, exports) {
 					var rtaccount = ment.getElementById("rtaccount").value;//收款人账号
 					var rtbank = ment.getElementById("rtbank").value;//收款人开户行
 					var recetDate = ment.getElementById("time").value;//回款收条签收日期
-					          
-					var backReceipt = {receiptId : receiptId,name : name,reman : reman, rcount : rcount,
+					if(!Number(id))id=null;
+					var backReceipt = {id:id,receiptId : receiptId,reman : reman,name : name, rcount : rcount,
 					rnum : rnum,outMan : outMan,omaccount : omaccount,pbank : pbank,outDate : outDate,
 					endDate : endDate,amount : amount, rtacname : rtacname,rtaccount : rtaccount,rtbank : rtbank,recetDate : recetDate}
 					
+					for (var back in backReceipt){
+						if(back!="id" && back!="receiptId"){
+							if(!backReceipt[back]){
+//								alert('信息填写不完整！');
+								validation.innerHTML="提示：信息填写不完整！";
+								ment.getElementById(back).focus()
+								return false;
+							}
+						}
+					}
 					/**
 					 * 汇票回款单表
 					 */
@@ -216,6 +227,16 @@ define(function(require, exports) {
 					var backInvoce = {sdate : sdate,name : sname,amount : samount, rate : rate,
 					tiamount : tiamount,bamount : bamount,pamount : pamount}
 
+					for (var back in backInvoce){
+						if(!backInvoce[back]){
+							if(back=="name" || back=="amount"){
+								back="s"+back;	
+							}
+							validation.innerHTML="提示：信息填写不完整！";
+							ment.getElementById(back).focus()
+							return false;
+						}
+					}
 					
 					datas[0] = [backReceipt];
 					datas[1] = [backInvoce];

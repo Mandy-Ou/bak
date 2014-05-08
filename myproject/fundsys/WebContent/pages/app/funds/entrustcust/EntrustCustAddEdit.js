@@ -15,8 +15,8 @@ define(function(require, exports) {
 				sysId:null,
 				fset_roleset : null,
 				setParentCfg : function(parentCfg,params) {
-					this.parentCfg = parentCfg.parent;
-					this.selId=this.parentCfg.selId;
+					this.parentCfg = parentCfg;
+					this.selId=this.parentCfg.parent.getSelId();
 					this.params = params;
 					this.optionType = parentCfg.optionType || OPTION_TYPE.ADD;//默认是新增的
 				},
@@ -61,7 +61,7 @@ define(function(require, exports) {
 					var _this = exports.WinEdit;
 					var self = this;
 					var urls = {};
-					var selId = exports.WinEdit.parentCfg.selId;//返回父类中的appgrid对象
+					var selId = exports.WinEdit.selId;
 					var id = self.appFrm.findFieldByName("id").id; //--> {id:1,name:'张三'}
 					if (this.optionType == OPTION_TYPE.ADD) { // --> 新增
 						/*--- 添加 URL --*/
@@ -88,8 +88,10 @@ define(function(require, exports) {
 							birthday.setValue(data);
 							var _ctype=	self.appFrm.findFieldByName("ctype");
 							_ctype.setValue(Json_data["ctype"]);
-							var _deadline=self.appFrm.getValueByName("cpt_deadline").deadline;
-							_deadline.setValue(Json_data["deadline"]);
+							var cpt_deadline = self.appFrm.findFieldByName("cpt_deadline");
+							var deadline = Json_data["deadline"] || 0;
+							var dlimit = Json_data["dlimit"] || 0;
+							cpt_deadline.setValue({deadline:deadline,dlimit:dlimit});
 							}
 						};
 						urls[URLCFG_KEYS.GETURLCFG] = {
@@ -239,21 +241,21 @@ define(function(require, exports) {
 						 "maxLength" : 50,
 						data : [["1", "年"], ["2", "月"], ["3", "日"]]
 						 });
-							var txt_appAmountdd = FormUtil.getTxtField({
-							    fieldLabel: '委托期限',
-							    name:'deadline',
-						    	"allowBlank" : false,
-							    width:70
-							});
-							var txt_deadlines = FormUtil.getMyCompositeField({
-								 fieldLabel: '委托期限'
-								 ,width:150,
-								 name:'cpt_deadline',
-								 sigins : null,
-								 itemNames : 'deadline,dlimit',
-							 	 "allowBlank" : false,
-								 items : [txt_appAmountdd,cbo_eqopAmount]
-							});
+					var txt_appAmountdd = FormUtil.getTxtField({
+					    fieldLabel: '委托期限',
+					    name:'deadline',
+				    	"allowBlank" : false,
+					    width:70
+					});
+					var txt_deadlines = FormUtil.getMyCompositeField({
+						 fieldLabel: '委托期限'
+						 ,width:150,
+						 name:'cpt_deadline',
+						 sigins : null,
+						 itemNames : 'deadline,dlimit',
+					 	 "allowBlank" : false,
+						 items : [txt_appAmountdd,cbo_eqopAmount]
+					});
 							
 					var txt_prange = FormUtil.getRadioGroup({
 						fieldLabel : '委托产品范围',
@@ -306,15 +308,15 @@ define(function(require, exports) {
 					return valid;
 				}
 			});
-					var loanManfieldset = FormUtil.createLayoutFieldSet({
-						title : '委托意向信息'
-					},[{
-						cmns : FormUtil.CMN_THREE,
-						fields : [rad_ctype, txt_appAmount,txt_deadlines]
-					},{
-						cmns : FormUtil.CMN_TWO,
-						fields : [txt_prange,txt_products]
-					}]);	
+				var loanManfieldset = FormUtil.createLayoutFieldSet({
+					title : '委托意向信息'
+				},[{
+					cmns : FormUtil.CMN_THREE,
+					fields : [rad_ctype, txt_appAmount,txt_deadlines]
+				},{
+					cmns : FormUtil.CMN_TWO,
+					fields : [txt_prange,txt_products]
+				}]);	
 					var txt_phone = FormUtil.getTxtField({
 								fieldLabel : '手机',
 								name : 'phone',
@@ -365,8 +367,8 @@ define(function(require, exports) {
 					var txt_remined = FormUtil.getTAreaField({
 								fieldLabel : '备注',
 								name : 'remark',
-								maxLength : '120',
-								"width" : "670"
+								width : 780,
+								height : 50
 							});
 					var fset_2 = [{
 						cmns : FormUtil.CMN_THREE,
@@ -435,7 +437,7 @@ define(function(require, exports) {
 								dir : 'mort_path',
 								isSave : true,
 								isNotDisenbaled : true,
-								params:{sysId:-1,formType:ATTACHMENT_FORMTYPE.FType_39,formId:uuid}
+								params:{sysId:-1,formType:ATTACHMENT_FORMTYPE.FType_43,formId:uuid}
 							});
 					return attachMentFs;
 				},
@@ -462,6 +464,7 @@ define(function(require, exports) {
 						var params = {formType:ATTACHMENT_FORMTYPE.FType_37,sysId:-1,formId : applyId,isNotDisenbaled:true};
 //						_this.attachMentFs.updateTempFormId(params,true);
 						_this.appWin.hide();
+						_this.parentCfg.parent.reload();
 					}
 				};
 				EventManager.frm_save(_this.appFrm,cfg);

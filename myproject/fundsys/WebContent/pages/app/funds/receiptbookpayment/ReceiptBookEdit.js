@@ -121,6 +121,7 @@ define(function(require, exports) {
 				}case 2 :{/*保存*/
 					var document = iframeEle.document;
 					var beforeData = _this.dataBeforeSave(document);
+					if(!beforeData)return;
 					var params  = {};
 					params.receiptBook =Ext.encode( beforeData[0]);
 					params.attachmentList = Ext.encode(beforeData[1]);
@@ -225,6 +226,15 @@ define(function(require, exports) {
 					 */
 					var settlement = {sdate : sdate,qamonut : qamonut,auditMan : auditMan,name:name,
 						tiamount : tiamount,leaderMan : leaderMan,amount : amount,ramount : ramount,finMan : finMan,rate : rate}
+					
+					var validation = ment.getElementById("validation");
+					for (var back in settlement){
+						if(!settlement[back]){
+							validation.innerHTML="提示：信息填写不完整！";
+							ment.getElementById(back).focus()
+							return false;
+						}
+					}
 				datas[0] = [receiptBook];
 				datas[1] = [data];
 				datas[2] = [settlement];

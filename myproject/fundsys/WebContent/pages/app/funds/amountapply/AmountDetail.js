@@ -11,10 +11,11 @@ define(function(require, exports) {
 		optionType : OPTION_TYPE.ADD,/* 默认为新增 */
 		detailPnl : null, // 详情面板
 		appWin : null,
+		sysid:null,
 		setParentCfg : function(parentCfg) {
+			this.sysid=parentCfg.sysid;
 			if(parentCfg.formId){
 				this.formId = parentCfg.formId;
-				this.sysid = parentCfg.sysid;
 			}else{
 				this.parent = parentCfg.parent;
 			}
@@ -52,7 +53,11 @@ define(function(require, exports) {
 			}else{
 				this.appWin.show();
 			}
-			this.detailPnl.reload();
+//			this.detailPnl.reload();
+			var selId = this.sysid;
+			this.detailPnl.reload({
+			 id : selId
+			 });
 		},
 		/**
 		 * 销毁组件
@@ -99,17 +104,18 @@ define(function(require, exports) {
 			 * params : {sysId:系统ID,formType:业务类型,参见 公共平台数据字典中 ts_attachment 中的说明,formId:业务单ID，如果有多个用","号分隔}
 			 *    当 isLoad = false 时， params 可在 reload 方法中提供
 			 *  ---- */
-			this.attachMentFs = new  Ext.ux.AppAttachmentFs({title:'展期相关附件上传',isLoad:false,dir : 'extension_path',isSave:true});
+			this.attachMentFs = new  Ext.ux.AppAttachmentFs({
+				title:'相关材料附件',isLoad:true,
+				dir : 'extension_path',isSave:true});
 		},
 		/**
 		 * 创建详情面板
 		 */
 		createDetailPnl : function() {
 			var _this = exports.WinEdit;
-			var parent = exports.WinEdit.parent;
 			var htmlArrs_1 = [
 					'<tr><th colspan="15" style="font-weight:bold;text-align:left;" >&nbsp;&nbsp;委托人信息>>></th><tr>',    
-					'<tr><th col="code">委托合同编号</th> <td col="code" >&nbsp;</td><th col="name">姓名</th> <td col="name">&nbsp;</td><th col="sex">性别</th> <td col="sex">&nbsp;</td></tr>',
+					'<tr><th col="code">委托合同编号</th> <td col="code" >&nbsp;</td><th col="name">姓名</th><td col="name">&nbsp;</td><th col="sex">性别</th> <td col="sex" >&nbsp;</td></tr>',
 					'<tr><th col="birthday">出生日期</th> <td col="birthday" >&nbsp;</td><th col="cardNum">身份证号码</th> <td col="cardNum" >&nbsp;</td><th col="appAmount">委托金额</th> <td col="appAmount" >&nbsp;</td></tr>',
 					'<tr><th col="products">委托产品</th> <td col="products" >&nbsp;</td><th col="maristal">婚姻状况</th> <td col="maristal" >&nbsp;</td><th col="job">职务</th> <td col="job" >&nbsp;</td></tr>'
 					];
@@ -125,42 +131,19 @@ define(function(require, exports) {
 						htmls : htmlArrs_1,
 						url : './fuEntrustCust_get.action',
 						params : {
-							id : _this.formId
+							id : _this.sysid
 						},
 						callback : {
 							sfn : function(jsonData) {
-								jsonData["appAmount"]=Cmw.getThousandths(jsonData["appAmount"])+'元'; 
-								 var tdote=new Date(jsonData["birthday"]);//转换为时间格式（返回值类型是时间）
-							      jsonData["birthday"]=Ext.util.Format.date(tdote,'Y-m-d');//进行时间的格式化
-							      switch(jsonData["appAmount"]){
-							      case '0':
-							    	  return jsonData["sex"]='男'
-							      break;
-							      case '1':
-							    	  return jsonData["sex"]='女'
-							      break;
-							      }
-								/*
-								if(jsonData){
-									var extAmount  = jsonData["extAmount"];
-									jsonData["extAmount"] =  Cmw.getThousandths(extAmount)+"元&nbsp;&nbsp;<br/><span style='color:red;font-weight:bold;'>("+Cmw.cmycurd(extAmount)+")</span>";
-									jsonData["rate"] = Render_dataSource.rateTypeRender(jsonData["rateType"]) +"<span style='color : red;font-weight:bold;'>("+jsonData["rate"]+"%)</span>";
-									jsonData["limitLoan"] = "<span style='color : red;font-weight:bold;'>(自"+jsonData["estartDate"] +"起  至"+ jsonData["eendDate"]+"止)</span>";;
-									jsonData["limitExtDate"] =  "<span style='color : red;font-weight:bold;'>(自"+jsonData["estartDate"]+"起  至"+jsonData["estartDate"]+"止)</span>";
-									jsonData["isadvance"] =  Render_dataSource.isadvanceRender(jsonData["isadvance"]);
-									jsonData["mgrtype"] = Render_dataSource.mgrtype_render(jsonData["mgrtype"].toString());
-									jsonData["mrate"] = jsonData["mrate"]+"%";
-									
-									var sysId = _this.sysid;
-						        	var formId = _this.formId;
-						        	if(!formId){
-						        		formId = -1;
-						        	}
-						        	var params = {sysId:sysId,formType:ATTACHMENT_FORMTYPE.FType_31,formId:formId};
-						        	_this.attachMentFs.reload(params);
-						        	_this.gopinionGrid.reload({extensionId:formId});
+								if(jsonData["maristal"]){
+									jsonData["maristal"]=Render_dataSource.gvlistRender('100003',jsonData["maristal"]);
 								}
-							*/}
+								 jsonData["appAmount"]=Cmw.getThousandths(jsonData["appAmount"]); 
+								 var tdote=new Date(jsonData["birthday"]);//转换为时间格式（返回值类型是时间）
+							     jsonData["birthday"]=Ext.util.Format.date(tdote,'Y-m-d');//进行时间的格式化
+							   	 jsonData["sex"]=Render_dataSource.sexDetailRender(jsonData["sex"]);
+								 
+							}
 						}
 					}];
 			var detailPanel_1 = new Ext.ux.panel.DetailPanel({

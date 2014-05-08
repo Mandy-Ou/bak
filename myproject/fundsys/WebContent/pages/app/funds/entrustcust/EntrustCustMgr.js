@@ -163,21 +163,7 @@ Ext.extend(cmw.skythink.OwnFundsMgr, Ext.util.MyObservable, {
 							tooltip : Btn_Cfgs.DELETE_TIP_BTN_TXT,
 							handler : function() {
 									EventManager.deleteData('./fuEntrustCust_delete.action',{type:'grid',cmpt:self.appgrid,optionType:OPTION_TYPE.DEL,self:self});}
-						},
-//						 {
-//							token : '导入',
-//							text : Btn_Cfgs.EXPORT_IMPORT_BTN_TXT,
-//							iconCls : 'page_detail',
-//							tooltip : Btn_Cfgs.EXPORT_TIP_IMPORT_BTN_TXT,
-//							handler : function() {
-//								self.globalMgr.winEdit.show({
-//											key : "提交",
-//											optionType : OPTION_TYPE.EDIT,
-//											self : self
-//										});
-//							}
-//						},
-							{
+						},{
 							token : '导出',
 							text : Btn_Cfgs.EXPORT_BTN_TXT,
 							iconCls : 'page_exportxls',
@@ -185,8 +171,7 @@ Ext.extend(cmw.skythink.OwnFundsMgr, Ext.util.MyObservable, {
 							handler : function() {
 								self.globalMgr.doExport(self);
 							}
-						}					
-						];
+						}];
 					toolBar = new Ext.ux.toolbar.MyCmwToolbar({
 							aligin : 'right',
 							controls : barItems,
@@ -209,14 +194,14 @@ Ext.extend(cmw.skythink.OwnFundsMgr, Ext.util.MyObservable, {
 							renderer : function(val) {
 						return Render_dataSource.entrusIsenRender(val);
 					}
-						}, {
+						},/* {
 							header : '状态',
 							name : 'status',
 							width:55,
 					renderer : function(val) {
 						return Render_dataSource.entrusStateRender(val);
 					}
-						},{
+						},*/{
 							header : '编号',
 							name : 'code'
 						}, {
@@ -249,10 +234,10 @@ Ext.extend(cmw.skythink.OwnFundsMgr, Ext.util.MyObservable, {
 						    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';}
 						}, {
 							header : '委托期限',
-							name : 'deadline',
+							name : 'deadline'/*,
 							renderer:function(v,t,r){
 								return v+Render_dataSource.entruestRender(r.get("dlimit"));
-							}
+							}*/
 						}, {
 							header : 'dlimit',
 							name : 'dlimit',
@@ -334,6 +319,7 @@ Ext.extend(cmw.skythink.OwnFundsMgr, Ext.util.MyObservable, {
 					var token = _this.params.nodeId;
 					EventManager.doExport(token, params);
 				},
+				
 				isFormula : null,
 				appgrid:null,
 				/**
@@ -344,7 +330,6 @@ Ext.extend(cmw.skythink.OwnFundsMgr, Ext.util.MyObservable, {
 				sysId : this.params.sysid,
 				winEdit : {
 					show : function(parentCfg) {
-						Cmw.print(parentCfg);
 						var _this = parentCfg.self;
 						var winkey = parentCfg.key;
 						_this.globalMgr.activeKey = winkey;

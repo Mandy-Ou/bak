@@ -124,38 +124,44 @@ define(function(require, exports) {
 	getAppGrid : function(){
 			var _this = this;
 			var structure_1 = [{
-				header: '委托人编号',
-				name :'entCode'
+				header: '付息状态',
+				name :'status'
 			},{
 			  	header: '委托人姓名',
 				name :'name'
 			},{
+				header: '委托合同编号',
+				name :'code'
+			},{
 				header: '委托金额',
 				name :'appAmount'
 			},{
-				header: '可用委托金额',
-				name :'uamount'
+				header :'委托期限',
+				name :'yearLoan'
 			},{
-				header :'撤资金额',
-				name :'bamount'
+				header :'委托期限(月)',
+				name :'monthLoan'
 			},{
-				header :'利息金额',
+				header :'利息',
+				name :'rate'
+			},{
+				header :'利息单位',
+				name :'unint'
+			},{
+				header :'付息日期',
+				name :'xpayDate'
+			},{
+				header :'付息金额',
 				name :'iamount'
-			},{
-				header :'已付息金额',
-				name :'yamount'
-			},{
-				header :'退回利息',
-				name :'riamount'
 			}];
 			
 			var appgrid_1 = new Ext.ux.grid.AppGrid({
 				tbar :_this.toolBar,
 			    structure: structure_1,
 			    url: './fuInterest_paylist.action',
-			    needPage: true,
+			    needPage: false,
 			    keyField: 'entrustCustId',
-			    isLoad: false,
+			    isLoad: true,
 			    listeners : {
 				   	render : function(grid){
 //				   		 _this.query();

@@ -28,69 +28,68 @@ Ext.extend(cmw.skythink.AuditExtensionAll,Ext.util.MyObservable,{
 	 * 获取查询Form 表单
 	 */
 	getQueryFrm : function(){
-		var self =this;
-	
-		var cbo_custType = FormUtil.getLCboField({
-		    fieldLabel: '客户类型',
-		    name: 'custType',
-		    width : 150,
-		    data : Lcbo_dataSource.getAllDs(Lcbo_dataSource.custType_datas)
-		});
+				var self = this;
+				var txt_Name = FormUtil.getTxtField({
+							fieldLabel : '银行帐号',
+							name : 'payAccount'
+						});
+				var txt_doDate = FormUtil.getDateField({
+							name : 'doDate',
+							fieldLabel : '合同签订日期'
+						});
+				var txt_startDate1 = FormUtil.getDateField({
+							name : 'payDate',
+							width : 90
+						});
+				var txt_endDate1 = FormUtil.getDateField({
+							name : 'endDate',
+							width : 90
+						});
+				var comp_appDate = FormUtil.getMyCompositeField({
+							itemNames : 'payDate,endDate',
+							sigins : null,
+							fieldLabel : '委托日期范围',
+							width : 210,
+							sigins : null,
+							name : 'comp_estartDate',
+							items : [txt_startDate1, {
+										xtype : 'displayfield',
+										value : '至'
+									}, txt_endDate1]
+						});
+				var txt_code = FormUtil.getTxtField({
+							fieldLabel : '编号',
+							name : 'code'
+						});
+				var txt_contactTel = FormUtil.getTxtField({
+							fieldLabel : '账户名',
+							name : 'accName'
+						});
 		
-		var txt_custName = FormUtil.getTxtField({fieldLabel : '客户姓名',name:'custName',width : 150});
-			
-		
-		var cbo_eqopAmount = FormUtil.getEqOpLCbox({name:'eqopAmount'});
-		var txt_endAmount = FormUtil.getMoneyField({
-		    fieldLabel: '贷款金额',
-		    name:'endAmount',
-		    width:70
-		});
-		var comp_appAmount = FormUtil.getMyCompositeField({
-			 fieldLabel: '贷款金额',width:150,sigins:null,itemNames:'eqopAmount,endAmount',
-			 name:'comp_appAmount',
-			 items : [cbo_eqopAmount,txt_endAmount]
-		});
-		var txt_startDate1 = FormUtil.getDateField({name:'startDate1',width:90});
-		var txt_endDate1 = FormUtil.getDateField({name:'endDate1',width:90});
-		var comp_estartDate = FormUtil.getMyCompositeField({
-			itemNames : 'startDate1,endDate1',
-			sigins : null,
-			 fieldLabel: '展期起始日',width:210,sigins:null,
-			 name:'comp_estartDate',
-			 items : [txt_startDate1,{xtype:'displayfield',value:'至'},txt_endDate1]
-		});
-		
-		var txt_startDate2 = FormUtil.getDateField({name:'startDate2',width:90});
-		var txt_endDate2 = FormUtil.getDateField({name:'endDate2',width:90});
-		var comp_eendDate = FormUtil.getMyCompositeField({
-			itemNames : 'startDate2,endDate2',
-			sigins : null,
-			 fieldLabel: '展期截止日',width:210,sigins:null,
-			 name:'comp_estartDate',
-			 items : [txt_startDate2,{xtype:'displayfield',value:'至'},txt_endDate2]
-		});
-		
-		
-		var cbo_eqextAmount = FormUtil.getEqOpLCbox({name:'eqextAmount'});
-		var txt_endAmount = FormUtil.getMoneyField({
-		    fieldLabel: '展期金额',
-		    name:'extAmount',
-		    width:70
-		});
-		var comp_extAmount = FormUtil.getMyCompositeField({
-			 fieldLabel: '展期金额',width:150,sigins:null,itemNames:'eqextAmount,extAmount',
-			 name:'comp_extAmount',
-			 items : [cbo_eqextAmount,txt_endAmount]
-		});
-		
-		
-		var layout_fields = [{cmns:'THREE',fields:[cbo_custType,txt_custName,comp_appAmount,comp_estartDate,comp_eendDate,comp_extAmount]}]
-
-		var queryFrm = FormUtil.createLayoutFrm(null,layout_fields);
-		
-		return queryFrm;
-	},
+				var cbo_eqopAmount = FormUtil.getEqOpLCbox({
+							name : 'eqopAmount'
+						});
+				var txt_endAmount = FormUtil.getMoneyField({
+							fieldLabel : '委托金额',
+							name : 'appAmount',
+							width : 70
+						});
+				var txt_inAddress = FormUtil.getMyCompositeField({
+							fieldLabel : '委托金额',
+							width : 150,
+							sigins : null,
+							itemNames : 'eqopAmount,appAmount',
+							name : 'comp_appAmount',
+							items : [cbo_eqopAmount, txt_endAmount]
+						});
+				var layout_fields = [{
+					cmns : 'THREE',
+					fields : [txt_code, txt_Name, txt_contactTel, txt_doDate,
+							comp_appDate, txt_inAddress]
+				}]
+				var queryFrm = FormUtil.createLayoutFrm(null, layout_fields);
+				return queryFrm;
+			},
 	
 	/**
 	 * 查询工具栏
@@ -142,7 +141,7 @@ Ext.extend(cmw.skythink.AuditExtensionAll,Ext.util.MyObservable,{
 						return Render_dataSource.entrusIsenRender(val);
 					}
 				}, {
-					header : '合同编号',
+					header : '申请单编号',
 					name : 'code'
 				}, {
 					header : '收款银行',

@@ -28,16 +28,12 @@ define(function(require, exports) {
 		},
 		createAppWindow : function() {
 			var _this = this;
-			EventManager.get('./fuAmountApply_add.action', {
-				params : {},
-				sfn : function(json_data) {
-					var _code = _this.appFrm.findFieldByName("code");
-					if(_code){
-					json_data.code=json_data.code+parseInt(11);
-					_code.setValue(json_data.code);
-					}
-				}
-			})
+//			EventManager.get('./fuAmountApply_add.action', {
+//				params : {},
+//				sfn : function(json_data) {
+//					
+//				}
+//			})
 			this.appFrm = this.createForm();
 			this.appWin = new Ext.ux.window.AbsEditWindow({
 						autoScroll : true,
@@ -98,7 +94,7 @@ define(function(require, exports) {
 					},
 					sfn : function(json_data) {
 						_this.appFrm.setVs(json_data);
-						_this.appFrm.setVs(json_data);
+//						_this.appFrm.setVs(json_data);
 						var doDate = _this.appFrm.findFieldByName('doDate');
 						doDate.enable();
 						var birthday=	_this.appFrm.findFieldByName("payDate");
@@ -112,7 +108,12 @@ define(function(require, exports) {
 							var _datadoDate=new Date(json_data["doDate"]);
 							_endDatedoDate.setValue(_datadoDate);
 						}
-						
+						var uuid = Cmw.getUuid();
+						var _code = _this.appFrm.findFieldByName("code");
+						if (_code) {
+							var _codes = 'E' + uuid;
+							_code.setValue(_codes);
+						}
 						if(json_data["id"]){
 							var _id=	_this.appFrm.findFieldByName("id");
 							_id.setValue("");

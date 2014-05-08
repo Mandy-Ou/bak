@@ -157,7 +157,7 @@ Ext.extend(cmw.skythink.ReceiptMgr,Ext.util.MyObservable,{
 			handler : function(){
 				self.globalMgr.submitApplyForm(self);
 			}
-		},{/*打印汇票证明*/
+		}/*,{打印汇票证明
 			token : '打印汇票证明',
 			//text : Btn_Cfgs.DISABLED_BTN_TXT,
 			text : '打印汇票证明',
@@ -166,7 +166,7 @@ Ext.extend(cmw.skythink.ReceiptMgr,Ext.util.MyObservable,{
 			handler : function(){
 				EventManager.disabledData('./crmCustBase_disabled.action',{type:'grid',cmpt:self.appgrid,optionType:OPTION_TYPE.DISABLED,self:self});
 			}
-		},{
+		}*/,{
 			token : '删除',
 			text : Btn_Cfgs.DELETE_BTN_TXT,
 			iconCls:'page_delete',
@@ -226,14 +226,7 @@ Ext.extend(cmw.skythink.ReceiptMgr,Ext.util.MyObservable,{
 			{header: '出票日期',name: 'outDate'},
 		    {header: '到票日期',name: 'endDate'},
 			{header: '金额(单位:元)',name: 'amount',
-		   		 renderer: function(val) {
-		       		switch (val) {
-		        		case 0:
-		            		val = '0';
-		            		break;
-		       		}
-		        	return val;
-		    }},
+		   		 renderer: Render_dataSource.moneyRender},
 			{header: '收款人账户名',name: 'rtacname'},
 			{header: '收款人账号',name: 'rtaccount'},
 			{header: '收款人开户行', name: 'rtbank'},

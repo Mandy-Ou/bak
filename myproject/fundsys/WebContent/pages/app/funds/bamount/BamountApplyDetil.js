@@ -96,7 +96,7 @@ define(function(require, exports) {
 			var htmlArrs_1 = [
 					'<tr><th col="code">委托客户编号</th> <td col="code" >&nbsp;</td><th col="name">委托人</th> <td col="name" >&nbsp;</td><th col="appAmount">委托金额</th> <td col="appAmount" >&nbsp;</td></tr>',
 					'<tr><th col="bamount">撤资金额</th> <td col="bamount" >&nbsp;</td><th col="wamount">违约金额</th> <td col="wamount" >&nbsp;</td><th col="backDate">撤资日期</th> <td col="backDate" >&nbsp;</td></tr>',
-					'<tr><th col="isNotExpiration">是否期满</th> <td col="isNotExpiration" >&nbsp;</td><th col="clause">备注</th> <td col="clause" >&nbsp;</td></tr>'];
+					'<tr><th col="isNotExpiration">是否期满</th> <td col="isNotExpiration" >&nbsp;</td><th col="remark">备注</th> <td col="remark" >&nbsp;</td></tr>'];
 			var detailCfgs_1 = [{
 						cmns : 'THREE',
 						/* ONE , TWO , THREE */
@@ -127,9 +127,6 @@ define(function(require, exports) {
 						        			jsonData["isNotExpiration"] = "可用";
 						          	 		break;
 						       		 	}
-								/* 可在对页面进行赋值前，对数据进行转换处理 to do .. */
-								// jsonData["leaf"] =
-								// (jsonData["leaf"]=="false") ? "否" : "是";
 							}
 						}
 					}];
