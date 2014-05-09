@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Maven使用指南</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+body { font:80% Verdana,Tahoma,Arial,sans-serif; }
+h1, h2, h3, h4 {  font-family: "Trebuchet MS",Georgia,"Times New Roman",serif; }
+ul.toc { padding: 4px; margin-left: 0; }
+ul.toc li { list-style-type:none; }
+ul.toc li.heading2 { margin-left: 1em; }
+ul.toc li.heading3 { margin-left: 2em; }
+a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+</style>
+</head>
+<body>
+<a name="Maven使用指南"></a>
+<h1 >Maven使用指南<a href="#Maven使用指南" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="请注意，最近Maven中心节点repo1mavenorg被联通墙掉了，所以如果发生获取插件或者依赖失败的情况下，请从其他途径获取一份复制粘贴本地库。FUCK-GFW"></a>
+<h1 >请注意，最近Maven中心节点repo1.maven.org被联通墙掉了，所以如果发生获取插件或者依赖失败的情况下，请从其他途径获取一份复制粘贴本地库。FUCK GFW!!!!!!<a href="#请注意，最近Maven中心节点repo1mavenorg被联通墙掉了，所以如果发生获取插件或者依赖失败的情况下，请从其他途径获取一份复制粘贴本地库。FUCK-GFW" class="wiki-anchor">&para;</a></h1>
+
+
+	<p>可以考虑在自己的setting中加入以下的mirror，也许可以解决（因为我在服务器上也配置了，所以不确认到底哪个起作用了……）<br /><pre><code class="xml syntaxhl"><span class="CodeRay"><span class="line-numbers"> 1</span>    <span class="tag">&lt;mirrors&gt;</span>
+<span class="line-numbers"> 2</span>        <span class="tag">&lt;mirror&gt;</span>
+<span class="line-numbers"> 3</span>            <span class="tag">&lt;id&gt;</span>ibiblio.org<span class="tag">&lt;/id&gt;</span>
+<span class="line-numbers"> 4</span>            <span class="tag">&lt;name&gt;</span>ibiblio Mirror of http://repo1.maven.org/maven2/<span class="tag">&lt;/name&gt;</span>
+<span class="line-numbers"> 5</span>            <span class="tag">&lt;url&gt;</span>http://mirrors.ibiblio.org/pub/mirrors/maven2<span class="tag">&lt;/url&gt;</span>
+<span class="line-numbers"> 6</span>            <span class="tag">&lt;mirrorOf&gt;</span>central<span class="tag">&lt;/mirrorOf&gt;</span>
+<span class="line-numbers"> 7</span>            <span class="comment">&lt;!-- United States, North Carolina --&gt;</span>
+<span class="line-numbers"> 8</span>        <span class="tag">&lt;/mirror&gt;</span>
+<span class="line-numbers"> 9</span>        <span class="tag">&lt;mirror&gt;</span>
+<span class="line-numbers"><strong>10</strong></span>            <span class="tag">&lt;id&gt;</span>cica.es<span class="tag">&lt;/id&gt;</span>
+<span class="line-numbers">11</span>            <span class="tag">&lt;url&gt;</span>http://ftp.cica.es/mirrors/maven2<span class="tag">&lt;/url&gt;</span>
+<span class="line-numbers">12</span>            <span class="tag">&lt;mirrorOf&gt;</span>central<span class="tag">&lt;/mirrorOf&gt;</span>
+<span class="line-numbers">13</span>            <span class="comment">&lt;!-- Spain, Sevilla --&gt;</span>
+<span class="line-numbers">14</span>        <span class="tag">&lt;/mirror&gt;</span>
+<span class="line-numbers">15</span>        <span class="tag">&lt;mirror&gt;</span>
+<span class="line-numbers">16</span>            <span class="tag">&lt;id&gt;</span>skynet.be<span class="tag">&lt;/id&gt;</span>
+<span class="line-numbers">17</span>            <span class="tag">&lt;url&gt;</span>http://maven2.mirrors.skynet.be/pub/maven2<span class="tag">&lt;/url&gt;</span>
+<span class="line-numbers">18</span>            <span class="tag">&lt;mirrorOf&gt;</span>central<span class="tag">&lt;/mirrorOf&gt;</span>
+<span class="line-numbers">19</span>            <span class="comment">&lt;!-- Belgium --&gt;</span>
+<span class="line-numbers"><strong>20</strong></span>        <span class="tag">&lt;/mirror&gt;</span>
+<span class="line-numbers">21</span>    <span class="tag">&lt;/mirrors&gt;</span>
+</span></pre></p>
+
+
+	<a name="概述"></a>
+<h1 >概述<a href="#概述" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="目的"></a>
+<h2 >目的<a href="#目的" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>　　让团队成员更快更好的在项目中使用Maven。</p>
+
+
+	<a name="范围"></a>
+<h2 >范围<a href="#范围" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>　　所有使用Maven管理项目的工程师。</p>
+
+
+	<a name="准备"></a>
+<h1 >准备<a href="#准备" class="wiki-anchor">&para;</a></h1>
+
+
+	<p>　　强烈建议你在看下去之前花上1个小时通读一遍<a href="http://www.kuaipan.cn/file/id_45545890496119040.htm" class="external">Maven in action.pdf</a><br />      公司内部maven仓库服务器地址，<a class="external" href="http://portal.gall.me/nexus">http://portal.gall.me/nexus</a> ，可以用来查找构件和上传私有构件。<br />　　</p>
+
+
+	<a name="Maven构成"></a>
+<h1 >Maven构成<a href="#Maven构成" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="Maven项目文件结构"></a>
+<h2 >Maven项目文件结构<a href="#Maven项目文件结构" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+　　pom.xml
+　　src
+　　target（install以后才存在）
+</pre><br />　　除此之外都不是Maven的文件，这里有一个<a href="http://dev.gall.me/attachments/62/pom.xml" class="external">pom.xml</a> 的模版，仅供参考和复制粘贴依赖和设置使用，建议直接通过m2eclipse插件的向导完成项目的创建。
+
+	<a name="src"></a>
+<h2 >src<a href="#src" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+　　src/main/java
+　　src/main/resourse
+　　src/test/java
+　　src/test/resourse
+　　src/main/webapp（只有packaging属性为war时）
+</pre><br />　　其他的目录都不是Maven的有效目录
+
+	<a name="m2eclipse"></a>
+<h1 >m2eclipse<a href="#m2eclipse" class="wiki-anchor">&para;</a></h1>
+
+
+	<ol>
+	<li>导入eclipse时会根据pom.xml自动生成工程文件.setting，.classpath和.project，这些配置文件都是eclipse的，不是maven的！</li>
+		<li>不要在eclipse中手动修改eclipse的设置，包含编译版本，src路径，输出路径等！建议通过工程右键Maven中的Update Project Configuration来应用pom中的设置，例如编码，编译级别等。</li>
+		<li>如果是webapp项目，可以使用maven的eclipse插件来转换成本地的webapp工程。每次修改过pom文件后，必须重新生成工程。</li>
+		<li>不要svn提交更新任何eclipse的设置文件！</li>
+		<li>这个插件不是特别稳定，经常会遇到无法更新设置，无法删除旧文件等问题，如果遇到问题太多的话，建议直接通过maven命令行来操作。<br />Maven多模块</li>
+		<li>父模块packaging一定是pom。</li>
+		<li>子模块根目录默认是父模块二级文件夹。</li>
+		<li>副模块的设置会自动传递给子模块，所以一般情况下所有的设置（所有的依赖）都要放到父模块。</li>
+		<li>模块默认的编译不会包含Lib，所以不用担心体积和速度问题，引用的都是本地的仓库。</li>
+	</ol>
+
+
+	<a name="常用指令"></a>
+<h1 >常用指令<a href="#常用指令" class="wiki-anchor">&para;</a></h1>
+
+
+<pre>
+　　mvn clean install
+</pre> <br />每次更新代码后
+
+<pre>
+　　mvn eclipse:clean eclipse:eclipse -Dwtpversion=1.5
+</pre> <br />更新webapp工程
+
+<pre>
+　　mvn site-deploy
+</pre><br />生成站点并且发布
+
+<pre>
+　　mvn clean install deploy
+</pre><br />发布构建
+
+<pre>
+　　tomcat:deploy
+</pre><br />首次发布到该服务器
+
+<pre>
+　　tomcat:redeploy
+</pre><br />重复发布更新到该服务器
+
+	<p>请先按照7.5章节在pom中增加配置。<br />如果遇到OutOfMemoryError异常导致发布失败，参照<a class="external" href="http://springsfeng.iteye.com/blog/1168416">http://springsfeng.iteye.com/blog/1168416</a> 中方法3设置即可解决。<br />　　　　<br /><strong>以上的mvn在m2eclipse中均可以省略，并且可以保存为一个run configuration配置重用。</strong><br />　　<br />当构建或者发布的时候不希望执行单元测试的时候，可以考虑跳过单元测试。有两种方法，配置方法和命令行方法，后者较为简单，只需要在命令中增加“-Dmaven.test.skip=true”即可。</p>
+
+
+	<a name="常用pom配置"></a>
+<h1 >常用pom配置<a href="#常用pom配置" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="设置发布服务器"></a>
+<h2 >设置发布服务器<a href="#设置发布服务器" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+        &lt;distributionManagement&gt;
+            &lt;snapshotRepository&gt;
+                &lt;id&gt; Gallme-Internal-Snapshot &lt;/id&gt;
+                &lt;name&gt;  Internal-Snapshot&lt;/name&gt;
+                &lt;url&gt; http://portal.gall.me/nexus/content/repositories/snapshots/&lt;/url&gt;
+            &lt;/snapshotRepository&gt;
+                &lt;repository&gt;
+                &lt;id&gt; Gallme-Internal-Release &lt;/id&gt;
+                &lt;name&gt;  Internal-Release&lt;/name&gt;
+                &lt;url&gt; http://portal.gall.me/nexus/content/repositories/releases/&lt;/url&gt;
+            &lt;/repository&gt;
+        &lt;/distributionManagement&gt;
+</pre><br />　　建议放到super pom中。
+
+	<a name="设置编译级别"></a>
+<h2 >设置编译级别<a href="#设置编译级别" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;inherited&gt;true&lt;/inherited&gt;
+                &lt;version&gt;2.3.2&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.6&lt;/source&gt;
+                    &lt;target&gt;1.6&lt;/target&gt;
+                    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+</pre><br />　　建议放到super pom中。
+
+	<a name="设置发布java-doc"></a>
+<h2 >设置发布java-doc<a href="#设置发布java-doc" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+　　    &lt;plugin&gt;
+　　        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+　　        &lt;artifactId&gt;maven-javadoc-plugin&lt;/artifactId&gt;
+　　        &lt;version&gt;2.8&lt;/version&gt;
+　　        &lt;executions&gt;
+　　            &lt;execution&gt;
+　　                &lt;id&gt;attach-javadocs&lt;/id&gt;
+　　                &lt;goals&gt;
+　　                    &lt;goal&gt;jar&lt;/goal&gt;
+　　                &lt;/goals&gt;
+　　            &lt;/execution&gt;
+　　        &lt;/executions&gt;
+　　    &lt;/plugin&gt;
+</pre><br />　　建议独立模块发布使用。
+
+	<a name="设置发布java-source"></a>
+<h2 >设置发布java-source<a href="#设置发布java-source" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+　　            &lt;plugin&gt;
+　　                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+　　                &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;
+　　                &lt;version&gt;2.1.2&lt;/version&gt;
+　　                &lt;executions&gt;
+　　                    &lt;execution&gt;
+　　                        &lt;id&gt;attach-sources&lt;/id&gt;
+　　                        &lt;goals&gt;
+　　                            &lt;goal&gt;jar&lt;/goal&gt;
+　　                        &lt;/goals&gt;
+　　                    &lt;/execution&gt;
+　　                &lt;/executions&gt;
+　　            &lt;/plugin&gt;
+</pre><br />　　建议独立模块发布使用。
+
+	<a name="设置自动发布到Tomcat"></a>
+<h2 >设置自动发布到Tomcat<a href="#设置自动发布到Tomcat" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+                &lt;plugin&gt;
+                    &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                    &lt;artifactId&gt;tomcat-maven-plugin&lt;/artifactId&gt;
+                    &lt;version&gt;1.1&lt;/version&gt;
+                    &lt;configuration&gt;
+                        &lt;url&gt;http://portal.gall.me/manager/html&lt;/url&gt;
+                        &lt;server&gt;Tomcat&lt;/server&gt;
+                        &lt;path&gt;/${project.name}&lt;/path&gt;
+                    &lt;/configuration&gt;
+                &lt;/plugin&gt;
+</pre><br />　　建议测试阶段使用，放到webapp工程的pom中。
+
+	<a name="自动下载源码和Javadoc"></a>
+<h2 >自动下载源码和Javadoc<a href="#自动下载源码和Javadoc" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>　　前提是这个dependency是有sources或者javadoc的。</p>
+
+
+	<a name="配置方法"></a>
+<h3 >配置方法<a href="#配置方法" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>　　在dependency标签中加入classifier，值为sources或者javadoc，例如<br /><pre>
+　　        &lt;dependency&gt;
+　　            &lt;groupId&gt;me.gall.androidbox&lt;/groupId&gt;
+　　            &lt;artifactId&gt;androidbox-common&lt;/artifactId&gt;
+　　            &lt;version&gt;0.0.6-SNAPSHOT&lt;/version&gt;
+　　            &lt;type&gt;jar&lt;/type&gt;
+　　            &lt;scope&gt;compile&lt;/scope&gt;
+　　            &lt;classifier&gt;javadoc&lt;/classifier&gt;
+　　        &lt;/dependency&gt;
+</pre><br />　　或者<br /><pre>
+　　        &lt;dependency&gt;
+　　            &lt;groupId&gt;me.gall.androidbox&lt;/groupId&gt;
+　　            &lt;artifactId&gt;androidbox-common&lt;/artifactId&gt;
+　　            &lt;version&gt;0.0.6-SNAPSHOT&lt;/version&gt;
+　　            &lt;type&gt;jar&lt;/type&gt;
+　　            &lt;scope&gt;compile&lt;/scope&gt;
+　　            &lt;classifier&gt;sources&lt;/classifier&gt;
+　　        &lt;/dependency&gt;
+</pre><br />　　优点是可以只下载某一个依赖的源码或者javadoc。<br />　　缺点是两者只能写一个，如果只需要一个的话推荐配置方法。</p>
+
+
+	<a name="命令行方法"></a>
+<h3 >命令行方法<a href="#命令行方法" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>　　下载源码<br /><pre>
+　　mvn dependency:sources
+</pre> <br />　　下载javadoc<br /><pre>
+　　mvn dependency:resolve -Dclassifier=javadoc
+</pre></p>
+
+
+	<p>　　两者也可以合并成一句，推荐合并使用<br />　　mvn dependency:sources dependency:resolve -Dclassifier=javadoc<br />　　优点是同时可以下载源码和javadoc。<br />　　缺点是要一次性下载所有依赖的源码或javadoc，下载时间比较长，占用空间比较大，而且大部分都没用。</p>
+
+
+	<a name="通过Profile切换发布到不同的环境"></a>
+<h2 >通过Profile切换发布到不同的环境<a href="#通过Profile切换发布到不同的环境" class="wiki-anchor">&para;</a></h2>
+
+
+	<a name="准备-2"></a>
+<h3 >准备<a href="#准备-2" class="wiki-anchor">&para;</a></h3>
+
+
+　　首先请确认你已经从svn上下载了最新的<a href="http://dev.gall.me/attachments/60/settings.xml" class="external">settings.xml</a> ，并且应用到了你本地的maven配置中。这个配置中已经包含了all，local，development和production四个profile。
+	<ul>
+	<li>all：通用配置，默认激活，切换其他配置也是需要激活的。</li>
+		<li>local：本地环境配置，默认激活，当切换到以下配置时需要禁用。</li>
+		<li>development：测试环境配置，默认不激活，根据需要激活（默认为内网测试服务器172.16.109.50）。</li>
+		<li>production：生产环境配置，默认不激活，根据需要激活（不包含发布服务器设置，请根据每个项目情况自行设置）。</li>
+	</ul>
+
+
+	<a name="更新pom设置"></a>
+<h3 >更新pom设置<a href="#更新pom设置" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>　　在项目（一般是需要发布的webapp项目）的pom的build节点中添加<br />　　<br /><pre>
+　　        &lt;resources&gt;
+　　            &lt;resource&gt;
+　　                &lt;directory&gt;src/main/resources&lt;/directory&gt;
+　　                &lt;filtering&gt;true&lt;/filtering&gt;
+　　            &lt;/resource&gt;
+　　        &lt;/resources&gt;
+</pre></p>
+
+
+	<p>　　该设置的作用为过滤resource文件夹内的所有文件，并且替换指定的属性（在settings.xml中已经配置好了profiles.active这个属性）。</p>
+
+
+	<a name="更新项目资源"></a>
+<h3 >更新项目资源<a href="#更新项目资源" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>　　接下来准备需要根据不同环境下的资源，这里以数据源配置为例。<br />　　在同一项目resource目录中新建dataSource-local.xml，dataSource-development.xml和dataSource-production.xml三个配置文件，分别配置对应的数据源bean。<br />　　删除项目中原先配置的数据源bean，替换为<br /><pre>
+　　&lt;import resource="classpath:dataSource-${profiles.active}.xml" /&gt;
+</pre></p>
+
+
+	<a name="发布"></a>
+<h3 >发布<a href="#发布" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>　　发布时指定使用的profile，即可把profiles.active这个变量替换成指定的profile对应的名称。<br />　　发布到本地环境<br /><pre>
+　　tomcat:deploy [-Pall,local]
+</pre><br />　　发布到测试环境<br /><pre>
+　　tomcat:deploy -Pall,development
+</pre><br />　　发布到生产环境<br /><pre>
+　　tomcat:deploy -Pall,production
+</pre><br />　　<br />　　强烈建议保存以上发布参数为run configuration。</p>
+
+
+	<a name="去除引用包的依赖"></a>
+<h2 >去除引用包的依赖<a href="#去除引用包的依赖" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>　　因为引入的依赖包含的依赖本身版本较老，与项目整体依赖发生版本冲突等原因，所以有时候需要手动的去除引入包的依赖关系。</p>
+
+
+<pre>
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.unitils&lt;/groupId&gt;
+            &lt;artifactId&gt;unitils-spring&lt;/artifactId&gt;
+            &lt;version&gt;${unitils.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+            &lt;exclusions&gt;
+                &lt;exclusion&gt;
+                    &lt;artifactId&gt;unitils-database&lt;/artifactId&gt;
+                    &lt;groupId&gt;org.unitils&lt;/groupId&gt;
+                &lt;/exclusion&gt;
+            &lt;/exclusions&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+</pre>
+
+	<p>　　使用exclusion可以手动去除依赖关系。<br />　　可以通过使用mvn dependency:tree可以发现包的依赖关系，也可以通过m2eclipse的依赖分析查找发生版本冲突的依赖。</p>
+
+
+	<a name="Android开发"></a>
+<h1 >Android开发<a href="#Android开发" class="wiki-anchor">&para;</a></h1>
+
+
+	<p>总体来讲比较完善，更多细节可以查看插件的主页。</p>
+
+
+	<a name="插件android-maven-plugin"></a>
+<h2 >插件android-maven-plugin<a href="#插件android-maven-plugin" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>主页：<a class="external" href="http://code.google.com/p/maven-android-plugin/">http://code.google.com/p/maven-android-plugin/</a><br />入门：<a class="external" href="http://code.google.com/p/maven-android-plugin/wiki/GettingStarted">http://code.google.com/p/maven-android-plugin/wiki/GettingStarted</a></p>
+
+
+	<a name="依赖"></a>
+<h2 >依赖<a href="#依赖" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>1.5_r4需要替换成对应的版本<br /><pre>&lt;code class="xml"&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.google.android&lt;/groupId&gt;
+    &lt;artifactId&gt;android&lt;/artifactId&gt;
+    &lt;version&gt;1.5_r4&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+ &lt;/dependency&gt;
+&lt;/pre&gt;
+
+h2. 打包
+
+&lt;pre&gt;
+mvn android:deploy
+&lt;/pre&gt;
+
+h1. 最佳实践
+
+# 团队必须统一使用最新的"setting.xml":http://dev.gall.me/attachments/60/settings.xml。
+# 务必配置好自己的开发环境和Maven的集成，比如JDK，M2_REPO等。
+# 一般情况下，开发工程师不需要修改pom.xml，通过项目的Owner来维护。
+# 当pom发生变更时，必须全局重新clean并且install一次。
+# 手动提交更新源码时，建议先clean一次。
+
+h1. FAQ
+
+h2. 解决webapp项目启动丢失依赖
+
+　　Q：从SVN上checkout项目到PC上，需要经过clean,install,以及将webapp工程从maven项目变成eclipse项目，具体指令是：“eclipse:clean ”以及“eclipse:eclipse –Dwtpversion=1.5”，但是容器运行的时候发现没有依赖？具体表现为ClassNotFound异常。
+　　A：在eclipse中找到webapp工程，右键properties属性，选中Deployment Assembly选项，查看工程引用，将报红叉的项目remove，然后重新add相应项目，问题解决。
+
+h2. 如何解决跨项目的依赖冲突
+
+　　Q：项目开发过程中，需要被外部项目依赖(就是外部项目需要调用本项目的接口)，但不知本项目中所依赖包结构，导致包冲突问题？例如接口一致的两套实现。
+　　A：首先，在需要被引用的项目中，修改pom.xml中修改依赖包的版本，版本要保持一致；其次，由于不知会出现版本冲突问题，在服务器上已经有了本项目的版本了，如果直接修改pom.xml然后deploy，服务器上本项目的版本虽然被改变了，但是因为其他人没有清除本地缓存中的版本号相同的lib，所以引用也枉然。建议修改被引用项目的项目版本。例如：原本的版本为0.0.1版本，现在可以修改为0.0.2版本，注意这版本是项目pom.xml的版本。这样修改了是不够的；还需要将主项目也就是管理被引用项目的主项目版本。主项目也需要相应升级版本号，升级方法参照被引用项目升级方法。好了，一切就绪，点击主项目右键run as ，选中“maven build..”项，注意是“maven build…”而不是“maven build”项，然后在对话框的Goals栏目中输入deploy指令，点击run ，OVER。
+
+h2. 远程依赖升级但本地无法更新
+
+　　Q：某个依赖在服务器上有更高的版本，但是本地改写了pom以后，一直提示Missing artifact xxx
+　　A：在本地执行install的时候加上-U的参数，强制从服务器端下载某个版本的依赖即可解决。
+
+h2. 独立Maven项目依赖维护注意的问题
+
+　　Q：有时候你可能需要抽象出自己代码中可以复用的部分作为一个独立的模块，可以被其他的项目使用，这个时候每次修改都需要升级一下版本号发布到服务器，给初期的联调带来不便，如何解决？
+　　A：在这种情况下，应该考虑先通过发布到svn，其他人checkout svn上面的工程通过本地方式联调，等到项目联调到一个稳定的状态，再通过发布maven依赖的方式来使用。
+
+h2. 找不到类的问题
+
+　　Q：两种情况，在编辑器中出现import不到某个类（红线），或者运行时ClassNotFound异常
+　　A：第一种情况和Maven无关，是eclipse的工程设置未更新的原因，解决方法为刷新（Refresh）该项目，如果仍然没有效果，清理（clean）该项目，等待eclipse自动重建项目，即可解决。第二种情况先判断是否修改过pom.xml文件，如果有修改过，则需要在父项目中全局的clean并且install一次，即可解决。如果没有的话请尝试情况一的解决方式。如果仍然没有解决，可以尝试问题9.1的解决方法。
+
+h2. cannot read zip file entry的问题
+
+　　Q：install构建项目时提示complie过程中找不到类并提示cannot read zip file entry。例如错误：读取 C:\Users\lianggf\.m2\repository\org\apache\ant\ant\1.8.2\ant-1.8.2.jar 时出错；cannot read zip file entry
+　　A：原因一般有两种，该jar包未下载完全或者因为svn的版本管理问题，可以尝试在项目上右键Team/小组选择clean/清理项目，如果仍然无法解决，则进入本地仓库....m2\repository下删除提示的jar，重新构建工程即可。</p></pre></code></pre>
+</body>
+</html>
