@@ -93,7 +93,9 @@ public class InterestAction extends BaseAction {
 	
 	public String paylist()throws Exception {
 		try {
+			Long cid=getLVal("cid");
 			SHashMap<String, Object> map = new SHashMap<String, Object>();
+			map.put("cid", cid);
 //			map.put(SysConstant.USER_KEY, this.getCurUser());
 			DataTable dt = interestService.getLoanRecordsList(map,getStart(),getLimit());
 			result = (null == dt || dt.getRowCount() == 0) ? ResultMsg.NODATA : dt.getJsonArr(new JsonDataCallback(){

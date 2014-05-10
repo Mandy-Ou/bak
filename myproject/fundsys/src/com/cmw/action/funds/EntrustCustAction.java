@@ -298,7 +298,6 @@ public class EntrustCustAction extends BaseAction {
 			String id = getVal("id");
 			if(!StringHandler.isValidStr(id)) throw new ServiceException(ServiceException.ID_IS_NULL);
 			EntrustCustEntity entity = entrustCustService.getEntity(Long.parseLong(id));
-			
 			result = FastJsonUtil.convertJsonToStr(entity,new Callback(){
 				@Override
 				public void execute(JSONObject jsonObj) {
