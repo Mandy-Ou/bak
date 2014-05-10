@@ -1,26 +1,21 @@
 package com.cmw.dao.impl.funds;
 
 
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import com.cmw.constant.BussStateConstant;
 import com.cmw.constant.SysConstant;
 import com.cmw.core.base.annotation.Description;
 import com.cmw.core.base.dao.GenericDaoAbs;
 import com.cmw.core.base.exception.DaoException;
-import com.cmw.core.base.exception.ServiceException;
 import com.cmw.core.util.DataTable;
-import com.cmw.core.util.DateUtil;
 import com.cmw.core.util.SHashMap;
 import com.cmw.core.util.SqlUtil;
 import com.cmw.core.util.StringHandler;
-import com.cmw.dao.inter.funds.EntrustCustDaoInter;
 import com.cmw.dao.inter.funds.InterestDaoInter;
-import com.cmw.entity.funds.EntrustCustEntity;
 import com.cmw.entity.funds.InterestEntity;
 /**
  * 利息支付DAO实现类
@@ -74,12 +69,18 @@ public class InterestDaoImpl extends GenericDaoAbs<InterestEntity, Long> impleme
 		sb.append("select A.id,A.xpayDate,A.entrustCustId,A.entrustContractId,A.nextDate,A.iamount,A.yamount,A.riamount,A.lastDate,A.status "
 				+ ",B.code,B.appAmount,B.yearLoan,B.monthLoan,B.rate,B.unint,C.name from fu_Interest A inner join fu_EntrustContract B on A.entrustContractId=B.id "
 				+ " inner join fu_EntrustCust C on A.entrustCustId=C.id")
-		.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");
+				.append(" where A.isenabled!='"+SysConstant.OPTION_DEL+"' ");
 		try {
-//			String entrustCustId = params.getvalAsStr("entrustCustId");//id
-//				if(StringHandler.isValidStr(entrustCustId)){
-//					sb.append(" and A.entrustCustId ='"+entrustCustId+"' ");
-//				}
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//定义日期输出格式 HH:mm:ss
+			String now_date=dateFormat.format(new Date());
+			String cid = params.getvalAsStr("cid");//id
+				if(StringHandler.isValidStr(cid)){
+					if(cid.equals("1")){
+						sb.append(" and A.xpayDate = '"+now_date+"' ");
+					}else if(cid.equals("2")){
+						sb.append(" and A.xpayDate ! = '"+now_date+"' ");
+					}
+				}
 //				String entrustContractId = params.getvalAsStr("entrustContractId");//id
 //				if(StringHandler.isValidStr(entrustContractId)){
 //					sb.append(" and A.entrustContractId ='"+entrustContractId+"' ");
