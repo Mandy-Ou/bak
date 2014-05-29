@@ -389,6 +389,11 @@ var Btn_Cfgs = {
 	HOLIDAYS_QUERY_BTN_FASTKEY : '',
 	HOLIDAYS_QUERY_BTN_CLS : 'page_holidaysearch',
 	HOLIDAYS_QUERY_TIP_BTN_TXT : '查询节假日',
+	
+	QUERYS_BTN_TXT : '选择其他',
+	QUERYS_BTN_FASTKEY : '',
+	QUERYS_BTN_CLS : 'page_holidaysearch',
+	QUERYS_TIP_BTN_TXT : '选择其他',
 
 	MENU_ENABLED_BTN_TXT_DO : '可逆',
 	MENU_ENABLED_BTN_FASTKEY_DO : '',
@@ -2193,6 +2198,45 @@ var Lcbo_dataSource = {
 
 var Render_dataSource = {
 	
+	/**
+	 * 利率单位
+	 * Render_dataSource.rateUnit_datas
+	 * @type 
+	 */
+	rateUnit_datas : function(val){
+		if (!val && val != 0)
+			return '暂未设置';
+		val += '';
+		switch(val){
+			case '1':
+				val = '%';
+				break;
+			case '2': 
+				val = '‰';
+				break;
+		}
+			return val;
+	},
+	/**						
+	 * 委托产品范围
+	 * Render_dataSource.prangeUnit_datas
+	 * @type 
+	 */
+	prangeUnit_datas : function(val){
+		if (!val && val != 0)
+			return '暂未设置';
+		val += '';
+		switch(val){
+			case '1':
+				val = "所有产品";
+				break;
+			case '2': 
+				val = "指定产品";
+				break;
+		}
+			return val;
+	},
+	
 	 /**
      * 基础数据 render 
      * Render_dataSource.gvlistRender('100003',1);
@@ -2237,12 +2281,18 @@ var Render_dataSource = {
      	return val;
     },
     /**
-     * moneyRender 涉及金钱的转换
+     * Render_dataSource.moneyRender 涉及金钱的转换
      * @param {} val
      * @return {}
      */
     moneyRender :function(val){
    		return (val && val>=0) ?Cmw.getThousandths(val)+'元' : '';
+	}, 
+	rateRender :function(val){
+   		return (val && val>=0) ?Cmw.getThousandths(val)+'%' : '';
+	}, 
+	nomoneyRender :function(val){
+   		return (val && val>=0) ?Cmw.getThousandths(val): '';
 	}, 
     /**
      * moneyRender 涉及金钱的转换
@@ -2285,6 +2335,21 @@ var Render_dataSource = {
 				break;
 			case "2" :
 				val = '否';
+				break;
+		}
+		return val;
+	},
+	/*付息状态管理*/
+	isInterestRender : function(val){
+		switch (val) {
+			case "0" :
+				val = '未付息';
+				break;
+			case "1" :
+				val = '部分付息';
+				break;
+			case "2" :
+				val = '已付息';
 				break;
 		}
 		return val;
@@ -2386,6 +2451,17 @@ var Render_dataSource = {
 				break;
 			case "1" :
 				val = '已核对';
+				break;
+		}
+		return val;
+	},
+	restesRenders : function(val) {
+		switch (val) {
+			case "0" :
+				val = '未撤资';
+				break;
+			case "1" :
+				val = '已撤资';
 				break;
 		}
 		return val;
@@ -2762,6 +2838,7 @@ var Render_dataSource = {
 	 * @return {}
 	 */
 	entrussexRender : function(val) {
+		if (!val && val != 0) val += '';
 		switch (val) {
 			case "0" :
 				val = '男';
@@ -3134,12 +3211,28 @@ custTypeRender : function(val) {
 	 * @return {} Render_dataSource.sexRender(0);
 	 */
 	sexDetailRender : function(val) {
+		if (!val && val != 0) val += '';
 		switch (val) {
 			case 0 :
 				val = '男';
 				break;
 			case 1 :
 				val = '女';
+				break;
+		}
+		return val;
+	},
+	
+	
+	sDetailRender : function(val) {
+			if (!val && val != 0)
+			val += '';
+		switch (val) {
+			case 1 :
+				val = '未撤资';
+				break;
+			case 2 :
+				val = '已撤资';
 				break;
 		}
 		return val;
@@ -3161,6 +3254,21 @@ custTypeRender : function(val) {
 				break;
 			case '1' :
 				val = '暂住';
+				break;
+			default : {
+				val = '暂未设置';
+			}
+		}
+		return val;
+	},
+	ecustIdRender : function(val) {
+		if (!val && val != 0)  val += '';
+		switch (val) {
+			case '1' :
+				val = '所有产品';
+				break;
+			case '2' :
+				val = '指定产品';
 				break;
 			default : {
 				val = '暂未设置';
