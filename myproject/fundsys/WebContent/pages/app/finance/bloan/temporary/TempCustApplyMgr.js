@@ -261,14 +261,11 @@ Ext.extend(cmw.skythink.TempCustApplyMgr,Ext.util.MyObservable,{
 		return appgrid_1;
 		
 	},
-	
 	refresh:function(optionType,data){
 		var activeKey = this.globalMgr.activeKey;
-		
 		this.globalMgr.query(this);
 		this.globalMgr.activeKey = null;
 	},
-	
 	globalMgr : {
 		getQparams : function(_this){
 			var params = _this.queryFrm.getValues() || {};
