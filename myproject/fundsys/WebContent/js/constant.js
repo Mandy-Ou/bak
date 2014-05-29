@@ -302,7 +302,7 @@ var ATTACHMENT_FORMTYPE = {
 	FType_31 : 31, // 展期申请附件
 	FType_32 : 32, // 提前还款申请附件
 	FType_33 : 33, // 息费豁免申请附件,
-	FType_34 : 34,
+	FType_34 : 34,//
 	FType_35 : 35,//第三方担保附件个人
 	FType_36 : 36,//第三方担保附件企业
 	FType_37 : 37,//委托客户附件
@@ -311,6 +311,7 @@ var ATTACHMENT_FORMTYPE = {
 	FType_40 : 40,// 申请合同
 	FType_41 : 41// 委托合同
 ,	FType_42: 42// 股东资料交接
+,	FType_43: 43// 委托人
 };
 
 /**
