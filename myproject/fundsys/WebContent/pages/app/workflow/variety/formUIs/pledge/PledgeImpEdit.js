@@ -87,7 +87,7 @@ define(function(require, exports) {
 		createForm : function(){
 		
 			var txt_code = FormUtil.getTxtField({
-			    fieldLabel: '质押物编号',
+			    fieldLabel: '质押登记编号',
 			    name: 'code',
 			    "width": "125"
 			});
@@ -122,11 +122,11 @@ define(function(require, exports) {
 			    width: 125
 			});
 			
-			txt_carrMan.grid.on("dblclick",function(val){
-				var dept=txt_carrMan.grid.getSelRow();
-				txt_carrDeptName.setValue(dept.get("indeptName"));
-				txt_carrDept.setValue(dept.get("indeptId"));
-			})
+//			txt_carrMan.grid.on("dblclick",function(val){
+//				var dept=txt_carrMan.grid.getSelRow();
+//				txt_carrDeptName.setValue(dept.get("indeptName"));
+//				txt_carrDept.setValue(dept.get("indeptId"));
+//			})
 			
 			var txt_carrDeptName=FormUtil.getTxtField({
 			    fieldLabel: '落实办理部门',

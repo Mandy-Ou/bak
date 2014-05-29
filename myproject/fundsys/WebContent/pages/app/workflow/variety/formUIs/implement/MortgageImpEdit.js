@@ -122,11 +122,11 @@ define(function(require, exports) {
 			    width: 125
 			});
 			
-			txt_carrMan.grid.on("dblclick",function(val){
-				var dept=txt_carrMan.grid.getSelRow();
-				txt_carrDeptName.setValue(dept.get("indeptName"));
-				txt_carrDept.setValue(dept.get("indeptId"));
-			})
+//			txt_carrMan.grid.on("dblclick",function(val){
+//				var dept=txt_carrMan.grid.getSelRow();
+//				txt_carrDeptName.setValue(dept.get("indeptName"));
+//				txt_carrDept.setValue(dept.get("indeptId"));
+//			})
 			
 			var txt_carrDeptName=FormUtil.getTxtField({
 			    fieldLabel: '落实办理部门',
@@ -139,28 +139,6 @@ define(function(require, exports) {
 			    name: 'carrDept',
 			    "width": "125"
 			});
-			
-//			/*所属部门*/
-//			var barIndept = [{type:'label',text:'名称'},{type:'txt',name:'name'}];
-//			var strIndept = [
-//				{header: '部门名称', name: 'name',width:100},
-//				{header: '部门类型',name: 'dtype',width:60},
-//				{header: '联系人', name: 'contactor',width:100}];
-//					
-//			var txt_carrDept = new Ext.ux.grid.AppComBoxGrid({
-//			    fieldLabel: '落实办理部门',
-//			    name: 'carrDept',
-//			    barItems : barIndept,
-//			    structure:strIndept,
-//			    dispCmn:'name',
-//			    isAll:true,
-//			    url : './sysDepartment_list.action',
-//			    allowBlank: false,
-//			    needPage : true,
-//			    isLoad : true,
-//			    keyField : 'id',
-//			    width: 125
-//			});
 			
 			
 			var hid_id = FormUtil.getHidField({

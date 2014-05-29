@@ -68,6 +68,11 @@ Ext.extend(skythink.cmw.workflow.bussforms.MortgageMgr,Ext.util.MyObservable,{
 			    hidden :true,
 			    width: 125
 			},{
+			    header: '状态',
+			    name: 'state',
+			    renderer:Render_dataSource.mortState,
+			    width: 125
+			},{
 			    header: '抵押物名称',
 			    name: 'name',
 			    width: 125

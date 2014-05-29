@@ -86,7 +86,7 @@ define(function(require, exports) {
 		createForm : function(){
 		
 			var txt_code = FormUtil.getTxtField({
-			    fieldLabel: '质押物编号',
+			    fieldLabel: '解押登记编号',
 			    name: 'charCode',
 			    "width": "125"
 			});
@@ -121,11 +121,11 @@ define(function(require, exports) {
 			    width: 125
 			});
 			
-			txt_carrMan.grid.on("dblclick",function(val){
-				var dept=txt_carrMan.grid.getSelRow();
-				txt_carrDeptName.setValue(dept.get("indeptName"));
-				txt_carrDept.setValue(dept.get("indeptId"));
-			})
+//			txt_carrMan.grid.on("dblclick",function(val){
+//				var dept=txt_carrMan.grid.getSelRow();
+//				txt_carrDeptName.setValue(dept.get("indeptName"));
+//				txt_carrDept.setValue(dept.get("indeptId"));
+//			})
 			
 			var txt_carrDeptName=FormUtil.getTxtField({
 			    fieldLabel: '解押办理部门',
@@ -180,7 +180,7 @@ define(function(require, exports) {
 			    fields: [txt_code, bdat_carrTime, txt_carrMan, txt_carrDeptName,hid_id,hid_state,txt_carrDept]
 			}];
 			var frm_cfg = {
-			    title: '质押物落实办理',
+			    title: '质押物释放',
 			    heigth:180,
 			    labelWidth:100,
 			    url: './fcPledge_save.action'

@@ -86,7 +86,7 @@ define(function(require, exports) {
 		createForm : function(){
 		
 			var txt_code = FormUtil.getTxtField({
-			    fieldLabel: '抵押物编号',
+			    fieldLabel: '解押登记编号',
 			    name: 'charCode',
 			    "width": "125"
 			});
@@ -120,13 +120,13 @@ define(function(require, exports) {
 			    keyField : 'userId',
 			    width: 125
 			});
-			
-			txt_carrMan.grid.on("dblclick",function(val){
-				var dept=txt_carrMan.grid.getSelRow();
-				txt_carrDeptName.setValue(dept.get("indeptName"));
-				txt_carrDept.setValue(dept.get("indeptId"));
-			})
-			
+//			
+//			txt_carrMan.grid.on("dblclick",function(val){
+//				var dept=txt_carrMan.grid.getSelRow();
+//				txt_carrDeptName.setValue(dept.get("indeptName"));
+//				txt_carrDept.setValue(dept.get("indeptId"));
+//			})
+//			
 			var txt_carrDeptName=FormUtil.getTxtField({
 			    fieldLabel: '解押办理部门',
 			    name: 'charDeptName',
@@ -138,28 +138,6 @@ define(function(require, exports) {
 			    name: 'charDept',
 			    "width": "125"
 			});
-			
-//			/*所属部门*/
-//			var barIndept = [{type:'label',text:'名称'},{type:'txt',name:'name'}];
-//			var strIndept = [
-//				{header: '部门名称', name: 'name',width:100},
-//				{header: '部门类型',name: 'dtype',width:60},
-//				{header: '联系人', name: 'contactor',width:100}];
-//					
-//			var txt_carrDept = new Ext.ux.grid.AppComBoxGrid({
-//			    fieldLabel: '落实办理部门',
-//			    name: 'carrDept',
-//			    barItems : barIndept,
-//			    structure:strIndept,
-//			    dispCmn:'name',
-//			    isAll:true,
-//			    url : './sysDepartment_list.action',
-//			    allowBlank: false,
-//			    needPage : true,
-//			    isLoad : true,
-//			    keyField : 'id',
-//			    width: 125
-//			});
 			
 			
 			var hid_id = FormUtil.getHidField({
@@ -180,7 +158,7 @@ define(function(require, exports) {
 			    fields: [txt_code, bdat_carrTime, txt_carrMan, txt_carrDeptName,hid_id,hid_state,txt_carrDept]
 			}];
 			var frm_cfg = {
-			    title: '抵押物落实办理',
+			    title: '抵押物释放',
 			    heigth:180,
 			    labelWidth:100,
 			    url: './fcMortgage_save.action'

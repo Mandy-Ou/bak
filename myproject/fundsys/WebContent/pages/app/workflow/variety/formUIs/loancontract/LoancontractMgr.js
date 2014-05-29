@@ -98,7 +98,6 @@ Ext.extend(skythink.cmw.workflow.bussforms.LoancontractMgr,Ext.util.MyObservable
 						return;
 					}
 				}});
-				
 			}
 		},{type:"sp"},{
 			token :"删除借款合同", 

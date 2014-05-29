@@ -66,10 +66,9 @@ define(function(require, exports) {
 		 */
 		loadData : function() {
 			var _this = this;
-			var applyId = this.applyId;
 			EventManager.get('./fuBamountApply_detail.action', {//fuEntrustContract_list
 						params : {
-							id : applyId
+							id : _this.applyId
 						},
 						sfn : function(json_data) {
 							var activePanel = Ext.getCmp(_this.orderDetailPnlId);

@@ -131,6 +131,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.MortgageMgr,Ext.util.MyObservable,{
 			},{
 			    header: '落实人',
 			    name: 'carrMan',
+			    renderer:Render_dataSource.treeOrGrid,
 			    width: 150
 			},{
 			    header: '落实时间',
