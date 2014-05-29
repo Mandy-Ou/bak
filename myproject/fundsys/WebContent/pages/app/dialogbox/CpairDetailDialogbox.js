@@ -48,17 +48,25 @@ define(function(require, exports) {
 
 			{
 			    header: '委托期限',
-			    name: 'sex'
+			    name: 'yearLoan',
+			    renderer:function(x,y,z){
+			    	
+			    return x+'年'+z.get('monthLoan')+'月' ;
+			    }
+			},{
+			    header: '委托期限月',
+			    name: 'monthLoan',
+			    hidden:true
 			},
 			
 			{
 			    header: '委托生效日期',
-			    name: 'contactTel',
+			    name: 'payDate',
 			    width: 90
 			},
 			{
 			    header: '委托失效日期',
-			    name: 'birthday',
+			    name: 'endDate',
 			    width: 90
 			},
 			{
@@ -70,7 +78,7 @@ define(function(require, exports) {
 			var appgrid = new Ext.ux.grid.AppGrid({
 			    title: '符合条件的客户',
 			    structure: structure_1,
-		  		url : './fuCapitalPair_list.action',
+		  		url : './fuCapitalPair_custBol.action',
 			    needPage: false,
 			    isLoad: false,
 			    selectType:"check",

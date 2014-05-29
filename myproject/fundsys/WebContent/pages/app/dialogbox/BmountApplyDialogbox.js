@@ -28,44 +28,76 @@ define(function(require, exports) {
 				 width: 120
 			},
 			{
-			    header: '委托客户编号',
+			    header: '委托合同编号',
 			    name: 'code',
 			    width: 120
 			},
 			{
-			    header: '姓名',
+			    header: '委托人姓名',
 			    name: 'name'
-			},
-			{
-			    header: '性别',
-			    name: 'sex',
-			    width: 60,
-			    renderer: function(val) {
-			       return Render_dataSource.sexRender(val);
-			    }
 			},
 			{
 			    header: '委托金额',
 			    name: 'appAmount',
 			    width: 90,
-					renderer: function(val) {
-				    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';}
+				renderer: function(val) {
+			    return (val && val>0) ? Cmw.getThousandths(val): '';}
 			},
 			{
-			    header: '手机',
-			    name: 'phone',
+			    header: '期限',
+			    name: 'yearLoan',
+			    width: 90,
+					renderer: function(r,t,x) {
+						if(x.get('monthLoan')==0){
+							return r+'&nbsp;年'+'&nbsp;&nbsp;';
+						}else{
+							return r+'&nbsp;年'+'&nbsp;&nbsp;'+x.get('monthLoan')+'&nbsp;月';
+						}
+				    	
+				    }
+			},
+			{
+			    header: '期限',
+			    name: 'monthLoan',
+			    width: 90,hidden:true
+			},
+			{	
+			    header: '利率',
+			    name: 'rate',
+			    width: 90,
+			    renderer : function(value , cellmeta,record){
+			    	return value + Render_dataSource.rateUnit_datas(record.get('unint'));
+			    }
+			},	
+			{
+				header : '利率单位',
+				name : 'unint',
+				hidden : true
+			},
+			{
+			    header: '委托生效日期',
+			    name: 'payDate',
 			    width: 90
 			},
 			{
-			    header: '电话',
-			    name: 'contactTel',
+			    header: '委托失效日期',
+			    name: 'endDate',
 			    width: 90
+			},	
+			{
+			    header: '每月收益金额',
+			    name: 'iamount',
+			    width: 90,
+				renderer: function(val) {
+			    return (val && val>0) ? Cmw.getThousandths(val): '';}
 			},
 			{
-			    header: '出生日期',
-			    name: 'birthday',
-			    width: 90
-			}];
+				header: '合同签订日期',
+			    name: 'doDate',
+			    width: 90,hidden:true
+				
+			}
+			];
 			
 			var appgrid = new Ext.ux.grid.AppGrid({
 			    title: '委托合同列表',

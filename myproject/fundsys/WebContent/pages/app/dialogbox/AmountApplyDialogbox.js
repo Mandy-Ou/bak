@@ -71,7 +71,7 @@ define(function(require, exports) {
 			var appgrid = new Ext.ux.grid.AppGrid({
 			    title: '委托人列表',
 			    structure: structure_1,
-		  	 url : './fuEntrustCust_listCus.action',
+		  		 url : './fuEntrustCust_listCus.action',
 			    needPage: false,
 			    isLoad: false,
 			    tbar : this.getToolBar(),
