@@ -106,7 +106,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ProjectAmuntMgr,Ext.util.MyObservable
 		 	var _this = this;
 			var structure_1 = [{
 							header : '状态',
-							name : 'state',
+							name : 'status',
 							width : 65,
 							renderer : function(val) {
 								switch (val) {
@@ -125,11 +125,25 @@ Ext.extend(skythink.cmw.workflow.bussforms.ProjectAmuntMgr,Ext.util.MyObservable
 						}, {
 							header : '费用类型',
 							name : 'itemType',
-							width : 135
+							width : 135,
+							renderer : function(val) {
+								return	Render_dataSource.gvlistRender('200007',val);
+							}
 						}, {
 							header : '收支方向',
 							name : 'direction',
-							width : 135
+							width : 135,
+							renderer : function(val) {
+								switch (val) {
+									case '1' :
+										val = '收入';
+										break;
+									case '2' :
+										val = '支出';
+										break;
+								}
+								return val;
+							}
 						}, {
 							header : '金额',
 							name : 'amount',
@@ -196,7 +210,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ProjectAmuntMgr,Ext.util.MyObservable
 					});
 				var rad_order = FormUtil.getRadioGroup({
 							fieldLabel : '收支方向',
-							"width" : 200,
+							"width" : 180,
 							allowBlank : false,
 							id : 'rad_orderid',
 							name : 'direction',
@@ -232,8 +246,8 @@ Ext.extend(skythink.cmw.workflow.bussforms.ProjectAmuntMgr,Ext.util.MyObservable
 				});
 				var layout_fields = [{
 							cmns : FormUtil.CMN_TWO,
-							fields : [txt_id, txt_products, rad_order, num_cat,txt_formid]
-						},txt_remark];
+							fields : [txt_products, rad_order, num_cat]
+						},txt_remark,txt_id,txt_formid];
 				var frm_cfg = {
 					labelWidth : 110,
 					height : 400,
@@ -257,6 +271,7 @@ Ext.extend(skythink.cmw.workflow.bussforms.ProjectAmuntMgr,Ext.util.MyObservable
 							listeners : {
 								"click" : function() {
 								cfg = {sfn : function(Json_data) {
+								self.finishBussCallback();
 								self.globalMgr.appgrid.reload();
 								self.globalMgr.appform_1.setDisabled(true);//保存成功之后进行禁用
 								}}
@@ -305,14 +320,11 @@ Ext.extend(skythink.cmw.workflow.bussforms.ProjectAmuntMgr,Ext.util.MyObservable
 					_this.globalMgr.appform_1.setDisabled(false);
 				}else if(winkey=="编辑"){
 					_this.globalMgr.appform_1.setDisabled(false);
-					var json_date=_this.globalMgr.appgrid.getCmnVals("id,status,itemType,direction,amount,lastDate")
-					Cmw.print(json_date);
+					var json_date=_this.globalMgr.appgrid.getCmnVals("status,itemType,direction,amount,lastDate,remark,yamount")
 						_this.globalMgr.appform_1.findFieldByName("itemType").setValue(json_date.itemType);
-						_this.globalMgr.appform_1.findFieldByName("status").setValue(json_date.status);
 						_this.globalMgr.appform_1.findFieldByName("direction").setValue(json_date.direction);
 						_this.globalMgr.appform_1.findFieldByName("amount").setValue(json_date.amount);
 						_this.globalMgr.appform_1.findFieldByName("remark").setValue(json_date.remark);
-						_this.globalMgr.appform_1.reload({json_data:json_date},true);
 				}
 				var parent ={};
 				_this.globalMgr.formId = _this.params.applyId;
