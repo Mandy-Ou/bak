@@ -254,7 +254,13 @@ define(function(require, exports) {
 						 sigins : null,
 						 itemNames : 'deadline,dlimit',
 					 	 "allowBlank" : false,
-						 items : [txt_appAmountdd,cbo_eqopAmount]
+						 items : [txt_appAmountdd,cbo_eqopAmount],validate : function(item){
+						 	var val = item["getValue"] ? item.getValue() : null;
+						 	if(val==null || val == 'undefined'){
+							return false;
+							}
+							return true;
+						 }
 					});
 							
 					var txt_prange = FormUtil.getRadioGroup({

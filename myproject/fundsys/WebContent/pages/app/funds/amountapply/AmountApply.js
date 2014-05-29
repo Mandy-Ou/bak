@@ -221,6 +221,7 @@ define(function(require, exports) {
 			var comp_loanLimit = FormUtil.getMyCompositeField({
 						fieldLabel : '贷款期限',
 						width : 215,
+						"allowBlank" : false,
 						name:'cpt_deadline',
 						sigins : null,
 						items : [int_yearLoan, {
@@ -571,7 +572,6 @@ define(function(require, exports) {
 			var _this = this;
 			var currTabId = this.params.tabId;
 			var apptabtreewinId = this.params.apptabtreewinId;
-			var _this = this;
 			EventManager.frm_save(this.applyPanel, {
 				beforeMake : function(formDatas) {
 					formDatas.submitType = submitType;
@@ -603,6 +603,9 @@ define(function(require, exports) {
 					if (submitType == 0) {
 						tabId = CUSTTAB_ID.tempAamountApplyMgrTabId;
 						Cmw.activeTab(apptabtreewinId, tabId, params);
+						if(_this.appgrid){
+							_this.appgrid.reload();
+						}
 					} else { /* 跳转到 业务审批页面 */
 						var code = formDatas["code"];
 						var procId = _this.applyPanel.getValueByName("procId");
@@ -680,6 +683,7 @@ define(function(require, exports) {
 		setParams : function(parentPanel, params) {
 			this.parentPanel = parentPanel;
 			this.params = params;
+			this.appgrid = params["appgrid"] ? params["appgrid"] : null;
 			this.applyId = params.applyId;
 			this.entrustCustId = params.entrustCustId;
 			this.breed = params.breed;
@@ -693,6 +697,20 @@ define(function(require, exports) {
 			} else {
 				this.loadDatas();
 			}
+		},
+		changeReload : function(keyfile) {
+			var _this=this;
+			Cmw.print(keyfile);
+			var id=keyfile.entrustCustId;
+		         EventManager.get('./fuEntrustCust_get.action', {
+						params : {id:id},
+						sfn : function(json_data) {
+					_this.customerPanel.reload({json_data : json_data
+						}, true);
+						}
+					});
+
+		
 		},
 		/**
 		 * 在这里加载数据
@@ -725,6 +743,8 @@ define(function(require, exports) {
 								id : _this.applyId
 							},
 							sfn : function(json_data) {
+								Cmw.print(json_data);
+								_this.changeReload(json_data);
 								if(json_data.payDate){
 							var payDate=new Date(json_data["payDate"]);
 							_this.applyPanel.setFieldValue("payDate",Ext.util.Format.date(payDate,'Y-m-d'));
@@ -736,12 +756,13 @@ define(function(require, exports) {
 							var doDate=new Date(json_data["doDate"]);
 							_this.applyPanel.setFieldValue("doDate",Ext.util.Format.date(doDate,'Y-m-d'));
 							var cpt_deadline = _this.applyPanel.findFieldByName("cpt_deadline");
-							Cmw.print(cpt_deadline);
 							var yearLoan = json_data["yearLoan"] || 0;
 							var monthLoan = json_data["monthLoan"] || 0;
 							cpt_deadline.setValue({yearLoan:yearLoan,monthLoan:monthLoan});
 							},
-						ffn : function(json_data) {}
+						ffn : function(json_data) {
+								
+							}
 						});
 //				this.attachMentFs.reload(this.getAttachParams(applyId));
 			} else {/* 新增 */

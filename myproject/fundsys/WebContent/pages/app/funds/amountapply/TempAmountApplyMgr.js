@@ -258,6 +258,7 @@ Ext.extend(cmw.skythink.TempAmountApplyMgr, Ext.util.MyObservable, {
 				return appgrid;
 			},
 			refresh : function(data) {// 刷新
+				_this.appgrid.reload();
 				this.globalMgr.query(this);
 				this.globalMgr.activeKey = null;
 			},

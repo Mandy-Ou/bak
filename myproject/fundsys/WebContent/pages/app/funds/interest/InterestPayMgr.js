@@ -18,15 +18,14 @@ define(function(require, exports) {
 		this.params = params;
 	},
 	
-	
 	getMainUI : function(tab, params) {
 		var  _this = this;
 		this.setParams(tab, params);
 		if(!this.appMainlPnl){
-			this.getQueryFrm();
+//			this.getQueryFrm();
 			this.getToolBar();
 			this.getAppGrid();
-			this.appMainlPnl = new Ext.Panel({items:[this.queryFrm,this.toolBar,this.appgrid]});
+			this.appMainlPnl = new Ext.Panel({items:[/*this.queryFrm,*/this.toolBar,this.appgrid]});
 		}
 		this.appMainlPnl.on('afterrender',function(cmpt){
 				_this.doResize();
@@ -53,11 +52,11 @@ define(function(require, exports) {
 	resize : function(tabWidth,tabHeight){
 		this.appMainlPnl.setWidth(tabWidth);
 		this.appMainlPnl.setHeight(CLIENTHEIGHT);	
-		this.queryFrm.setWidth(tabWidth);	
+//		this.queryFrm.setWidth(tabWidth);	
 		this.appgrid.setWidth(tabWidth);
-		var queryFrmHeight = this.queryFrm.getHeight();
-		var appGridHieght = CLIENTHEIGHT- 85 - queryFrmHeight;
-		this.appgrid.setHeight(appGridHieght);
+//		var queryFrmHeight = this.queryFrm.getHeight();
+//		var appGridHieght = CLIENTHEIGHT- 85 - queryFrmHeight;
+		this.appgrid.setHeight(800);
 		this.appMainlPnl.doLayout();
 	},
 	/**
@@ -81,23 +80,33 @@ define(function(require, exports) {
 	getToolBar : function(){
 		var _this = this;
 		var toolBar = null;
-		var barItems = [{/*查询*/
-			token : '查询',
-			text : Btn_Cfgs.QUERY_BTN_TXT,
-			iconCls:'page_query',
-			tooltip:Btn_Cfgs.QUERY_TIP_BTN_TXT,
+		var barItems = [{	token : '选择其他',
+			text : Btn_Cfgs.QUERYS_BTN_TXT,
+			iconCls:'page_holidaysearch',
+			tooltip:Btn_Cfgs.QUERYS_TIP_BTN_TXT,
 			handler : function(){
-				_this.query();
-			}
-		},{/*重置*/
-			token : '重置',
-			text : Btn_Cfgs.RESET_BTN_TXT,
-			iconCls:'page_reset',
-			tooltip:Btn_Cfgs.RESET_TIP_BTN_TXT,
-			handler : function(){
-				_this.queryFrm.reset();
-			}
-		},{type:"sp"},{/*付款*/
+						var that = this;
+						_this.globalMgr.show({key:that.token,self:_this});}
+		},{
+				text : Btn_Cfgs.CAPSAVE_LABEL_TEXT,
+				iconCls:'page_edit',
+				tooltip:Btn_Cfgs.CAPSAVE_LABEL_TEXT,
+				token : '保存',
+				handler : function(){
+					    var that = this;
+						_this.globalMgr.winEdit.show({key:that.token,self:self});
+					}
+			},{
+				text : Btn_Cfgs.DELETE_BTN_TXT,
+				iconCls:'page_delete',
+				tooltip:Btn_Cfgs.DELETE_TIP_BTN_TXT,
+				token : '删除',
+				handler : function(){
+					var store = _this.appgrid.getStore();//获取grid存储的数据
+					var id = _this.appgrid.getSelRows();//返回选中的行对象:数组的形式
+					store.remove(id);
+					}
+			},{type:"sp"},{/*付款*/
 			token : '提交',
 			text : Btn_Cfgs.SUBMIT_BTN_TXT,
 			iconCls:Btn_Cfgs.SUBMIT_CLS,
@@ -118,6 +127,25 @@ define(function(require, exports) {
 		this.toolBar = new Ext.ux.toolbar.MyCmwToolbar({aligin:'right',controls:barItems,rightData : {saveRights : true,currNode : this.params[CURR_NODE_KEY]}});
 		return this.toolBar;
 	},
+	showCustomerDialog : function() {
+			var _this = this;
+			var parentCfg = {
+				callback : function(record) {
+						Cmw.print(record['0'].data);
+//						_this.appgrid.addRecord(record['0'].data);	
+							for(var i=0;i<record.length;i++){
+								_this.appgrid.addRecord(record[i].data);
+							}
+				}
+			};
+			if (this.customerDialog) {
+				this.customerDialog.show(parentCfg);
+			} else {
+			var _this = this;
+			Cmw.importPackage('pages/app/dialogbox/InterestDialogbox',
+			function(module) {_this.customerDialog = module.DialogBox;_this.customerDialog.show(parentCfg);});
+			}
+		},
 	/**
 	 *创建appgGrid
 	 */
@@ -125,7 +153,10 @@ define(function(require, exports) {
 			var _this = this;
 			var structure_1 = [{
 				header: '付息状态',
-				name :'status'
+				name :'status',
+					renderer: function(val) {
+				    return Render_dataSource.isInterestRender(val);
+				    }
 			},{
 			  	header: '委托人姓名',
 				name :'name'
@@ -134,31 +165,45 @@ define(function(require, exports) {
 				name :'code'
 			},{
 				header: '委托金额',
-				name :'appAmount'
+				name :'appAmount',
+					renderer: function(val) {
+				    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';
+				    }
 			},{
 				header :'委托期限',
-				name :'yearLoan'
+				name :'yearLoan',
+					renderer: function(x,y,z) {
+				    return x+'年'+z.get('monthLoan')+'月';
+				    }
 			},{
 				header :'委托期限(月)',
-				name :'monthLoan'
+				name :'monthLoan',
+				hidden:true
 			},{
 				header :'利息',
-				name :'rate'
+				name :'rate',
+					renderer: function(x,y,z) {
+  					return x+Render_dataSource.rateUnit_datas(z.get('unint'));
+						}
 			},{
 				header :'利息单位',
-				name :'unint'
+				name :'unint',
+				hidden:true
 			},{
 				header :'付息日期',
 				name :'xpayDate'
 			},{
 				header :'付息金额',
-				name :'iamount'
+				name :'iamount',
+					renderer: function(val) {
+				    return (val && val>0) ? Cmw.getThousandths(val)+'元' : '';
+				    }
 			}];
 			
 			var appgrid_1 = new Ext.ux.grid.AppGrid({
 				tbar :_this.toolBar,
 			    structure: structure_1,
-			    url: './fuInterest_paylist.action',
+			    url: './fuInterest_paylist.action?cid='+'1',
 			    needPage: false,
 			    keyField: 'entrustCustId',
 			    isLoad: true,
@@ -175,6 +220,28 @@ define(function(require, exports) {
 		getQparams : function(){
 			
 		},
+		
+		globalMgr : {
+		
+			show :function(parentCfg){
+				var _this = parentCfg.self;
+				var winkey=parentCfg.key;
+				var parent ={};
+				
+				parentCfg.parent = parent;				
+				
+				if(winkey=='选择其他'){
+				_this.showCustomerDialog();
+				}
+				
+			
+			}
+		
+		},
+		
+		
+		
+		
 		/**
 		 * 查询方法
 		 */

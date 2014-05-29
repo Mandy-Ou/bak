@@ -93,8 +93,7 @@ define(function(require, exports) {
 						formId : formId
 					},
 					defaultVal : {
-						formId :_this.formId
- ,customerId:_this.customerId }
+						formId :_this.formId,customerId:_this.customerId }
 				};
 				urls[URLCFG_KEYS.ADDURLCFG] = {
 					url : './fuAgreeBook_add.action',
