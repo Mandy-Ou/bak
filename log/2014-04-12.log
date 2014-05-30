@@ -1,4 +1,0 @@
-前台格式化时间
-var tdote=new Date(jsonData["doDate"]);//时间处理（返回的是时间类型）
-jsonData["doDate"]=Ext.util.Format.date(tdote,'Y-m-d');//重新定义值（也就是把格式化之后的值重新赋值给原来的值）
-
