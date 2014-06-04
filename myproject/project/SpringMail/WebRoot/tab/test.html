@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body {
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+.STYLE1 {font-size: 12px}
+.STYLE2 {
+	font-size: 12px;
+	font-weight: bold;
+}
+.STYLE4 {font-size: 12px; color: #A4D3EE; }
+.STYLE5 {color: #A4D3EE}
+
+-->
+</style>
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.STYLE6 {
+	color: #666666;
+	font-size: 12px;
+}
+-->
+</style>
+
+<script>
+var  highlightcolor='#FFEFDB';
+//此处clickcolor只能用win系统颜色代码才能成功,如果用#xxxxxx的代码就不行,还没搞清楚为什么:(
+var  clickcolor='#FFEFDB';
+function  changeto(){
+source=event.srcElement;
+if  (source.tagName=="TR"||source.tagName=="TABLE")
+return;
+while(source.tagName!="TD")
+source=source.parentElement;
+source=source.parentElement;
+cs  =  source.children;
+//alert(cs.length);
+if  (cs[1].style.backgroundColor!=highlightcolor&&source.id!="nc"&&cs[1].style.backgroundColor!=clickcolor)
+for(i=0;i<cs.length;i++){
+	cs[i].style.backgroundColor=highlightcolor;
+}
+}
+
+function  changeback(){
+if  (event.fromElement.contains(event.toElement)||source.contains(event.toElement)||source.id=="nc")
+return
+if  (event.toElement!=source&&cs[1].style.backgroundColor!=clickcolor)
+//source.style.backgroundColor=originalcolor
+for(i=0;i<cs.length;i++){
+	cs[i].style.backgroundColor="";
+}
+}
+
+function  clickto(){
+source=event.srcElement;
+if  (source.tagName=="TR"||source.tagName=="TABLE")
+return;
+while(source.tagName!="TD")
+source=source.parentElement;
+source=source.parentElement;
+cs  =  source.children;
+//alert(cs.length);
+if  (cs[1].style.backgroundColor!=clickcolor&&source.id!="nc")
+for(i=0;i<cs.length;i++){
+	cs[i].style.backgroundColor=clickcolor;
+}
+else
+for(i=0;i<cs.length;i++){
+	cs[i].style.backgroundColor="";
+}
+}
+</script>
+</head>
+
+<body>
+<table width="100%" border="1" cellpadding="5" cellspacing="0" bordercolor="#E3E3E3" bordercolordark="#FFFFFF" class="table" >
+  <tr>
+    <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="6%" align="center"><div align="left">
+          <input type="checkbox" name="checkbox2" value="checkbox" />
+        </div></td>
+        <td width="37%"><span class="STYLE1"><strong>收件人</strong></span></td>
+        <td width="28%"><span class="STYLE1"><strong>主题</strong></span></td>
+        <td width="29%"><span class="STYLE1"><strong>日期</strong></span></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="font" onmouseover="changeto()"  onmouseout="changeback()" >
+      <tr>
+        <td width="4%" align="center"><div align="left">
+          <input type="checkbox" name="checkbox" value="checkbox" />
+        </div></td>
+        <td width="2%"><img src="../img/run.gif" width="16" height="14" /></td>
+        <td width="37%">wangshujun@163.com</td>
+        <td width="28%"><a href="yifa.html">dsadsadddddddddddd</a></td>
+        <td width="29%"><a href="yifa.html" target="_blank">saaaaaaaaaaaaaa</a></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0">
+      <tr>
+        <td width="82%"><span class="STYLE2">选择</span>: <span class="STYLE4">全选</span> <span class="STYLE5">-</span> <span class="STYLE4">不选</span><span class="STYLE5"> - <span class="STYLE1">未读</span> - <span class="STYLE1">已读</span></span></td>
+        <td width="18%"><span class="STYLE6">[ 首页 | 上一页 | 下一页 | 尾页 ]</span></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFFAF0"><input name="Submit" type="submit" class="delete" value="删除" style=" font-size:12px"/>
+      &nbsp;&nbsp;
+        <select name="select" class="border">
+        <option value="0">移动到..</option>
+        <option value="1">收件箱</option>
+        <option value="2">草稿箱</option>
+        <option value="3">已发送</option>
+        <option value="4">已删除</option>
+      </select>
+     &nbsp;
+     <select name="select2" class="border">
+       <option value="0" selected="selected">查看...</option>
+       <option value="1">全部邮件</option>
+       <option>--------</option>
+       <option value="2">未读邮件</option>
+       <option value="3">已读邮件</option>
+       <option value="4">已回复</option>
+       <option value="5">已转发</option>
+       <option value="6">回复且转发</option>
+     </select>    </td>
+  </tr>
+</table>
+</body>
+</html>
