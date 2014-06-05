@@ -19,13 +19,14 @@ body {
 
 <body>
 <script>
-function onLoad(){
+
+window.onload=function(){
 var date=new Date();//获取当前日期
 var nows= document.getElementById("nows");
 nows.innerHTML=date;
 alert(nows.innerHTML);
-}
-window.onload=onLoad();
+};
+//使用匿名函数的形式让文档加载的时候加载javascript
 
 </script>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
