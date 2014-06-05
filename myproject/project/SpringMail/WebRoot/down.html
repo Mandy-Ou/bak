@@ -20,11 +20,13 @@ body {
 <body>
 <script>
 
-window.onload=function(){
-var date=new Date();//获取当前日期
+function a(){
+	var date=new Date();//获取当前日期
 var nows= document.getElementById("nows");
 nows.innerHTML=date;
-alert(nows.innerHTML);
+}
+window.onload=function(){
+	setInterval(a,999);
 };
 //使用匿名函数的形式让文档加载的时候加载javascript
 
