@@ -72,7 +72,7 @@ public class SelectMoreDAOImpl implements SelectMoreDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "3");
 			
 			rs = pstm.executeQuery();
@@ -113,7 +113,7 @@ public class SelectMoreDAOImpl implements SelectMoreDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "4");
 			
 			rs = pstm.executeQuery();
@@ -155,7 +155,7 @@ public class SelectMoreDAOImpl implements SelectMoreDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "0");
 			pstm.setString(3, "4");
 			

@@ -143,10 +143,10 @@ public class InfoAction extends DispatchAction {
 		
 		EmailBean email = new EmailBean();
 		
-		email.setHost("pop3.sohu.com");
+		email.setHost("pop3.163.com");
 		email.setUsername(ub.getUsername());
 		email.setPassword(ub.getPassword());
-		email.setRecipients(ub.getUsername()+"@sohu.com");
+		email.setRecipients(ub.getUsername()+"@163.com");
 		
 		new EmailService().receiveMail(email);//�����ʼ�
 		
@@ -465,7 +465,7 @@ public class InfoAction extends DispatchAction {
 		
 		EmailBean email = new EmailBean();
 		
-		email.setHost("pop3.sohu.com");
+		email.setHost("pop3.163.com");
 		email.setUsername(ub.getUsername());
 		email.setPassword(ub.getPassword());
 		

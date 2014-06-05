@@ -14,7 +14,7 @@ import com.hygj.db.DbUtil;
 public class SelectSendedDAOImpl implements SelectSendedDAOINF {
 
 	/*****
-	 * ²éÑ¯ÒÑ·¢ËÍ·¢ËÍÓÊ¼þµÄDAO
+	 * ï¿½ï¿½Ñ¯ï¿½Ñ·ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½DAO
 	 * @param send sql
 	 * @return List
 	 */
@@ -29,7 +29,7 @@ public class SelectSendedDAOImpl implements SelectSendedDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "3");
 			
 			rs = pstm.executeQuery();

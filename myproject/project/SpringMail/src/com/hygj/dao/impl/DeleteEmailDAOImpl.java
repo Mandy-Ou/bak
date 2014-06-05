@@ -23,7 +23,7 @@ public class DeleteEmailDAOImpl implements DeleteEmail {
 			
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, fg);
 
 			pstm.execute();

@@ -24,7 +24,7 @@ public class SelectCaoDAOImpl implements SelectCaoDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "2");
 			
 			rs = pstm.executeQuery();
@@ -73,7 +73,7 @@ public class SelectCaoDAOImpl implements SelectCaoDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "2");
 			
 			rs = pstm.executeQuery();

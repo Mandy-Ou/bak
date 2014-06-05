@@ -24,7 +24,7 @@ public class SelectGetsDAOImpl implements SelectGetsDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "1");
 			
 			rs = pstm.executeQuery();
@@ -72,7 +72,7 @@ public class SelectGetsDAOImpl implements SelectGetsDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "1");
 			
 			rs = pstm.executeQuery();
@@ -115,7 +115,7 @@ public class SelectGetsDAOImpl implements SelectGetsDAOINF {
 
 			pstm = conn.prepareStatement(sql);
 			
-			pstm.setString(1, username+"@sohu.com");
+			pstm.setString(1, username+"@163.com");
 			pstm.setString(2, "0");
 			pstm.setString(3, "1");
 			
