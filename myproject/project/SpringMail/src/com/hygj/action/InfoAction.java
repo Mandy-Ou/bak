@@ -80,11 +80,13 @@ public class InfoAction extends DispatchAction {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	public ActionForward sendedMail(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		try {
-			request.setCharacterEncoding("GBK");
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,14 +101,17 @@ public class InfoAction extends DispatchAction {
 		UsersBean ub = (UsersBean)(request.getSession().getAttribute("user") != null ? request.getSession().getAttribute("user") : "");
 		
 		EmailBean email = new EmailBean();
-		
-		email.setHost("smtp.sohu.com");
+//		String encoding = System.getProperty("file.encoding");  
+//        System.out.println("系统默认的字符集是:" + encoding); 
+        String getCon=  dn.get("content").toString();
+//       String content=new String(getCon.getBytes("ISO-8859-1"),encoding);
+		email.setHost("smtp.163.com");//设置发送邮件的服务器
 		email.setUsername(ub.getUsername());
 		email.setPassword(ub.getPassword());
 		email.setSender(dn.get("fajianren").toString());
 		email.setRecipients(dn.get("shoujianren").toString());
 		email.setTitle(dn.get("title").toString());
-		email.setContent(dn.get("content").toString());
+		email.setContent(getCon);
 		email.setThetime(thetime);
 		email.setType(3);
 		email.setStatus(0);
